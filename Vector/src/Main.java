@@ -13,10 +13,11 @@ public class Main {
 
         Range range1 = new Range(from,to);
 
-
         // число для проверки вхождения
         System.out.println("Введите число, для проверки его вхождения в отрезок: ");
         double numberToChek = scanner.nextDouble();
+
+        System.out.println(range1.isNumberInsideThisRage(numberToChek));
 
         // второй отрезок
         System.out.println("Введите начало (включительно) второго отрезка: ");
@@ -26,5 +27,6 @@ public class Main {
 
         Range range2 = new Range(from,to);
 
+        System.out.println(range2.isNumberInsideThisRage(numberToChek));
     }
 }
