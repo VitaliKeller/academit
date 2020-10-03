@@ -1,3 +1,6 @@
+import javax.crypto.spec.PSource;
+import java.util.Arrays;
+
 public class Range {
     // класс, описывающий отрезок. И его методы.
     private double from;    // начало отрезка, включительно
@@ -50,20 +53,24 @@ public class Range {
 
     // проверка пересечения.
     public boolean isIntercept(Range range2) {
-        return range2.getFrom() <= to && from <= range2.getTo();
+        return to > range2.getFrom() && range2.getTo() > from;
     }
 
     // пересечение отрезков.
     public Range getInterception(Range range2) {
         if (isIntercept(range2)) {
             return new Range(Math.max(from, range2.from), Math.min(to, range2.to));
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     // объединение отрезков
     public Range[] getUnion(Range range2) {
-        return new Range[] {new Range(0, 0)};
+        if (to < range2.getFrom() || range2.getTo() < from) {
+            return new Range[]{new Range(from, to), new Range(range2.getFrom(), range2.getTo())};
+        }
+
+        return new Range[]{new Range(Math.min(from, range2.getFrom()), Math.max(to, range2.getTo()))};
     }
 }

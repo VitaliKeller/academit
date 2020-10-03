@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -29,7 +30,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // (1.1, 1.2, 1.3) ---------- Задать отрезки
-        Range range1 = new Range(10.5, 20.5);
+        Range range1 = new Range(10.5, 20.0);
         Range range2 = new Range(20.0, 25.0);
 
         // (1.4) ---------- Длина отрезка
@@ -37,29 +38,24 @@ public class Main {
         System.out.println("Длина отрезка №2 " + range2.toString() + " = " + range2.getLength());
 
         // (1.5) ---------- Проверка вхождения числа в отрезок
-        System.out.print("*** Введите число, для проверки его вхождения в отрезки №1 и №2: ");
-        double numberToChek = scanner.nextDouble();     // double numberToChek = 15.2
+        //System.out.print("*** Введите число, для проверки его вхождения в отрезки №1 и №2: ");
+        //double numberToChek = scanner.nextDouble();
+        double numberToChek = 15.2;
 
-        System.out.println( numberToChek + " входит в " + range1.toString() + " = " + range1.isInside(numberToChek));
-        System.out.println( numberToChek + " входит в " + range2.toString() + " = " + range2.isInside(numberToChek));
+        System.out.println(numberToChek + " в " + range1.toString() + " = " + range1.isInside(numberToChek));
+        System.out.println(numberToChek + " в " + range2.toString() + " = " + range2.isInside(numberToChek));
 
         // (2.1) ---------- пресечение отрезков
         if (range1.getInterception(range2) != null) {
-            System.out.println("Пересечение отрезка " + range1.toString() + " и " + range2.toString() + " = " + range1.getInterception(range2).toString());
+            System.out.println("Пересечение отрезков (" + range1.toString() + " и " + range2.toString() + ") = " + range1.getInterception(range2).toString());
         } else {
-            System.out.println("Пересечение отрезка " + range1.toString() + " и " + range2.toString() + " = ПУСТО!");
+            System.out.println("Пересечение отрезков (" + range1.toString() + " и " + range2.toString() + ") = ПУСТО!");
         }
 
-/*
-        System.out.print("Введите начало (включительно) первого отрезка: ");
-        double from = scanner.nextDouble();
-        System.out.print("Введите конец (включительно) первого отрезка: ");
-        double to = scanner.nextDouble();
+        // (2.2) ---------- пресечение отрезков
+        Range[] mass = range1.getUnion(range2);
+        System.out.println("Объединение отрезков (" + range1.toString() + " и " + range2.toString() + ") = " + Arrays.toString(mass));
 
-        System.out.print("Введите начало (включительно) второго отрезка: ");
-        from = scanner.nextDouble();
-        System.out.print("Введите конец (включительно) второго отрезка: ");
-        to = scanner.nextDouble();
-*/
+
     }
 }
