@@ -26,4 +26,8 @@ public class Square implements Shape {
     public double getPerimeter() {
         return sideLength * 4;
     }
+
+    public String toString(){
+        return "Квадрат со стороной " + sideLength;
+    }
 }
