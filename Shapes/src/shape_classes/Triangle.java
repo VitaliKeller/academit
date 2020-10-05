@@ -41,7 +41,22 @@ public class Triangle implements Shape {
         return side1 + side2 + side3;   //http://www.bolshoyvopros.ru/questions/2995540-perimetr-geometricheskoj-figury-po-koordinatam-vershin-kak-najti.html
     }
 
+    @Override
     public String toString() {
         return "Треугольник с вершинами (" + x1 + ", " + y1 + "; " + x2 + ", " + y2 + "; " + x3 + ", " + y3 + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Triangle triangle = (Triangle) o;       // явное приведение
+        return triangle.x1 == x1 && triangle.y1 == y1 && triangle.x2 == x2 && triangle.y2 == y2 && triangle.x3 == x3 && triangle.y3 == y3;
     }
 }

@@ -27,7 +27,22 @@ public class Square implements Shape {
         return sideLength * 4;
     }
 
-    public String toString(){
+    @Override
+    public String toString() {
         return "Квадрат со стороной " + sideLength;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Square square = (Square) o;     // явное приведение
+        return square.sideLength == sideLength;
     }
 }

@@ -27,7 +27,23 @@ public class Circle implements Shape {
         return 2 * Math.PI * radius;
     }
 
+    @Override
     public String toString(){
         return "Круг, радиус " + radius;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Circle circle = (Circle) o;        // явное приведение
+
+        return circle.radius == radius;
     }
 }

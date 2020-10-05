@@ -29,7 +29,23 @@ public class Rectangle implements Shape {
         return 2 * (width + height);
     }
 
+    @Override
     public String toString(){
         return "Прямоугольник шириной " + width + ", высотой " + height;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Rectangle rectangle = (Rectangle) o;        // явное приведение
+
+        return rectangle.width == width && rectangle.height == height;
     }
 }

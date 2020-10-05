@@ -1,3 +1,5 @@
+package shape;
+
 import shape_classes.*;
 
 public class Main {
