@@ -77,7 +77,7 @@ public class Triangle implements Shape {
         return Math.abs(0.5 * ((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3))); //http://www.pm298.ru/reshenie/delen.php
     }
 
-    private double sideLength(double x1, double y1, double x2, double y2) {
+    private static double sideLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
@@ -90,7 +90,7 @@ public class Triangle implements Shape {
         return side1 + side2 + side3;   //http://www.bolshoyvopros.ru/questions/2995540-perimetr-geometricheskoj-figury-po-koordinatam-vershin-kak-najti.html
     }
 
-    // тустринг, сравнение, хэшкод
+    // toString, hashCode, equals
     @Override
     public String toString() {
         return "Треугольник с вершинами (" + x1 + ", " + y1 + "; " + x2 + ", " + y2 + "; " + x3 + ", " + y3 + ")";
@@ -102,11 +102,26 @@ public class Triangle implements Shape {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
 
         Triangle triangle = (Triangle) o;       // явное приведение
         return triangle.x1 == x1 && triangle.y1 == y1 && triangle.x2 == x2 && triangle.y2 == y2 && triangle.x3 == x3 && triangle.y3 == y3;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        hash = prime * hash + Double.hashCode(x1);
+        hash = prime * hash + Double.hashCode(y1);
+        hash = prime * hash + Double.hashCode(x2);
+        hash = prime * hash + Double.hashCode(y2);
+        hash = prime * hash + Double.hashCode(x3);
+        hash = prime * hash + Double.hashCode(y3);
+
+        return hash;
     }
 }

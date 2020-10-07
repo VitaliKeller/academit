@@ -3,12 +3,11 @@ package shape_classes;
 public class Circle implements Shape {
     private double radius;
 
-    public Circle(double radius){
+    public Circle(double radius) {
         this.radius = radius;
     }
+
     // геттеры и сеттеры
-
-
     public double getRadius() {
         return radius;
     }
@@ -20,12 +19,12 @@ public class Circle implements Shape {
     // оверрайд интерфейса
     @Override
     public double getWidth() {
-        return radius *2;
+        return radius * 2;
     }
 
     @Override
     public double getHeight() {
-        return radius *2;
+        return radius * 2;
     }
 
     @Override
@@ -38,9 +37,9 @@ public class Circle implements Shape {
         return 2 * Math.PI * radius;
     }
 
-    // тустринг, сравнение, хэшкод
+    // toString, hashCode, equals
     @Override
-    public String toString(){
+    public String toString() {
         return "Круг, радиус " + radius;
     }
 
@@ -50,12 +49,22 @@ public class Circle implements Shape {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
 
         Circle circle = (Circle) o;        // явное приведение
 
         return circle.radius == radius;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        hash = prime * hash + Double.hashCode(radius);
+
+        return hash;
     }
 }

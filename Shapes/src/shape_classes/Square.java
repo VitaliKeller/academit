@@ -37,7 +37,7 @@ public class Square implements Shape {
         return sideLength * 4;
     }
 
-    // тустринг, сравнение, хэшкод
+    // toString, hashCode, equals
     @Override
     public String toString() {
         return "Квадрат со стороной " + sideLength;
@@ -49,11 +49,21 @@ public class Square implements Shape {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
 
         Square square = (Square) o;     // явное приведение
         return square.sideLength == sideLength;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        hash = prime * hash + Double.hashCode(sideLength);
+
+        return hash;
     }
 }

@@ -40,9 +40,9 @@ public class Rectangle implements Shape {
         return 2 * (width + height);
     }
 
-    // тустринг, сравнение, хэшкод
+    // toString, hashCode, equals
     @Override
-    public String toString(){
+    public String toString() {
         return "Прямоугольник шириной " + width + ", высотой " + height;
     }
 
@@ -52,12 +52,23 @@ public class Rectangle implements Shape {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
 
         Rectangle rectangle = (Rectangle) o;        // явное приведение
 
         return rectangle.width == width && rectangle.height == height;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
+
+        return hash;
     }
 }
