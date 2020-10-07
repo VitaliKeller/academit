@@ -6,7 +6,18 @@ public class Circle implements Shape {
     public Circle(double radius){
         this.radius = radius;
     }
+    // геттеры и сеттеры
 
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    // оверрайд интерфейса
     @Override
     public double getWidth() {
         return radius *2;
@@ -27,6 +38,7 @@ public class Circle implements Shape {
         return 2 * Math.PI * radius;
     }
 
+    // тустринг, сравнение, хэшкод
     @Override
     public String toString(){
         return "Круг, радиус " + radius;

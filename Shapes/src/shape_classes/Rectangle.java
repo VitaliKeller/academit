@@ -9,6 +9,17 @@ public class Rectangle implements Shape {
         this.height = height;
     }
 
+    // геттеры и сеттеры
+    // геттеры есть ниже в реализации интерфейса
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    // оверрайд интерфейса
     @Override
     public double getWidth() {
         return width;
@@ -29,6 +40,7 @@ public class Rectangle implements Shape {
         return 2 * (width + height);
     }
 
+    // тустринг, сравнение, хэшкод
     @Override
     public String toString(){
         return "Прямоугольник шириной " + width + ", высотой " + height;
