@@ -1,4 +1,4 @@
-package shape_classes;
+package ru.kellervitali.shape_classes;
 
 public class Circle implements Shape {
     private double radius;

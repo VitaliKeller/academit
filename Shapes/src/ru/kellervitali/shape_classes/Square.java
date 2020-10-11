@@ -1,4 +1,4 @@
-package shape_classes;
+package ru.kellervitali.shape_classes;
 
 public class Square implements Shape {
     private double sideLength;

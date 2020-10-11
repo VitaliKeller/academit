@@ -1,6 +1,6 @@
-package shape_main;
+package ru.kellervitali.shape_main;
 
-import shape_classes.*;
+import ru.kellervitali.shape_classes.*;
 
 public class Main {
     public static void main(String[] args) {

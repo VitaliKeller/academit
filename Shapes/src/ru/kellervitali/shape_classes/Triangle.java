@@ -1,4 +1,4 @@
-package shape_classes;
+package ru.kellervitali.shape_classes;
 
 public class Triangle implements Shape {
     private double x1, y1, x2, y2, x3, y3;

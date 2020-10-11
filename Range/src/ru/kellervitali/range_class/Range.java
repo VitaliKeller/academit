@@ -1,3 +1,5 @@
+package ru.kellervitali.range_class;
+
 public class Range {
     // Класс отрезок. И его методы.
     private double from;        // Начало отрезка, включительно

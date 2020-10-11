@@ -63,14 +63,6 @@ public class Vector {
         return vectorName + response;
     }
 
-    public double[] getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(double[] coordinates) {
-        this.coordinates = coordinates;
-    }
-
     // 4.e Получение длины вектора
     // формула - https://zaochnik.com/spravochnik/matematika/vektory/dlina_vectora/
     public double getLength() {
@@ -82,5 +74,13 @@ public class Vector {
         }
 
         return Math.abs(Math.sqrt(powSum));
+    }
+
+    public double[] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
     }
 }
