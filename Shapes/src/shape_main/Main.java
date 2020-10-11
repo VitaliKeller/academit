@@ -1,4 +1,4 @@
-package shape;
+package shape_main;
 
 import shape_classes.*;
 
