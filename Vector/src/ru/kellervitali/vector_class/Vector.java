@@ -1,13 +1,13 @@
-package ru.kellervitali.vector;
+package ru.kellervitali.vector_class;
 
 import java.util.Arrays;
 
 public class Vector {
-    // ================= Поля объекта
+    // ================= ПОЛЯ
     private final String vectorName;
     private double[] coordinates;
 
-    // ================= Конструкторы
+    // ================= КОНСТРУКТОРЫ
     // 1.a. Vector(n) – размерность n, все компоненты равны
     public Vector(String vectorName, int dimension) {
         if (dimension <= 0) {
@@ -36,13 +36,10 @@ public class Vector {
         this.coordinates = Arrays.copyOf(coordinates, dimension);
     }
 
-    // ================== Методы
-    public double[] getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(double[] coordinates) {
-        this.coordinates = coordinates;
+    // ================== МЕТОДЫ
+    // Метод getSize() для получения размерности вектора
+    public int getSize() {
+        return coordinates.length;
     }
 
     // Реализовать метод toString(), чтобы выдавал информацию о векторе в формате { значения компонент через запятую }
@@ -66,5 +63,24 @@ public class Vector {
         return vectorName + response;
     }
 
+    public double[] getCoordinates() {
+        return coordinates;
+    }
 
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    // 4.e Получение длины вектора
+    // формула - https://zaochnik.com/spravochnik/matematika/vektory/dlina_vectora/
+    public double getLength() {
+        double powSum = 0;
+
+        for (double e : coordinates
+        ) {
+            powSum += Math.pow(e, 2);
+        }
+
+        return Math.abs(Math.sqrt(powSum));
+    }
 }
