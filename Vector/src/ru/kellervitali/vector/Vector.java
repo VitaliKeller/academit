@@ -3,12 +3,17 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Vector {
-    int coordinate[];
+    double[] coordinate;
 
-    public Vector(int[] coordinate) {
-        int incomingLength = Array.getLength(coordinate);
+    public Vector(double[] coordinate) {
+        //int incomingLength = Array.getLength(coordinate);
         this.coordinate = coordinate;
     }
+
+    public Vector(int dimention) {
+        this.coordinate = new double[dimention];
+    }
+
 
     @Override
     public String toString() {
