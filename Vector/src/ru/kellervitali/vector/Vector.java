@@ -1,24 +1,31 @@
 package ru.kellervitali.vector;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Vector {
-    double[] coordinate;
+// Поля объекта
+    double[] coordinates;
 
+// Конструкторы
     public Vector(double[] coordinate) {
         //int incomingLength = Array.getLength(coordinate);
-        this.coordinate = coordinate;
+        this.coordinates = coordinate;
     }
 
-    public Vector(int dimention) {
-        this.coordinate = new double[dimention];
+    public Vector(int dimension) {
+        this.coordinates = new double[dimension];
     }
 
+// Методы
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
+    }
 
     @Override
     public String toString() {
-        return "Vector{" +
-                "coordinate=" + Arrays.toString(coordinate) +
-                '}';
+        return "Vector" + Arrays.toString(coordinates);
     }
+
+
 }
