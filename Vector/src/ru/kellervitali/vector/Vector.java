@@ -8,6 +8,10 @@ public class Vector {
 
     // Конструкторы
     public Vector(int dimension) {      // 1.a
+        if (dimension <= 0) {
+            throw new IllegalArgumentException("Ошибка! dimension должно быть \">0\"!");
+        }
+
         this.coordinates = new double[dimension];
     }
 
