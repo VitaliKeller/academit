@@ -87,10 +87,10 @@ public class Range {
             return new Range[]{};
         }
 
-        if (from1 < from2) {                            // частично пересекаются, 1й начало < 2й начало
+        if (from1 < from2) {                            // частично пересекаются, 1й начало < 2й начало. Непересечение отрезков - уже было проверено первым.
             return new Range[]{new Range(from1, from2)};
         }
 
-        return new Range[]{new Range(to2, to1)};        // частично пересекаются, to1 > to2
+        return new Range[]{new Range(to2, to1)};        // частично пересекаются, to1 > to2. Непересечение отрезков - уже было проверено первым.
     }
 }
