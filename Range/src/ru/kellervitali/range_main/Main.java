@@ -78,11 +78,11 @@ public class Main {
 
         range2 = new Range(1, 5);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
-        System.out.println("  =   [0]");
+        System.out.println("  =   []");
 
         range2 = new Range(2, 5);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
-        System.out.println("  =   [0]");
+        System.out.println("  =   []");
 
         range2 = new Range(3, 5);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
@@ -90,11 +90,11 @@ public class Main {
 
         range2 = new Range(1, 6);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
-        System.out.println("  =   [0]");
+        System.out.println("  =   []");
 
         range2 = new Range(2, 6);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
-        System.out.println("  =   [0]");
+        System.out.println("  =   []");
 
         range2 = new Range(3, 6);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
