@@ -6,11 +6,6 @@ public class Range {
     private double to;          // Конец отрезка, включительно
 
     public Range(double from, double to) {
-        if (to < from) {        // Проверка что to > from, при создании отрезка
-            this.from = to;
-            this.to = from;
-        }
-
         this.from = from;
         this.to = to;
     }
@@ -19,12 +14,12 @@ public class Range {
         return from;
     }
 
-    public double getTo() {
-        return to;
-    }
-
     public void setFrom(double from) {
         this.from = from;
+    }
+
+    public double getTo() {
+        return to;
     }
 
     public void setTo(double to) {
@@ -41,8 +36,8 @@ public class Range {
     }
 
     // Проверка на вхождение числа в отрезок
-    public boolean isInside(double numberToCheck) {
-        return numberToCheck >= from && numberToCheck <= to;
+    public boolean isInside(double number) {
+        return number >= from && number <= to;
     }
 
     // Длина отрезка.
@@ -51,48 +46,55 @@ public class Range {
     }
 
     // Проверка пересечения boolean.
-    public boolean isIntercept(Range range2) {
-        return to > range2.getFrom() && range2.getTo() > from;
+    public boolean isIntercept(Range range) {
+        return to > range.getFrom() && range.getTo() > from;
     }
 
     // Пересечение (общая часть) отрезков.
-    public Range getInterception(Range range2) {
-        if (isIntercept(range2)) {
-            return new Range(Math.max(from, range2.from), Math.min(to, range2.to));
+    public Range getIntersection(Range range) {
+        if (isIntercept(range)) {
+            return new Range(Math.max(from, range.from), Math.min(to, range.to));
         }
 
         return null;
     }
 
     // Объединение отрезков
-    public Range[] getUnion(Range range2) {
-        if (to < range2.getFrom() || range2.getTo() < from) {
-            return new Range[]{new Range(from, to), new Range(range2.getFrom(), range2.getTo())};
+    public Range[] getUnion(Range range) {
+        if (to < range.getFrom() || range.getTo() < from) {
+            return new Range[]{new Range(from, to), new Range(range.getFrom(), range.getTo())};
         }
 
-        return new Range[]{new Range(Math.min(from, range2.getFrom()), Math.max(to, range2.getTo()))};
+        return new Range[]{new Range(Math.min(from, range.getFrom()), Math.max(to, range.getTo()))};
     }
 
     // Вычесть из первого отрезка второй
-    public Range[] getDifference(Range range2) {
-        double from1 = from, to1 = to, from2 = range2.getFrom(), to2 = range2.getTo();
+    public Range[] getDifference(Range range) {
+        double from1 = from;
+        double to1 = to;
+        double from2 = range.getFrom();
+        double to2 = range.getTo();
 
-        if (from1 < from2 && to1 > to2) {           // отрезок 2 внутри 1
+        if (from1 >= to2 || from2 >= to1) {
+            return new Range[]{new Range(from1, to1)};
+        }  // не пересекаются
+
+        if (from1 < from2 && to1 > to2) {           // отрезок 2 внутри 1 - получаем 2 отрезка
             return new Range[]{new Range(from1, from2), new Range(to2, to1)};
         }
 
-        if (from1 > from2 && to1 < to2) {           // отрезок 1й перекрыт 2ым
+        if (from1 >= from2 && to1 <= to2) {           // отрезок 1й перекрыт 2ым - пустой результат
             return new Range[]{};
         }
 
-        if (from1 < from2 && to1 > from2) {         // частично пересекаются, 1й начало и конец левее
+        if (from1 < from2 && to1 >= from2) {         // частично пересекаются, 1й начало < 2й начало, и 1й конец <= 2го конца
             return new Range[]{new Range(from1, from2)};
         }
 
-        if (from2 < from1 && to2 > from1) {         // частично пересекаются, 1й начало и конец правее
+        if (from2 <= from1 && to2 < to1) {         // частично пересекаются, 1й начало и конец правее
             return new Range[]{new Range(to2, to1)};
         }
 
-        return new Range[]{new Range(from1, to1)};  // не пересекаются
+        return null;
     }
 }

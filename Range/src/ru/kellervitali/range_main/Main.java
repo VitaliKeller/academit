@@ -47,8 +47,8 @@ public class Main {
         System.out.println(numberToChek + " в " + range2.toString() + " = " + range2.isInside(numberToChek));
 
         // (2.1) ---------- Пресечение отрезков
-        if (range1.getInterception(range2) != null) {
-            System.out.println("Пересечение " + range1.toString() + " и " + range2.toString() + " = " + range1.getInterception(range2).toString());
+        if (range1.getIntersection(range2) != null) {
+            System.out.println("Пересечение " + range1.toString() + " и " + range2.toString() + " = " + range1.getIntersection(range2).toString());
         } else {
             System.out.println("Пересечение " + range1.toString() + " и " + range2.toString() + " = ПУСТО!");
         }
@@ -58,5 +58,25 @@ public class Main {
 
         // (2.3) ---------- Вычитание из №1, отрезка №2
         System.out.println("Вычитание   " + range1.toString() + " - " + range2.toString() + " = " + Arrays.toString(range1.getDifference(range2)));
+
+        System.out.println();
+        System.out.println("------------");
+
+        range1 = new Range(2, 5);	range2 = new Range(1, 4);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(2, 4);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(3, 4);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(1, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(2, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(3, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(1, 6);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(2, 6);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);	range2 = new Range(3, 6);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        System.out.println();
+        range1 = new Range(1, 2);	range2 = new Range(4, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(4, 5);	range2 = new Range(1, 2);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+
+
+
+
     }
 }
