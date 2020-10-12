@@ -147,8 +147,6 @@ public class Vector {
 
     // 4.g Переопределить метод equals, чтобы был true ó векторы имеют одинаковую размерность и соответствующие компоненты равны.
     // Соответственно, переопределить hashCode
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -169,6 +167,7 @@ public class Vector {
         return prime + Arrays.hashCode(coordinates);
     }
 
+    // 5.a. Сложение двух векторов – должен создаваться новый вектор
     public static Vector addVector(Vector vector1, Vector vector2) {
         Vector newResultVector = new Vector(vector1);
 
@@ -176,10 +175,23 @@ public class Vector {
         return newResultVector;
     }
 
+    // 5.b. Вычитание векторов – должен создаваться новый вектор
     public static Vector subtractVector(Vector vector1, Vector vector2) {
         Vector newResultVector = new Vector(vector1);
 
         newResultVector.subtractVector(vector2);
         return newResultVector;
+    }
+
+    // 5.c. Скалярное произведение векторов
+    public static double scalarVector(Vector vector1, Vector vector2) {
+        int size = Math.min(vector1.getSize(), vector2.getSize());
+        double scalarResult = 0;
+
+        for (int i = 0; i < size; i++) {
+            scalarResult = +vector1.getCoordinateByIndex(i) * vector2.getCoordinateByIndex(i);
+        }
+
+        return scalarResult;
     }
 }
