@@ -111,6 +111,5 @@ public class Main {
         range2 = new Range(1, 2);
         System.out.print(Arrays.toString(range1.getDifference(range2)));
         System.out.println("  =   [4, 5]");
-
     }
 }
