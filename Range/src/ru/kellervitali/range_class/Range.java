@@ -77,24 +77,20 @@ public class Range {
 
         if (from1 >= to2 || from2 >= to1) {
             return new Range[]{new Range(from1, to1)};
-        }  // не пересекаются
+        }                                               // не пересекаются
 
-        if (from1 < from2 && to1 > to2) {           // отрезок 2 внутри 1 - получаем 2 отрезка
+        if (from1 < from2 && to1 > to2) {               // отрезок 2 внутри 1 - получаем 2 отрезка
             return new Range[]{new Range(from1, from2), new Range(to2, to1)};
         }
 
-        if (from1 >= from2 && to1 <= to2) {           // отрезок 1й перекрыт 2ым - пустой результат
+        if (from1 >= from2 && to1 <= to2) {             // отрезок 1й перекрыт 2ым - пустой результат
             return new Range[]{};
         }
 
-        if (from1 < from2 && to1 >= from2) {         // частично пересекаются, 1й начало < 2й начало, и 1й конец <= 2го конца
+        if (from1 < from2) {                            // частично пересекаются, 1й начало < 2й начало
             return new Range[]{new Range(from1, from2)};
         }
 
-        if (from2 <= from1 && to2 < to1) {         // частично пересекаются, 1й начало и конец правее
-            return new Range[]{new Range(to2, to1)};
-        }
-
-        return null;
+        return new Range[]{new Range(to2, to1)};        // частично пересекаются, to1 > to2
     }
 }

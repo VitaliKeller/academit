@@ -60,23 +60,57 @@ public class Main {
         System.out.println("Вычитание   " + range1.toString() + " - " + range2.toString() + " = " + Arrays.toString(range1.getDifference(range2)));
 
         System.out.println();
-        System.out.println("------------");
+        System.out.println("----- проверка вычитания -----");
 
-        range1 = new Range(2, 5);	range2 = new Range(1, 4);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(2, 4);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(3, 4);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(1, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(2, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(3, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(1, 6);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(2, 6);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(2, 5);	range2 = new Range(3, 6);	System.out.println(Arrays.toString(range1.getDifference(range2)));
+        range1 = new Range(2, 5);
+
+        range2 = new Range(1, 4);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [4, 5]");
+
+        range2 = new Range(2, 4);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [4, 5]");
+
+        range2 = new Range(3, 4);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [2, 3] [4, 5]");
+
+        range2 = new Range(1, 5);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [0]");
+
+        range2 = new Range(2, 5);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [0]");
+
+        range2 = new Range(3, 5);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [2, 3]");
+
+        range2 = new Range(1, 6);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [0]");
+
+        range2 = new Range(2, 6);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [0]");
+
+        range2 = new Range(3, 6);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [2, 3]");
+
         System.out.println();
-        range1 = new Range(1, 2);	range2 = new Range(4, 5);	System.out.println(Arrays.toString(range1.getDifference(range2)));
-        range1 = new Range(4, 5);	range2 = new Range(1, 2);	System.out.println(Arrays.toString(range1.getDifference(range2)));
 
+        range1 = new Range(1, 2);
+        range2 = new Range(4, 5);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [1, 2]");
 
-
+        range1 = new Range(4, 5);
+        range2 = new Range(1, 2);
+        System.out.print(Arrays.toString(range1.getDifference(range2)));
+        System.out.println("  =   [4, 5]");
 
     }
 }
