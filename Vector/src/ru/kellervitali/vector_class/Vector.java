@@ -137,10 +137,12 @@ public class Vector {
         this.coordinates[coordinateIndex] = coordinateValue;
     }
 
+    // установить сразу все координаты
     public void setCoordinates(double[] coordinates) {
         this.coordinates = coordinates;
     }
 
+    // получить сразу все координаты
     public double[] getCoordinates() {
         return coordinates;
     }
