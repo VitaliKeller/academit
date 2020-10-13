@@ -15,12 +15,12 @@ public class Vector {
             throw new IllegalArgumentException("Ошибка! dimension должно быть \">0\"!");
         }
 
-        this.coordinates = new double[dimension];
+        coordinates = new double[dimension];
     }
 
     // 1.b. Vector(Vector) – конструктор копирования
     public Vector(Vector vector) {
-        this.coordinates = Arrays.copyOf(vector.getCoordinates(), vector.getCoordinates().length);
+        coordinates = Arrays.copyOf(vector.getCoordinates(), vector.getCoordinates().length);
     }
 
     // 1.c. Vector(double[]) – заполнение вектора значениями из массива
@@ -59,48 +59,51 @@ public class Vector {
 
     // 4.a. Прибавление к вектору другого вектора
     public double[] addVector(Vector vector) {
-        int size = Math.max(this.getSize(), vector.getSize());
-        double[] addVectorResult = new double[size];
+        int size = Math.max(getSize(), vector.getSize());
+        double[] resultCoordinates = new double[size];
 
         for (int i = 0; i < size; i++) {
-            addVectorResult[i] = this.getCoordinateByIndex(i) + vector.getCoordinateByIndex(i);
+            resultCoordinates[i] = coordinates[i] + vector.getCoordinateByIndex(i);
         }
 
-        return addVectorResult;
+        return resultCoordinates;
     }
 
     // 4.b. Вычитание из вектора другого вектора
     public double[] subtractVector(Vector vector) {
-        int size = Math.max(this.getSize(), vector.getSize());
-        double[] addVectorResult = new double[size];
+        int size = Math.max(getSize(), vector.getSize());
+        double[] resultCoordinates = new double[size];
 
         for (int i = 0; i < size; i++) {
-            addVectorResult[i] = this.getCoordinateByIndex(i) - vector.getCoordinateByIndex(i);
+            resultCoordinates[i] = coordinates[i] - vector.getCoordinateByIndex(i);
         }
 
-        return addVectorResult;
+        return resultCoordinates;
     }
 
     //  4.c. Умножение вектора на скаляр
-    public double[] scalarVector(Vector vector, double scalarValue) {
-        double[] addVectorResult = new double[vector.getSize()];
+    public double[] scalarVector( double scalarValue) {
+        double[] resultCoordinates = new double[getSize()];
 
-        for (int i = 0; i < vector.getSize(); i++) {
-            addVectorResult[i] = this.getCoordinateByIndex(i) * scalarValue;
+        for (int i = 0; i < getSize(); i++) {
+            resultCoordinates[i] = coordinates[i] * scalarValue;
         }
 
-        return addVectorResult;
+        return resultCoordinates;
     }
 
     //  4.d. Разворот вектора (умножение всех компонент на -1)
-    public double[] reverceVector(Vector vector) {
-        double[] reverceVectorResult = new double[vector.getSize()];
+    public double[] reverseVector() {
+        // зависимый вариант, поэтому - не стал его использовать:
+        // return this.scalarVector(-1);
 
-        for (int i = 0; i < vector.getSize(); i++) {
-            reverceVectorResult[i] = this.getCoordinateByIndex(i) * -1;
+        double[] resultCoordinates = new double[getSize()];
+
+        for (int i = 0; i < getSize(); i++) {
+            resultCoordinates[i] = coordinates[i] * -1;
         }
 
-        return reverceVectorResult;
+        return resultCoordinates;
     }
 
     // 4.e Получение длины вектора
@@ -118,17 +121,17 @@ public class Vector {
 
     // 4.f.1 Получение компоненты вектора по индексу
     public double getCoordinateByIndex(int coordinateIndex) {
-        if (coordinateIndex >= this.coordinates.length) {
+        if (coordinateIndex >= coordinates.length) {
             return 0;
         }
 
-        return this.coordinates[coordinateIndex];
+        return coordinates[coordinateIndex];
     }
 
     // 4.f.2 Установка компоненты вектора по индексу
     public void setCoordinateByIndex(int coordinateIndex, double coordinateValue) {
-        if (coordinateIndex >= this.coordinates.length) {
-            this.coordinates = Arrays.copyOf(this.coordinates, coordinateIndex);
+        if (coordinateIndex >= coordinates.length) {
+            this.coordinates = Arrays.copyOf(coordinates, coordinateIndex);
         }
 
         this.coordinates[coordinateIndex] = coordinateValue;
