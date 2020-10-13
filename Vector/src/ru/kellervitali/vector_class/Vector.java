@@ -43,21 +43,18 @@ public class Vector {
     @Override
     // 3. Реализовать метод toString(), чтобы выдавал информацию о векторе в формате { значения компонент через запятую }
     public String toString() {
-        //return vectorName + Arrays.toString(coordinates);
-        String response = "{";
-        String actualDelimiter;
+        // переделал на stringBuilder, чтобы убрать warning
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{");
 
-        for (int i = 0; i < coordinates.length; i++) {
-            if (i < coordinates.length - 1) {
-                actualDelimiter = ", ";
-            } else {
-                actualDelimiter = "}";
-            }
-
-            response = response + String.valueOf(coordinates[i]) + actualDelimiter;
+        for (double coordinate : coordinates) {
+            stringBuilder.append(coordinate).append(", ");
         }
 
-        return response;
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append("}");
+
+        return stringBuilder.toString();
     }
 
     // 4.a. Прибавление к вектору другого вектора

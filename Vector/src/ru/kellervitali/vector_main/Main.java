@@ -36,9 +36,15 @@ public class Main {
         System.out.println("4.d. Координаты разворота вектора 1: " + Arrays.toString(vector1.reverceVector(vector1)));
 
         System.out.println();
+        System.out.println("Проверка равенства векторов");
         System.out.println("(1 == 2) " + vector1.equals(vector2));
         System.out.println("(2 == 3) " + vector2.equals(vector3));
         System.out.println("(3 == 4) " + vector3.equals(vector4));
         System.out.println("(4 == 1) " + vector4.equals(vector1));
+
+        System.out.println();
+        System.out.println("5.a " + Vector.addVector(vector1,vector2));
+        System.out.println("5.b " + Vector.subtractVector(vector1,vector2));
+        System.out.println("5.c " + Vector.scalarVector(vector1,vector2));
     }
 }
