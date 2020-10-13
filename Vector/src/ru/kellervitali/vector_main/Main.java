@@ -32,7 +32,7 @@ public class Main {
         System.out.println();
         System.out.println("4.a. Координаты сложения вектора 1 и 2: " + Arrays.toString(vector1.addVector(vector2)));
         System.out.println("4.b. Координаты вычитания из вектора 1 вектора 2: " + Arrays.toString(vector1.subtractVector(vector2)));
-        System.out.println("4.c. Координаты умножения вектора 1 на скалар (3): " + Arrays.toString(vector1.scalarVector( 3)));
+        System.out.println("4.c. Координаты умножения вектора 1 на скалар (3): " + Arrays.toString(vector1.scalarVector(3)));
         System.out.println("4.d. Координаты разворота вектора 1: " + Arrays.toString(vector1.reverseVector()));
 
         System.out.println();
@@ -43,8 +43,8 @@ public class Main {
         System.out.println("(4 == 1) " + vector4.equals(vector1));
 
         System.out.println();
-        System.out.println("5.a " + Vector.addVector(vector1,vector2));
-        System.out.println("5.b " + Vector.subtractVector(vector1,vector2));
-        System.out.println("5.c " + Vector.scalarVector(vector1,vector2));
+        System.out.println("5.a " + Vector.addVector(vector1, vector2));
+        System.out.println("5.b " + Vector.subtractVector(vector1, vector2));
+        System.out.println("5.c " + Vector.scalarVector(vector1, vector2));
     }
 }

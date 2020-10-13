@@ -82,7 +82,7 @@ public class Vector {
     }
 
     //  4.c. Умножение вектора на скаляр
-    public double[] scalarVector( double scalarValue) {
+    public double[] scalarVector(double scalarValue) {
         double[] resultCoordinates = new double[getSize()];
 
         for (int i = 0; i < getSize(); i++) {
