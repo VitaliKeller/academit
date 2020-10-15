@@ -1,4 +1,4 @@
-package ru.kellervitali.shape_classes;
+package ru.kellervitali.shapes;
 
 public interface Shape {
     double getWidth();

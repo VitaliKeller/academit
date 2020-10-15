@@ -1,6 +1,6 @@
 package ru.kellervitali.vector_main;
 
-import ru.kellervitali.vector_class.Vector;
+import ru.kellervitali.vector.Vector;
 
 import java.util.Arrays;
 

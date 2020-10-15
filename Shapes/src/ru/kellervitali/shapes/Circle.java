@@ -1,4 +1,4 @@
-package ru.kellervitali.shape_classes;
+package ru.kellervitali.shapes;
 
 public class Circle implements Shape {
     private double radius;
@@ -49,7 +49,7 @@ public class Circle implements Shape {
             return true;
         }
 
-        if (o == null || o.getClass() != this.getClass()) {
+        if (o == null || o.getClass() != getClass()) {
             return false;
         }
 

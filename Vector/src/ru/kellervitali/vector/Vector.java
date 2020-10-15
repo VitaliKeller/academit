@@ -1,4 +1,4 @@
-package ru.kellervitali.vector_class;
+package ru.kellervitali.vector;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package ru.kellervitali.shape_classes;
+package ru.kellervitali.shapes;
 
 public class Rectangle implements Shape {
     private double width;
@@ -10,24 +10,22 @@ public class Rectangle implements Shape {
     }
 
     // геттеры и сеттеры
-    // геттеры есть ниже в реализации интерфейса
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
-    // оверрайд интерфейса
     @Override
     public double getWidth() {
         return width;
     }
 
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
     @Override
     public double getHeight() {
         return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class Rectangle implements Shape {
             return true;
         }
 
-        if (o == null || o.getClass() != this.getClass()) {
+        if (o == null || o.getClass() != getClass()) {
             return false;
         }
 

@@ -1,10 +1,10 @@
 package ru.kellervitali.shape_main;
 
-import ru.kellervitali.shape_classes.*;
+import ru.kellervitali.shapes.*;
 
 public class Main {
     public static void main(String[] args) {
-        Shape[] shapes = new Shape[]{
+        Shape[] shapes = {
                 new Circle(2.5),
                 new Circle(4.1),
                 new Triangle(1, 1, 2, 2, 3, 3),
@@ -17,7 +17,7 @@ public class Main {
 
         // посмотреть на все фигуры в консоли
         for (Shape e : shapes) {
-            System.out.print(e.toString() + " - ");
+            System.out.print(e + " - ");
             System.out.print("ширина: " + e.getWidth() + "; ");
             System.out.print("высота: " + e.getHeight() + "; ");
             System.out.print("площадь: " + e.getArea() + "; ");

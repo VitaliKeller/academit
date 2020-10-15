@@ -1,4 +1,4 @@
-package ru.kellervitali.shape_classes;
+package ru.kellervitali.shapes;
 
 public class Triangle implements Shape {
     private double x1;
@@ -82,15 +82,15 @@ public class Triangle implements Shape {
         return Math.abs(0.5 * ((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3))); //http://www.pm298.ru/reshenie/delen.php
     }
 
-    private static double sideLength(double x1, double y1, double x2, double y2) {
+    private static double getSideLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     @Override
     public double getPerimeter() {
-        double side1 = sideLength(x1, y1, x2, y2);
-        double side2 = sideLength(x2, y2, x3, y3);
-        double side3 = sideLength(x1, y1, x3, y3);
+        double side1 = getSideLength(x1, y1, x2, y2);
+        double side2 = getSideLength(x2, y2, x3, y3);
+        double side3 = getSideLength(x1, y1, x3, y3);
 
         return side1 + side2 + side3;   //http://www.bolshoyvopros.ru/questions/2995540-perimetr-geometricheskoj-figury-po-koordinatam-vershin-kak-najti.html
     }
@@ -107,7 +107,7 @@ public class Triangle implements Shape {
             return true;
         }
 
-        if (o == null || o.getClass() != this.getClass()) {
+        if (o == null || o.getClass() != getClass()) {
             return false;
         }
 
