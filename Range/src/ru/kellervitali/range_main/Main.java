@@ -1,4 +1,5 @@
-package ru.kellervitali.range_main;/*
+package ru.kellervitali.range_main;
+/*
     Часть 1. Создать класс Range (непрерывный вещественный числовой диапазон на прямой). В нём:
         +    1.1 Объявить два вещественных поля from, to
         +    1.2 Описать конструктор, при помощи которого заполняются поля
@@ -61,6 +62,7 @@ public class Main {
 
         System.out.println();
         System.out.println("----- проверка вычитания -----");
+        System.out.println("все равенства должны выполниться:");
 
         range1 = new Range(2, 5);
 
