@@ -3,34 +3,38 @@ package ru.kellervitali.vector;
 import java.util.Arrays;
 
 public class Vector {
-    // ================= ПОЛЯ
-
     private double[] coordinates;
 
-    // ================= КОНСТРУКТОРЫ
-
     // 1.a. Vector(n) – размерность n, все компоненты равны
-    public Vector(int dimension) {
-        if (dimension <= 0) {
-            throw new IllegalArgumentException("Ошибка! dimension должно быть \">0\"!");
+    public Vector(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Ошибка! Передана size = \"" + size + "\". (size должно быть \">0\"!)");
         }
 
-        coordinates = new double[dimension];
+        coordinates = new double[size];
     }
 
     // 1.b. Vector(Vector) – конструктор копирования
     public Vector(Vector vector) {
-        coordinates = Arrays.copyOf(vector.getCoordinates(), vector.getCoordinates().length);
+        coordinates = Arrays.copyOf(vector.coordinates, vector.coordinates.length);
     }
 
     // 1.c. Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] coordinates) {
-        this.coordinates = coordinates;
+        if (coordinates.length == 0) {
+            throw new IllegalArgumentException("Ошибка! Передан пустой массив. Вектор должен быть ненулевым!");
+        }
+
+        this.coordinates = Arrays.copyOf(coordinates, coordinates.length);
     }
 
     // 1.Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
-    public Vector(double[] coordinates, int dimension) {
-        this.coordinates = Arrays.copyOf(coordinates, dimension);
+    public Vector(int size, double[] coordinates) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Ошибка! Передана size = \"" + size + "\". (size должно быть \">0\"!)");
+        }
+
+        this.coordinates = Arrays.copyOf(coordinates, size);
     }
 
     // ================== МЕТОДЫ
@@ -40,8 +44,8 @@ public class Vector {
         return coordinates.length;
     }
 
-    @Override
     // 3. Реализовать метод toString(), чтобы выдавал информацию о векторе в формате { значения компонент через запятую }
+    @Override
     public String toString() {
         // переделал на stringBuilder, чтобы убрать warning
         StringBuilder stringBuilder = new StringBuilder();
@@ -58,71 +62,61 @@ public class Vector {
     }
 
     // 4.a. Прибавление к вектору другого вектора
-    public double[] addVector(Vector vector) {
-        int size = Math.max(getSize(), vector.getSize());
-        double[] resultCoordinates = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            resultCoordinates[i] = coordinates[i] + vector.getCoordinateByIndex(i);
+    public Vector getAddingResult(Vector vector) {
+        if (vector.coordinates.length > coordinates.length) {
+            coordinates = Arrays.copyOf(coordinates, vector.coordinates.length);
         }
 
-        return resultCoordinates;
+        for (int i = 0; i < vector.coordinates.length; i++) {
+            coordinates[i] += vector.coordinates[i];
+        }
+
+        return this;
     }
 
     // 4.b. Вычитание из вектора другого вектора
-    public double[] subtractVector(Vector vector) {
-        int size = Math.max(getSize(), vector.getSize());
-        double[] resultCoordinates = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            resultCoordinates[i] = coordinates[i] - vector.getCoordinateByIndex(i);
+    public Vector getSubtractingResult(Vector vector) {
+        if (vector.coordinates.length > coordinates.length) {
+            coordinates = Arrays.copyOf(coordinates, vector.coordinates.length);
         }
 
-        return resultCoordinates;
+        for (int i = 0; i < vector.coordinates.length; i++) {
+            coordinates[i] -= vector.coordinates[i];
+        }
+
+        return this;
     }
 
     //  4.c. Умножение вектора на скаляр
-    public double[] scalarVector(double scalarValue) {
-        double[] resultCoordinates = new double[getSize()];
-
+    public Vector getScalarMultiply(double scalarValue) {
         for (int i = 0; i < getSize(); i++) {
-            resultCoordinates[i] = coordinates[i] * scalarValue;
+            coordinates[i] *= scalarValue;
         }
 
-        return resultCoordinates;
+        return this;
     }
 
     //  4.d. Разворот вектора (умножение всех компонент на -1)
-    public double[] reverseVector() {
-        // зависимый вариант, поэтому - не стал его использовать:
-        // return this.scalarVector(-1);
-
-        double[] resultCoordinates = new double[getSize()];
-
-        for (int i = 0; i < getSize(); i++) {
-            resultCoordinates[i] = coordinates[i] * -1;
-        }
-
-        return resultCoordinates;
+    public Vector reverse() {
+        return getScalarMultiply(-1);
     }
 
     // 4.e Получение длины вектора
     // формула - https://zaochnik.com/spravochnik/matematika/vektory/dlina_vectora/
     public double getLength() {
-        double powSum = 0;
+        double sum = 0;
 
-        for (double e : coordinates
-        ) {
-            powSum += Math.pow(e, 2);
+        for (double e : coordinates) {
+            sum += Math.pow(e, 2);
         }
 
-        return Math.abs(Math.sqrt(powSum));
+        return Math.sqrt(sum);
     }
 
     // 4.f.1 Получение компоненты вектора по индексу
     public double getCoordinateByIndex(int coordinateIndex) {
         if (coordinateIndex >= coordinates.length) {
-            return 0;
+            throw new IllegalArgumentException("Ошибка! Передана координата размерности вне диапазона = " + coordinateIndex + " (при размерности вектора = " + coordinates.length + ").");
         }
 
         return coordinates[coordinateIndex];
@@ -131,20 +125,10 @@ public class Vector {
     // 4.f.2 Установка компоненты вектора по индексу
     public void setCoordinateByIndex(int coordinateIndex, double coordinateValue) {
         if (coordinateIndex >= coordinates.length) {
-            this.coordinates = Arrays.copyOf(coordinates, coordinateIndex);
+            throw new IllegalArgumentException("Ошибка! Передана координата размерности вне диапазона = " + coordinateIndex + " (при размерности вектора = " + coordinates.length + ").");
         }
 
-        this.coordinates[coordinateIndex] = coordinateValue;
-    }
-
-    // установить сразу все координаты
-    public void setCoordinates(double[] coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    // получить сразу все координаты
-    public double[] getCoordinates() {
-        return coordinates;
+        coordinates[coordinateIndex] = coordinateValue;
     }
 
     // 4.g Переопределить метод equals, чтобы был true ó векторы имеют одинаковую размерность и соответствующие компоненты равны.
@@ -170,28 +154,28 @@ public class Vector {
     }
 
     // 5.a. Сложение двух векторов – должен создаваться новый вектор
-    public static Vector addVector(Vector vector1, Vector vector2) {
-        Vector newResultVector = new Vector(vector1);
+    public static Vector getAddingResult(Vector vector1, Vector vector2) {
+        Vector resultVector = new Vector(vector1);
 
-        newResultVector.addVector(vector2);
-        return newResultVector;
+        resultVector.getAddingResult(vector2);
+        return resultVector;
     }
 
     // 5.b. Вычитание векторов – должен создаваться новый вектор
-    public static Vector subtractVector(Vector vector1, Vector vector2) {
-        Vector newResultVector = new Vector(vector1);
+    public static Vector getSubtractingResult(Vector vector1, Vector vector2) {
+        Vector resultVector = new Vector(vector1);
 
-        newResultVector.subtractVector(vector2);
-        return newResultVector;
+        resultVector.getSubtractingResult(vector2);
+        return resultVector;
     }
 
     // 5.c. Скалярное произведение векторов
-    public static double scalarVector(Vector vector1, Vector vector2) {
-        int size = Math.min(vector1.getSize(), vector2.getSize());
+    public static double getScalarMultiply(Vector vector1, Vector vector2) {
+        int size = Math.min(vector1.coordinates.length, vector2.coordinates.length);
         double scalarResult = 0;
 
         for (int i = 0; i < size; i++) {
-            scalarResult = +vector1.getCoordinateByIndex(i) * vector2.getCoordinateByIndex(i);
+            scalarResult += (vector1.coordinates[i] * vector2.coordinates[i]);
         }
 
         return scalarResult;
