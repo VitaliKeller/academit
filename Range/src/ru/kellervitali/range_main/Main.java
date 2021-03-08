@@ -23,7 +23,7 @@ package ru.kellervitali.range_main;
       +  В main написать программу для проверки этих методов.
 */
 
-import ru.kellervitali.range_class.Range;
+import ru.kellervitali.range.Range;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -42,10 +42,10 @@ public class Main {
 
         // (1.5) ---------- Проверка вхождения числа в отрезок
         System.out.print("*** Введите число, для проверки его вхождения в отрезки №1 и №2: ");
-        double numberToChek = scanner.nextDouble();        //double numberToChek = 22.3;
+        double numberToCheck = scanner.nextDouble();        //double numberToCheck = 22.3;
 
-        System.out.println(numberToChek + " в " + range1.toString() + " = " + range1.isInside(numberToChek));
-        System.out.println(numberToChek + " в " + range2.toString() + " = " + range2.isInside(numberToChek));
+        System.out.println(numberToCheck + " в " + range1.toString() + " = " + range1.isInside(numberToCheck));
+        System.out.println(numberToCheck + " в " + range2.toString() + " = " + range2.isInside(numberToCheck));
 
         // (2.1) ---------- Пресечение отрезков
         if (range1.getIntersection(range2) != null) {

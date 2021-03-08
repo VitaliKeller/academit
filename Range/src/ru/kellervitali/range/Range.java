@@ -1,4 +1,4 @@
-package ru.kellervitali.range_class;
+package ru.kellervitali.range;
 
 public class Range {
     // Класс отрезок. И его методы.
@@ -46,13 +46,13 @@ public class Range {
     }
 
     // Проверка пересечения boolean.
-    public boolean isIntercept(Range range) {
+    public boolean isIntersect(Range range) {
         return to > range.from && range.to > from;
     }
 
     // Пересечение (общая часть) отрезков.
     public Range getIntersection(Range range) {
-        if (isIntercept(range)) {
+        if (isIntersect(range)) {
             return new Range(Math.max(from, range.from), Math.min(to, range.to));
         }
 
