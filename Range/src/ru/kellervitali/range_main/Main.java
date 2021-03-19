@@ -37,28 +37,28 @@ public class Main {
         Range range2 = new Range(20.0, 25.0);
 
         // (1.4) ---------- Длина отрезка
-        System.out.println("Длина отрезка №1 " + range1.toString() + " = " + range1.getLength());
-        System.out.println("Длина отрезка №2 " + range2.toString() + " = " + range2.getLength());
+        System.out.println("Длина отрезка №1 " + range1 + " = " + range1.getLength());
+        System.out.println("Длина отрезка №2 " + range2 + " = " + range2.getLength());
 
         // (1.5) ---------- Проверка вхождения числа в отрезок
         System.out.print("*** Введите число, для проверки его вхождения в отрезки №1 и №2: ");
         double numberToCheck = scanner.nextDouble();        //double numberToCheck = 22.3;
 
-        System.out.println(numberToCheck + " в " + range1.toString() + " = " + range1.isInside(numberToCheck));
-        System.out.println(numberToCheck + " в " + range2.toString() + " = " + range2.isInside(numberToCheck));
+        System.out.println(numberToCheck + " в " + range1 + " = " + range1.isInside(numberToCheck));
+        System.out.println(numberToCheck + " в " + range2 + " = " + range2.isInside(numberToCheck));
 
         // (2.1) ---------- Пресечение отрезков
         if (range1.getIntersection(range2) != null) {
-            System.out.println("Пересечение " + range1.toString() + " и " + range2.toString() + " = " + range1.getIntersection(range2).toString());
+            System.out.println("Пересечение " + range1 + " и " + range2 + " = " + range1.getIntersection(range2));
         } else {
-            System.out.println("Пересечение " + range1.toString() + " и " + range2.toString() + " = ПУСТО!");
+            System.out.println("Пересечение " + range1 + " и " + range2 + " = ПУСТО!");
         }
 
         // (2.2) ---------- Объединение отрезков
-        System.out.println("Объединение " + range1.toString() + " и " + range2.toString() + " = " + Arrays.toString(range1.getUnion(range2)));
+        System.out.println("Объединение " + range1 + " и " + range2 + " = " + Arrays.toString(range1.getUnion(range2)));
 
         // (2.3) ---------- Вычитание из №1, отрезка №2
-        System.out.println("Вычитание   " + range1.toString() + " - " + range2.toString() + " = " + Arrays.toString(range1.getDifference(range2)));
+        System.out.println("Вычитание   " + range1 + " - " + range2 + " = " + Arrays.toString(range1.getDifference(range2)));
 
         System.out.println();
         System.out.println("----- проверка вычитания -----");
