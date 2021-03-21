@@ -13,12 +13,11 @@ public class Main {
         System.out.println(vector2 + ", размерность = " + vector2.getSize() + ", длина = " + vector2.getLength() + ", hash = " + vector2.hashCode());
         System.out.println(vector3 + ", размерность = " + vector3.getSize() + ", длина = " + vector3.getLength() + ", hash = " + vector3.hashCode());
         System.out.println(vector4 + ", размерность = " + vector4.getSize() + ", длина = " + vector4.getLength() + ", hash = " + vector4.hashCode());
-        //System.out.println(vector5);
 
         try {
             Vector vector5 = new Vector(2);
             vector5.setCoordinateByIndex(1, 5.5);
-            System.out.println(vector5);
+            System.out.println("Просто вывод вектора: " + vector5);
 
             Vector vector666 = new Vector(-1);
             System.out.println(vector666);
@@ -43,8 +42,8 @@ public class Main {
         System.out.println("(4 == 1) " + vector4.equals(vector1));
 
         System.out.println();
-        System.out.println("5.a " + Vector.getAddingResult(vector1, vector2));
-        System.out.println("5.b " + Vector.subtract(vector1, vector2));
-        System.out.println("5.c " + Vector.multiplyByNumber(vector1, vector2));
+        System.out.println("5.a " + Vector.getSum(vector1, vector2));
+        System.out.println("5.b " + Vector.getDifference(vector1, vector2));
+        System.out.println("5.c " + Vector.getMultiplyProduct(vector1, vector2));
     }
 }

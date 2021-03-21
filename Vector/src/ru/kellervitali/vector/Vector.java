@@ -149,12 +149,11 @@ public class Vector {
 
     @Override
     public int hashCode() {
-        final int prime = 37;
-        return prime + Arrays.hashCode(coordinates);
+        return Arrays.hashCode(coordinates);
     }
 
     // 5.a. Сложение двух векторов – должен создаваться новый вектор
-    public static Vector getAddingResult(Vector vector1, Vector vector2) {
+    public static Vector getSum(Vector vector1, Vector vector2) {
         Vector resultVector = new Vector(vector1);
 
         resultVector.add(vector2);
@@ -162,7 +161,7 @@ public class Vector {
     }
 
     // 5.b. Вычитание векторов – должен создаваться новый вектор
-    public static Vector subtract(Vector vector1, Vector vector2) {
+    public static Vector getDifference(Vector vector1, Vector vector2) {
         Vector resultVector = new Vector(vector1);
 
         resultVector.subtract(vector2);
@@ -170,14 +169,14 @@ public class Vector {
     }
 
     // 5.c. Скалярное произведение векторов
-    public static double multiplyByNumber(Vector vector1, Vector vector2) {
-        int size = Math.min(vector1.coordinates.length, vector2.coordinates.length);
-        double scalarResult = 0;
+    public static double getMultiplyProduct(Vector vector1, Vector vector2) {
+        int resultVectorSize = Math.min(vector1.coordinates.length, vector2.coordinates.length);
+        double result = 0;
 
-        for (int i = 0; i < size; i++) {
-            scalarResult += (vector1.coordinates[i] * vector2.coordinates[i]);
+        for (int i = 0; i < resultVectorSize; i++) {
+            result += vector1.coordinates[i] * vector2.coordinates[i];
         }
 
-        return scalarResult;
+        return result;
     }
 }
