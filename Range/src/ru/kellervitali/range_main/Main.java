@@ -48,11 +48,7 @@ public class Main {
         System.out.println(numberToCheck + " в " + range2 + " = " + range2.isInside(numberToCheck));
 
         // (2.1) ---------- Пресечение отрезков
-        if (range1.getIntersection(range2) != null) {
-            System.out.println("Пересечение " + range1 + " и " + range2 + " = " + range1.getIntersection(range2));
-        } else {
-            System.out.println("Пересечение " + range1 + " и " + range2 + " = ПУСТО!");
-        }
+        System.out.println("Пересечение " + range1 + " и " + range2 + " = " + range1.getIntersection(range2));
 
         // (2.2) ---------- Объединение отрезков
         System.out.println("Объединение " + range1 + " и " + range2 + " = " + Arrays.toString(range1.getUnion(range2)));

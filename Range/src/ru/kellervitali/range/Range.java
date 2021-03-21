@@ -28,10 +28,6 @@ public class Range {
 
     @Override
     public String toString() {
-        if (from == to) {
-            return "[" + from + "]";
-        }
-
         return "[" + from + ", " + to + "]";
     }
 
