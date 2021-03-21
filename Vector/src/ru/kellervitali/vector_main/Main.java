@@ -27,11 +27,12 @@ public class Main {
         }
 
         System.out.println();
-        System.out.println("4.a. Координаты сложения вектора 2 и 1: " + vector2.getAddingResult(vector1));
-        System.out.println("4.a. Координаты сложения вектора 1 и 2: " + vector1.getAddingResult(vector2));
-        System.out.println("4.b. Координаты вычитания из вектора 2 вектора 1: " + vector2.getSubtractingResult(vector1));
-        System.out.println("4.b. Координаты вычитания из вектора 1 вектора 2: " + vector1.getSubtractingResult(vector2));
-        System.out.println("4.c. Координаты умножения вектора 1 на скалар (3): " + vector1.getScalarMultiply(3));
+        System.out.println("4.a. Координаты сложения вектора 2 и 1: " + vector2.add(vector1));
+        System.out.println("4.a. Координаты сложения вектора 1 и 2: " + vector1.add(vector2));
+        System.out.println("4.b. Координаты вычитания из вектора 2 вектора 1: " + vector2.subtract(vector1));
+        System.out.println("4.b. Координаты вычитания из вектора 1 вектора 2: " + vector1.subtract(vector2));
+
+        System.out.println("4.c. Координаты умножения вектора 1 на скалар (3): " + vector1.multiplyByNumber(3));
         System.out.println("4.d. Координаты разворота вектора 1: " + vector1.reverse());
 
         System.out.println();
@@ -43,7 +44,7 @@ public class Main {
 
         System.out.println();
         System.out.println("5.a " + Vector.getAddingResult(vector1, vector2));
-        System.out.println("5.b " + Vector.getSubtractingResult(vector1, vector2));
-        System.out.println("5.c " + Vector.getScalarMultiply(vector1, vector2));
+        System.out.println("5.b " + Vector.subtract(vector1, vector2));
+        System.out.println("5.c " + Vector.multiplyByNumber(vector1, vector2));
     }
 }

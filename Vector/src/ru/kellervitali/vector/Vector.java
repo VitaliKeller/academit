@@ -8,7 +8,7 @@ public class Vector {
     // 1.a. Vector(n) – размерность n, все компоненты равны
     public Vector(int size) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Ошибка! Передана size = \"" + size + "\". (size должно быть \">0\"!)");
+            throw new IndexOutOfBoundsException("Ошибка! Передана size = " + size + ". (size должно быть >0!)");
         }
 
         coordinates = new double[size];
@@ -22,7 +22,7 @@ public class Vector {
     // 1.c. Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] coordinates) {
         if (coordinates.length == 0) {
-            throw new IllegalArgumentException("Ошибка! Передан пустой массив. Вектор должен быть ненулевым!");
+            throw new IndexOutOfBoundsException("Ошибка! Количество компонент (координат) вектора должно быть >0!");
         }
 
         this.coordinates = Arrays.copyOf(coordinates, coordinates.length);
@@ -31,7 +31,7 @@ public class Vector {
     // 1.Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
     public Vector(int size, double[] coordinates) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Ошибка! Передана size = \"" + size + "\". (size должно быть \">0\"!)");
+            throw new IndexOutOfBoundsException("Ошибка! Передана size = " + size + ". (size должно быть >0!)");
         }
 
         this.coordinates = Arrays.copyOf(coordinates, size);
@@ -62,7 +62,7 @@ public class Vector {
     }
 
     // 4.a. Прибавление к вектору другого вектора
-    public Vector getAddingResult(Vector vector) {
+    public Vector add(Vector vector) {
         if (vector.coordinates.length > coordinates.length) {
             coordinates = Arrays.copyOf(coordinates, vector.coordinates.length);
         }
@@ -75,7 +75,7 @@ public class Vector {
     }
 
     // 4.b. Вычитание из вектора другого вектора
-    public Vector getSubtractingResult(Vector vector) {
+    public Vector subtract(Vector vector) {
         if (vector.coordinates.length > coordinates.length) {
             coordinates = Arrays.copyOf(coordinates, vector.coordinates.length);
         }
@@ -88,9 +88,9 @@ public class Vector {
     }
 
     //  4.c. Умножение вектора на скаляр
-    public Vector getScalarMultiply(double scalarValue) {
+    public Vector multiplyByNumber(double number) {
         for (int i = 0; i < getSize(); i++) {
-            coordinates[i] *= scalarValue;
+            coordinates[i] *= number;
         }
 
         return this;
@@ -98,7 +98,7 @@ public class Vector {
 
     //  4.d. Разворот вектора (умножение всех компонент на -1)
     public Vector reverse() {
-        return getScalarMultiply(-1);
+        return multiplyByNumber(-1);
     }
 
     // 4.e Получение длины вектора
@@ -107,28 +107,28 @@ public class Vector {
         double sum = 0;
 
         for (double e : coordinates) {
-            sum += Math.pow(e, 2);
+            sum += e * e;
         }
 
         return Math.sqrt(sum);
     }
 
     // 4.f.1 Получение компоненты вектора по индексу
-    public double getCoordinateByIndex(int coordinateIndex) {
-        if (coordinateIndex >= coordinates.length) {
-            throw new IllegalArgumentException("Ошибка! Передана координата размерности вне диапазона = " + coordinateIndex + " (при размерности вектора = " + coordinates.length + ").");
+    public double getCoordinateByIndex(int index) {
+        if (index >= coordinates.length || index < 0) {
+            throw new IndexOutOfBoundsException("Ошибка! Передана неверная координата размерности = " + index + " (Размерность вектора = " + coordinates.length + ").");
         }
 
-        return coordinates[coordinateIndex];
+        return coordinates[index];
     }
 
     // 4.f.2 Установка компоненты вектора по индексу
-    public void setCoordinateByIndex(int coordinateIndex, double coordinateValue) {
-        if (coordinateIndex >= coordinates.length) {
-            throw new IllegalArgumentException("Ошибка! Передана координата размерности вне диапазона = " + coordinateIndex + " (при размерности вектора = " + coordinates.length + ").");
+    public void setCoordinateByIndex(int index, double coordinateValue) {
+        if (index >= coordinates.length || index < 0) {
+            throw new IndexOutOfBoundsException("Ошибка! Передана неверная координата размерности = " + index + " (Размерность вектора = " + coordinates.length + ").");
         }
 
-        coordinates[coordinateIndex] = coordinateValue;
+        coordinates[index] = coordinateValue;
     }
 
     // 4.g Переопределить метод equals, чтобы был true ó векторы имеют одинаковую размерность и соответствующие компоненты равны.
@@ -157,20 +157,20 @@ public class Vector {
     public static Vector getAddingResult(Vector vector1, Vector vector2) {
         Vector resultVector = new Vector(vector1);
 
-        resultVector.getAddingResult(vector2);
+        resultVector.add(vector2);
         return resultVector;
     }
 
     // 5.b. Вычитание векторов – должен создаваться новый вектор
-    public static Vector getSubtractingResult(Vector vector1, Vector vector2) {
+    public static Vector subtract(Vector vector1, Vector vector2) {
         Vector resultVector = new Vector(vector1);
 
-        resultVector.getSubtractingResult(vector2);
+        resultVector.subtract(vector2);
         return resultVector;
     }
 
     // 5.c. Скалярное произведение векторов
-    public static double getScalarMultiply(Vector vector1, Vector vector2) {
+    public static double multiplyByNumber(Vector vector1, Vector vector2) {
         int size = Math.min(vector1.coordinates.length, vector2.coordinates.length);
         double scalarResult = 0;
 
