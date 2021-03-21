@@ -1,6 +1,6 @@
 package ru.kellervitali.shapes;
 
-public interface Shape {
+public interface Shape extends Comparable<Shape> {
     double getWidth();
 
     double getHeight();
@@ -8,4 +8,9 @@ public interface Shape {
     double getArea();
 
     double getPerimeter();
+
+    @Override
+    default int compareTo(Shape o) {
+        return Double.compare(this.getArea(), o.getArea());
+    }
 }

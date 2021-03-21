@@ -79,7 +79,7 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        return Math.abs(0.5 * ((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3))); //http://www.pm298.ru/reshenie/delen.php
+        return 0.5 * Math.abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));   //http://www.treugolniki.ru/ploshhad-treugolnika-po-koordinatam-vershin/
     }
 
     private static double getSideLength(double x1, double y1, double x2, double y2) {

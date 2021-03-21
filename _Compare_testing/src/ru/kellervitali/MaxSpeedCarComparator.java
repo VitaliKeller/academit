@@ -1,6 +1,5 @@
 package ru.kellervitali;
 
-
 import java.util.Comparator;
 
 public class MaxSpeedCarComparator implements Comparator<Car> {
