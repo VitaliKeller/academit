@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/List/List.iml" filepath="$PROJECT_DIR$/List/List.iml" />
-      <module fileurl="file://$PROJECT_DIR$/_Compare_testing/Message.iml" filepath="$PROJECT_DIR$/_Compare_testing/Message.iml" />
       <module fileurl="file://$PROJECT_DIR$/Range/Range.iml" filepath="$PROJECT_DIR$/Range/Range.iml" />
       <module fileurl="file://$PROJECT_DIR$/Shapes/Shapes.iml" filepath="$PROJECT_DIR$/Shapes/Shapes.iml" />
       <module fileurl="file://$PROJECT_DIR$/Vector/Vector.iml" filepath="$PROJECT_DIR$/Vector/Vector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/_Compare_testing/_Compare_testing.iml" filepath="$PROJECT_DIR$/_Compare_testing/_Compare_testing.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/academit.iml" filepath="$PROJECT_DIR$/.idea/academit.iml" />
     </modules>
   </component>
