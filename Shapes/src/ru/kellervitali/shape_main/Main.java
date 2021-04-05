@@ -18,29 +18,32 @@ public class Main {
         };
 
         // посмотреть на все фигуры в консоли
-        Print(shapes);
+        print(shapes);
 
-        /*Часть 2.
-        + В main в коде объявить массив фигур, чтобы в нём было около 5-10 разных фигур.
-        ** Задача – написать функцию, которая находит фигуру с максимальной площадью.
-                Вызвать её для этого массива и распечатать информацию о фигуре в консоль.
-        ** Аналогично найдите фигуру со вторым по величине периметром.
+        /* Часть 2.
+        В main в коде объявить массив фигур, чтобы в нём было около 5-10 разных фигур.
+        * Задача - написать функцию, которая находит фигуру с максимальной площадью.
+                 - вызвать её для этого массива и распечатать информацию о фигуре в консоль.
+        * Аналогично найдите фигуру со вторым по величине периметром.
+
         Поиск фигур реализовать через стандартный метод Arrays.sort (в C# Array.Sort) с компаратором.
         Что такое компаратор почитайте сами, но если будут вопросы, задавайте.
         */
 
         System.out.println();
-        Arrays.sort(shapes);
-        Print(shapes);
+
+        Arrays.sort(shapes, new ShapeAreaComparator());
+        print(shapes);
         System.out.println("========= 1-е место по площади: " + shapes[shapes.length - 1]);
 
         Arrays.sort(shapes, new ShapePerimeterComparator());
-        Print(shapes);
+        print(shapes);
         System.out.println("========= 2-е место по периметру: " + shapes[shapes.length - 2]);
     }
 
-    private static void Print(Shape[] shapes){
+    private static void print(Shape[] shapes) {
         System.out.println();
+
         for (Shape e : shapes) {
             System.out.print(e + ". ");
             System.out.print("Ширина: " + e.getWidth() + "; ");
