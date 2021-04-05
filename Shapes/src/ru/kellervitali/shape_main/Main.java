@@ -30,8 +30,6 @@ public class Main {
         Что такое компаратор почитайте сами, но если будут вопросы, задавайте.
         */
 
-        System.out.println();
-
         Arrays.sort(shapes, new ShapeAreaComparator());
         print(shapes);
         System.out.println("========= 1-е место по площади: " + shapes[shapes.length - 1]);
