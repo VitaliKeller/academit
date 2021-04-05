@@ -44,6 +44,6 @@ public class Main {
         System.out.println();
         System.out.println("5.a " + Vector.getSum(vector1, vector2));
         System.out.println("5.b " + Vector.getDifference(vector1, vector2));
-        System.out.println("5.c " + Vector.getMultiplyProduct(vector1, vector2));
+        System.out.println("5.c " + Vector.getProduct(vector1, vector2));
     }
 }

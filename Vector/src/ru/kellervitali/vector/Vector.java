@@ -8,7 +8,7 @@ public class Vector {
     // 1.a. Vector(n) – размерность n, все компоненты равны
     public Vector(int size) {
         if (size <= 0) {
-            throw new IndexOutOfBoundsException("Ошибка! Передана size = " + size + ". (size должно быть >0!)");
+            throw new IllegalArgumentException("Передан size = " + size + ". (size должно быть > 0!)");
         }
 
         coordinates = new double[size];
@@ -22,7 +22,7 @@ public class Vector {
     // 1.c. Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] coordinates) {
         if (coordinates.length == 0) {
-            throw new IndexOutOfBoundsException("Ошибка! Количество компонент (координат) вектора должно быть >0!");
+            throw new IllegalArgumentException("Количество компонент (координат) вектора должно быть > 0!");
         }
 
         this.coordinates = Arrays.copyOf(coordinates, coordinates.length);
@@ -31,7 +31,7 @@ public class Vector {
     // 1.Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
     public Vector(int size, double[] coordinates) {
         if (size <= 0) {
-            throw new IndexOutOfBoundsException("Ошибка! Передана size = " + size + ". (size должно быть >0!)");
+            throw new IllegalArgumentException("Передана size = " + size + ". (size должно быть > 0!)");
         }
 
         this.coordinates = Arrays.copyOf(coordinates, size);
@@ -89,7 +89,7 @@ public class Vector {
 
     //  4.c. Умножение вектора на скаляр
     public Vector multiplyByNumber(double number) {
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < coordinates.length; i++) {
             coordinates[i] *= number;
         }
 
@@ -115,8 +115,8 @@ public class Vector {
 
     // 4.f.1 Получение компоненты вектора по индексу
     public double getCoordinateByIndex(int index) {
-        if (index >= coordinates.length || index < 0) {
-            throw new IndexOutOfBoundsException("Ошибка! Передана неверная координата размерности = " + index + " (Размерность вектора = " + coordinates.length + ").");
+        if (index < 0 || index >= coordinates.length) {
+            throw new IndexOutOfBoundsException("Передано неверное значение индекса = " + index + " (Размерность вектора = " + coordinates.length + ").");
         }
 
         return coordinates[index];
@@ -124,8 +124,8 @@ public class Vector {
 
     // 4.f.2 Установка компоненты вектора по индексу
     public void setCoordinateByIndex(int index, double coordinateValue) {
-        if (index >= coordinates.length || index < 0) {
-            throw new IndexOutOfBoundsException("Ошибка! Передана неверная координата размерности = " + index + " (Размерность вектора = " + coordinates.length + ").");
+        if (index < 0 || index >= coordinates.length) {
+            throw new IndexOutOfBoundsException("Передано неверное значение индекса = " + index + " (Размерность вектора = " + coordinates.length + ").");
         }
 
         coordinates[index] = coordinateValue;
@@ -144,6 +144,7 @@ public class Vector {
         }
 
         Vector vector = (Vector) o;
+
         return Arrays.equals(coordinates, vector.coordinates);
     }
 
@@ -157,6 +158,7 @@ public class Vector {
         Vector resultVector = new Vector(vector1);
 
         resultVector.add(vector2);
+
         return resultVector;
     }
 
@@ -165,15 +167,16 @@ public class Vector {
         Vector resultVector = new Vector(vector1);
 
         resultVector.subtract(vector2);
+
         return resultVector;
     }
 
     // 5.c. Скалярное произведение векторов
-    public static double getMultiplyProduct(Vector vector1, Vector vector2) {
-        int resultVectorSize = Math.min(vector1.coordinates.length, vector2.coordinates.length);
+    public static double getProduct(Vector vector1, Vector vector2) {
+        int minVectorsSize = Math.min(vector1.coordinates.length, vector2.coordinates.length);
         double result = 0;
 
-        for (int i = 0; i < resultVectorSize; i++) {
+        for (int i = 0; i < minVectorsSize; i++) {
             result += vector1.coordinates[i] * vector2.coordinates[i];
         }
 
