@@ -40,7 +40,7 @@ public class Circle implements Shape {
     // toString, hashCode, equals
     @Override
     public String toString() {
-        return "Круг, радиус " + radius;
+        return "Круг с радиусом " + radius;
     }
 
     @Override

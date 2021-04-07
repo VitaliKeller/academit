@@ -83,16 +83,16 @@ public class Triangle implements Shape {
     }
 
     private static double getSideLength(double x1, double y1, double x2, double y2) {
-        return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     @Override
     public double getPerimeter() {
-        double sideLength1 = getSideLength(x1, y1, x2, y2);
-        double sideLength2 = getSideLength(x2, y2, x3, y3);
-        double sideLength3 = getSideLength(x1, y1, x3, y3);
+        double side1Length = getSideLength(x1, y1, x2, y2);
+        double side2Length = getSideLength(x2, y2, x3, y3);
+        double side3Length = getSideLength(x1, y1, x3, y3);
 
-        return sideLength1 + sideLength2 + sideLength3;   //http://www.bolshoyvopros.ru/questions/2995540-perimetr-geometricheskoj-figury-po-koordinatam-vershin-kak-najti.html
+        return side1Length + side2Length + side3Length;   //http://www.bolshoyvopros.ru/questions/2995540-perimetr-geometricheskoj-figury-po-koordinatam-vershin-kak-najti.html
     }
 
     // toString, hashCode, equals
