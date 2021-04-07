@@ -22,7 +22,7 @@ public class Vector {
     // 1.c. Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] coordinates) {
         if (coordinates.length == 0) {
-            throw new IllegalArgumentException("Количество компонент (координат) вектора должен быть > 0!");
+            throw new IllegalArgumentException("Количество компонент (координат) вектора должно быть > 0!");
         }
 
         this.coordinates = Arrays.copyOf(coordinates, coordinates.length);
@@ -31,7 +31,7 @@ public class Vector {
     // 1.Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
     public Vector(int size, double[] coordinates) {
         if (size <= 0) {
-            throw new IllegalArgumentException("Передана size = " + size + ". (size должен быть > 0!)");
+            throw new IllegalArgumentException("Передан size = " + size + ". (size должен быть > 0!)");
         }
 
         this.coordinates = Arrays.copyOf(coordinates, size);
