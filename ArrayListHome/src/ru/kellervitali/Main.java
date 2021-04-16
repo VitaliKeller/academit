@@ -3,7 +3,6 @@ package ru.kellervitali;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -36,7 +35,8 @@ public class Main {
         System.out.println("№1 Прочитано: " + list1);
 
         // задача 2
-        ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
+        // ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
+        ArrayList<Integer> list2 = getIntegersListFromStringsList(list1);
 
         System.out.println(System.lineSeparator() + "№2 Исходный: " + list2);
         removeEvenNumbers(list2);
@@ -65,5 +65,29 @@ public class Main {
         }
 
         return resultList;
+    }
+
+    private static ArrayList<Integer> getIntegersListFromStringsList(ArrayList<String> stringsList) {
+        ArrayList<Integer> resultList = new ArrayList<>();
+
+        for (String e : stringsList) {
+            Integer tmp = getNumeric(e);
+
+            if (tmp != null) {
+                resultList.add(tmp);
+            }
+        }
+
+        return resultList;
+    }
+
+    // проверка на число, исходник - https://java-lessons.ru/strings/check-if-string-a-number
+    // тут нас интересуют только целые
+    public static Integer getNumeric(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }
