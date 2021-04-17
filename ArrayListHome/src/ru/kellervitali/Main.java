@@ -71,10 +71,9 @@ public class Main {
         ArrayList<Integer> resultList = new ArrayList<>();
 
         for (String e : stringsList) {
-            Integer tmp = getNumeric(e);
-
-            if (tmp != null) {
-                resultList.add(tmp);
+            try {
+                resultList.add(Integer.parseInt(e));
+            } catch (NumberFormatException ignored) {
             }
         }
 
@@ -83,11 +82,4 @@ public class Main {
 
     // проверка на число, исходник - https://java-lessons.ru/strings/check-if-string-a-number
     // тут нас интересуют только целые
-    public static Integer getNumeric(String str) {
-        try {
-            return Integer.parseInt(str);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
 }
