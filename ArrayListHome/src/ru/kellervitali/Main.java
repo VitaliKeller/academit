@@ -23,18 +23,18 @@ public class Main {
     public static void main(String[] args) {
         // Задача 1
         String path = "Numbers.txt";
-        ArrayList<String> list1 = getListFromFile(path);
+        ArrayList<String> stringsListFromFile = getListFromFile(path);
 
         // задача 2
-        // ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
-        ArrayList<Integer> list2 = getIntegersListFromStringsList(list1);
+        // ArrayList<Integer> integersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
+        ArrayList<Integer> integersList = getIntegersListFromStringsList(stringsListFromFile);
 
-        System.out.println(System.lineSeparator() + "№2 Исходный: " + list2);
-        removeEvenNumbers(list2);
-        System.out.println("№2 Убраны четные: " + list2);
+        System.out.println(System.lineSeparator() + "№2 Исходный: " + integersList);
+        removeEvenNumbers(integersList);
+        System.out.println("№2 Убраны четные: " + integersList);
 
         // задача 3 - создаем новый список в статичном методе
-        System.out.println(System.lineSeparator() + "№3 Убраны повторы: " + getDistinctNumbersList(list2));
+        System.out.println(System.lineSeparator() + "№3 Убраны повторы: " + getDistinctNumbersList(integersList));
     }
 
     public static ArrayList<String> getListFromFile(String path) {
@@ -43,7 +43,7 @@ public class Main {
         try (Scanner scanner = new Scanner(new File(path))) {
             while (scanner.hasNextLine()) {
                 listFromFile.add(scanner.nextLine());
-            };
+            }
 
             System.out.println("№1 Прочитано: " + listFromFile);
         } catch (FileNotFoundException e) {
@@ -63,19 +63,20 @@ public class Main {
     }
 
     private static ArrayList<Integer> getDistinctNumbersList(ArrayList<Integer> numbersList) {
-        ArrayList<Integer> resultList = new ArrayList<>();
+        ArrayList<Integer> distinctNumbersList = new ArrayList<>(20);
 
         for (Integer e : numbersList) {
-            if (!resultList.contains(e)) {
-                resultList.add(e);
+            if (!distinctNumbersList.contains(e)) {
+                distinctNumbersList.add(e);
             }
         }
 
-        return resultList;
+        distinctNumbersList.trimToSize();
+        return distinctNumbersList;
     }
 
     private static ArrayList<Integer> getIntegersListFromStringsList(ArrayList<String> stringsList) {
-        ArrayList<Integer> resultList = new ArrayList<>();
+        ArrayList<Integer> resultList = new ArrayList<>(20);
 
         for (String e : stringsList) {
             try {
@@ -84,6 +85,7 @@ public class Main {
             }
         }
 
+        resultList.trimToSize();
         return resultList;
     }
 
