@@ -21,18 +21,9 @@ public class Main {
 */
 
     public static void main(String[] args) {
-        ArrayList<String> list1 = new ArrayList<>();
+        // Задача 1
         String path = "Numbers.txt";
-
-        try (Scanner scanner = new Scanner(new File(path))) {
-            while (scanner.hasNextLine()) {
-                list1.add(scanner.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл " + path + " не найден!");
-        }
-
-        System.out.println("№1 Прочитано: " + list1);
+        ArrayList<String> list1 = getListFromFile(path);
 
         // задача 2
         // ArrayList<Integer> list2 = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
@@ -44,6 +35,22 @@ public class Main {
 
         // задача 3 - создаем новый список в статичном методе
         System.out.println(System.lineSeparator() + "№3 Убраны повторы: " + getDistinctNumbersList(list2));
+    }
+
+    public static ArrayList<String> getListFromFile(String path) {
+        ArrayList<String> listFromFile = new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(new File(path))) {
+            while (scanner.hasNextLine()) {
+                listFromFile.add(scanner.nextLine());
+            };
+
+            System.out.println("№1 Прочитано: " + listFromFile);
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл " + path + " не найден!");
+        }
+
+        return listFromFile;
     }
 
     private static void removeEvenNumbers(ArrayList<Integer> numbersList) {
