@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
         // Задача 1
         String path = "Numbers.txt";
-        ArrayList<String> stringsListFromFile = getListFromFile(path);
+        ArrayList<String> stringsListFromFile = readListFromFile(path);
 
         // задача 2
         // ArrayList<Integer> integersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
@@ -37,7 +37,7 @@ public class Main {
         System.out.println(System.lineSeparator() + "№3 Убраны повторы: " + getDistinctNumbersList(integersList));
     }
 
-    public static ArrayList<String> getListFromFile(String path) {
+    public static ArrayList<String> readListFromFile(String path) {
         ArrayList<String> listFromFile = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(path))) {
@@ -63,7 +63,7 @@ public class Main {
     }
 
     private static ArrayList<Integer> getDistinctNumbersList(ArrayList<Integer> numbersList) {
-        ArrayList<Integer> distinctNumbersList = new ArrayList<>(20);
+        ArrayList<Integer> distinctNumbersList = new ArrayList<>(numbersList.size() / 2);
 
         for (Integer e : numbersList) {
             if (!distinctNumbersList.contains(e)) {
@@ -71,12 +71,11 @@ public class Main {
             }
         }
 
-        distinctNumbersList.trimToSize();
         return distinctNumbersList;
     }
 
     private static ArrayList<Integer> getIntegersListFromStringsList(ArrayList<String> stringsList) {
-        ArrayList<Integer> resultList = new ArrayList<>(20);
+        ArrayList<Integer> resultList = new ArrayList<>(stringsList.size() / 2);
 
         for (String e : stringsList) {
             try {
@@ -85,7 +84,6 @@ public class Main {
             }
         }
 
-        resultList.trimToSize();
         return resultList;
     }
 
