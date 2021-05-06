@@ -101,7 +101,7 @@ public class Main {
                 .collect(Collectors.toList());
 
         System.out.println();
-        System.out.println(betweenPersonsList);
+        System.out.println("Персоны между " + ageFrom + " и " + ageTo + " включительно: " + betweenPersonsList);
         System.out.println(betweenPersonNamesList);
     }
 }
