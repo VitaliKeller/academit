@@ -1,7 +1,6 @@
 package ru.vitalikeller;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -90,14 +89,19 @@ public class Main {
     }
 
     public static void printNamesAgesBetween(List<Person> personsList, int ageFrom, int ageTo) {
-        List<String> betweenPersonList = personsList.stream()
+        List<String> betweenPersonNamesList = personsList.stream()
                 .filter(person -> person.getAge() >= ageFrom && person.getAge() <= ageTo)
                 .sorted((person1, person2) -> person2.getAge() - person1.getAge())
                 .map(Person::getName)
                 .collect(Collectors.toList());
 
+        List<Person> betweenPersonsList = personsList.stream()
+                .filter(person -> person.getAge() >= ageFrom && person.getAge() <= ageTo)
+                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
+                .collect(Collectors.toList());
+
         System.out.println();
-        System.out.println(personsList);
-        System.out.println(betweenPersonList);
+        System.out.println(betweenPersonsList);
+        System.out.println(betweenPersonNamesList);
     }
 }
