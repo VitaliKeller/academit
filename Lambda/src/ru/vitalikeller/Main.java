@@ -1,6 +1,7 @@
 package ru.vitalikeller;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  + Б) вывести список уникальных имен в формате: Имена: Иван, Сергей, Петр.
  + В) получить список людей младше 18, посчитать для них средний возраст
  + Г) при помощи группировки получить Map , в котором ключи – имена, а значения – средний возраст
- Д) получить людей, возраст которых от 20 до 45, вывести в консоль их имена в порядке убывания возраста
+ + Д) получить людей, возраст которых от 20 до 45, вывести в консоль их имена в порядке убывания возраста
  */
 
 public class Main {
@@ -41,6 +42,9 @@ public class Main {
 
         // задача 3.Г
         printMapAvgAgeForNames(personsList);
+
+        // задача 3.Д
+        printNamesAgesBetween(personsList, 18, 45);
     }
 
     public static void printDistinctNames(List<Person> personsList) {
@@ -76,13 +80,24 @@ public class Main {
         Map<String, Double> mapAvgAgeByName = personsList.stream().
                 collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
 
-        /*
-        // для интереса и проверки - подсчет количества
+        /*// для интереса и проверки - подсчет количества
         Map<String, Long> mapCountAgeByName = personsList.stream().
                 collect(Collectors.groupingBy(Person::getName, Collectors.counting()));*/
 
         System.out.println();
         System.out.println("Средний возраст по именам: " + mapAvgAgeByName);
-//        System.out.println("Количество по именам: " + mapCountAgeByName);
+        // System.out.println("Количество по именам: " + mapCountAgeByName);
+    }
+
+    public static void printNamesAgesBetween(List<Person> personsList, int ageFrom, int ageTo) {
+        List<String> betweenPersonList = personsList.stream()
+                .filter(person -> person.getAge() >= ageFrom && person.getAge() <= ageTo)
+                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
+                .map(Person::getName)
+                .collect(Collectors.toList());
+
+        System.out.println();
+        System.out.println(personsList);
+        System.out.println(betweenPersonList);
     }
 }
