@@ -2,8 +2,8 @@ package ru.vitalikeller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
 
 /*
 Задача «Лямбды»
@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
  + А) получить список уникальных имен
  + Б) вывести список уникальных имен в формате: Имена: Иван, Сергей, Петр.
  + В) получить список людей младше 18, посчитать для них средний возраст
- Г) при помощи группировки получить Map , в котором ключи – имена, а значения – средний возраст
- Д) получить людей, возраст которых от 20 до 45, вывести в консоль их имена в порядке убывания возраста*/
+ + Г) при помощи группировки получить Map , в котором ключи – имена, а значения – средний возраст
+ Д) получить людей, возраст которых от 20 до 45, вывести в консоль их имена в порядке убывания возраста
+ */
 
 public class Main {
     public static void main(String[] args) {
@@ -37,6 +38,9 @@ public class Main {
 
         // задача 3.В
         printNamesYoungerThen(personsList, 18);
+
+        // задача 3.Г
+        printMapAvgAgeForNames(personsList);
     }
 
     public static void printDistinctNames(List<Person> personsList) {
@@ -56,7 +60,6 @@ public class Main {
     }
 
     public static void printNamesYoungerThen(List<Person> personsList, int age) {
-
         List<Person> youngerThanXXPersonList = personsList.stream()
                 .filter(person -> person.getAge() < age)
                 .collect(Collectors.toList());
@@ -66,6 +69,20 @@ public class Main {
 
         System.out.println();
         System.out.println(youngerThanXXPersonList);
-        System.out.println("Средний возраст для person <" + age + " лет: " + youngerThanXXPersonsAgeAverage);
+        System.out.println("Средний возраст для person < " + age + " лет: " + youngerThanXXPersonsAgeAverage);
+    }
+
+    public static void printMapAvgAgeForNames(List<Person> personsList) {
+        Map<String, Double> mapAvgAgeByName = personsList.stream().
+                collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
+
+        /*
+        // для интереса и проверки - подсчет количества
+        Map<String, Long> mapCountAgeByName = personsList.stream().
+                collect(Collectors.groupingBy(Person::getName, Collectors.counting()));*/
+
+        System.out.println();
+        System.out.println("Средний возраст по именам: " + mapAvgAgeByName);
+//        System.out.println("Количество по именам: " + mapCountAgeByName);
     }
 }
