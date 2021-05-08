@@ -23,7 +23,8 @@ public class Main {
     public static void main(String[] args) {
         // Задача 1
         String path = "Numbers.txt";
-        ArrayList<String> stringsListFromFile = readListFromFile(path);
+        ArrayList<String> stringsListFromFile = readStringsFromFile(path);
+        System.out.println("№1 Прочитано: " + stringsListFromFile);
 
         // задача 2
         // ArrayList<Integer> integersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
@@ -37,20 +38,20 @@ public class Main {
         System.out.println(System.lineSeparator() + "№3 Убраны повторы: " + getDistinctNumbersList(integersList));
     }
 
-    public static ArrayList<String> readListFromFile(String path) {
-        ArrayList<String> listFromFile = new ArrayList<>();
+    public static ArrayList<String> readStringsFromFile(String path) {
+        ArrayList<String> stringArrayListFromFile = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(path))) {
             while (scanner.hasNextLine()) {
-                listFromFile.add(scanner.nextLine());
+                stringArrayListFromFile.add(scanner.nextLine());
             }
 
-            System.out.println("№1 Прочитано: " + listFromFile);
+            // System.out.println("№1 Прочитано: " + stringArrayList);
         } catch (FileNotFoundException e) {
             System.out.println("Файл " + path + " не найден!");
         }
 
-        return listFromFile;
+        return stringArrayListFromFile;
     }
 
     private static void removeEvenNumbers(ArrayList<Integer> numbersList) {
@@ -63,7 +64,7 @@ public class Main {
     }
 
     private static ArrayList<Integer> getDistinctNumbersList(ArrayList<Integer> numbersList) {
-        ArrayList<Integer> distinctNumbersList = new ArrayList<>(numbersList.size() / 2);
+        ArrayList<Integer> distinctNumbersList = new ArrayList<>(numbersList.size());
 
         for (Integer e : numbersList) {
             if (!distinctNumbersList.contains(e)) {
