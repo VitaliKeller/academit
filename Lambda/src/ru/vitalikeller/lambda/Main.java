@@ -79,13 +79,13 @@ public class Main {
         Map<String, Double> mapAvgAgeByName = personsList.stream().
                 collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
 
-        /*// для интереса и проверки - подсчет количества
+        // для интереса и проверки - подсчет количества
         Map<String, Long> mapCountAgeByName = personsList.stream().
-                collect(Collectors.groupingBy(Person::getName, Collectors.counting()));*/
+                collect(Collectors.groupingBy(Person::getName, Collectors.counting()));
 
         System.out.println();
         System.out.println("Средний возраст по именам: " + mapAvgAgeByName);
-        // System.out.println("Количество по именам: " + mapCountAgeByName);
+        System.out.println("Количество по именам: " + mapCountAgeByName);
     }
 
     public static void printNamesAgesBetween(List<Person> personsList, int ageFrom, int ageTo) {
