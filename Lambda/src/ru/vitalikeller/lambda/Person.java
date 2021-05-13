@@ -1,4 +1,4 @@
-package ru.vitalikeller;
+package ru.vitalikeller.lambda;
 
 public class Person {
     private String name;

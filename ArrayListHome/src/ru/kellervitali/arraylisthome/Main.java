@@ -1,4 +1,4 @@
-package ru.kellervitali;
+package ru.kellervitali.arraylisthome;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +27,6 @@ public class Main {
         System.out.println("№1 Прочитано: " + stringsListFromFile);
 
         // задача 2
-        // ArrayList<Integer> integersList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
         ArrayList<Integer> integersList = getIntegersListFromStringsList(stringsListFromFile);
 
         System.out.println(System.lineSeparator() + "№2 Исходный: " + integersList);
@@ -39,19 +38,18 @@ public class Main {
     }
 
     public static ArrayList<String> readStringsFromFile(String path) {
-        ArrayList<String> stringArrayListFromFile = new ArrayList<>();
+        ArrayList<String> stringsListFromFile = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(path))) {
             while (scanner.hasNextLine()) {
-                stringArrayListFromFile.add(scanner.nextLine());
+                stringsListFromFile.add(scanner.nextLine());
             }
 
-            // System.out.println("№1 Прочитано: " + stringArrayList);
         } catch (FileNotFoundException e) {
             System.out.println("Файл " + path + " не найден!");
         }
 
-        return stringArrayListFromFile;
+        return stringsListFromFile;
     }
 
     private static void removeEvenNumbers(ArrayList<Integer> numbersList) {

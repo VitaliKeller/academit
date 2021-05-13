@@ -1,4 +1,4 @@
-package ru.vitalikeller;
+package ru.vitalikeller.lambda;
 
 import java.util.*;
 import java.util.stream.Collectors;
