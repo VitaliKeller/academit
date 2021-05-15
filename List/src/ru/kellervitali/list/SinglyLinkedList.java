@@ -72,11 +72,11 @@ public class SinglyLinkedList<T> {
         }
 
         ListItem<T> prevItem = getItemByIndex(index - 1);
-        ListItem<T> currentItem = getItemByIndex(index);
+        ListItem<T> itemToDelete = getItemByIndex(index);
 
-        T deletedItemData = currentItem.getData();
+        T deletedItemData = itemToDelete.getData();
 
-        prevItem.setNext(currentItem.getNext());
+        prevItem.setNext(itemToDelete.getNext());
         length--;
 
         return deletedItemData;
@@ -122,10 +122,10 @@ public class SinglyLinkedList<T> {
 
     // 2.8 удаление первого элемента, пусть выдает значение элемента
     public ListItem<T> deleteHead() {
-        ListItem<T> p0 = head.getNext();
-        ListItem<T> p1 = head;
+        ListItem<T> nextItem = head.getNext();
+        ListItem<T> headItem = head;
 
-        head = p0;
-        return p1;
+        head = nextItem;
+        return headItem;
     }
 }

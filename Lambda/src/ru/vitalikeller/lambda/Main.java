@@ -1,6 +1,7 @@
 package ru.vitalikeller.lambda;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,7 +30,9 @@ public class Main {
                 new Person("Дима", 34),
                 new Person("Дима", 10),
                 new Person("Лена", 18),
-                new Person("Саша", 8));
+                new Person("Лена", 27),
+                new Person("Саша", 8)
+        );
 
         personsList.forEach(System.out::println);
 
@@ -37,13 +40,13 @@ public class Main {
         printDistinctNames(personsList);
 
         // задача 3.В
-        printNamesYoungerThen(personsList, 18);
+        printYoungerNamesAndAverageAge(personsList, 18);
 
         // задача 3.Г
-        printMapAvgAgeForNames(personsList);
+        printNamesAndAverageAge(personsList);
 
         // задача 3.Д
-        printNamesAgesBetween(personsList, 18, 45);
+        printNamesFromTo(personsList, 20, 45);
     }
 
     public static void printDistinctNames(List<Person> personsList) {
@@ -62,20 +65,20 @@ public class Main {
         System.out.println(printNames);
     }
 
-    public static void printNamesYoungerThen(List<Person> personsList, int age) {
-        List<Person> youngerThanXXPersonList = personsList.stream()
+    public static void printYoungerNamesAndAverageAge(List<Person> personsList, int age) {
+        List<Person> youngerPersonList = personsList.stream()
                 .filter(person -> person.getAge() < age)
                 .collect(Collectors.toList());
 
-        double youngerThanXXPersonsAgeAverage = youngerThanXXPersonList.stream()
+        double youngerPersonsAverageAge = youngerPersonList.stream()
                 .collect(Collectors.averagingDouble(Person::getAge));
 
         System.out.println();
-        System.out.println(youngerThanXXPersonList);
-        System.out.println("Средний возраст для person < " + age + " лет: " + youngerThanXXPersonsAgeAverage);
+        System.out.println(youngerPersonList);
+        System.out.println("Средний возраст для person < " + age + " лет: " + youngerPersonsAverageAge);
     }
 
-    public static void printMapAvgAgeForNames(List<Person> personsList) {
+    public static void printNamesAndAverageAge(List<Person> personsList) {
         Map<String, Double> mapAvgAgeByName = personsList.stream().
                 collect(Collectors.groupingBy(Person::getName, Collectors.averagingDouble(Person::getAge)));
 
@@ -88,20 +91,15 @@ public class Main {
         System.out.println("Количество по именам: " + mapCountAgeByName);
     }
 
-    public static void printNamesAgesBetween(List<Person> personsList, int ageFrom, int ageTo) {
-        List<String> betweenPersonNamesList = personsList.stream()
+    public static void printNamesFromTo(List<Person> personsList, int ageFrom, int ageTo) {
+        List<Person> personNamesFromTo = personsList.stream()
                 .filter(person -> person.getAge() >= ageFrom && person.getAge() <= ageTo)
-                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
-                .map(Person::getName)
-                .collect(Collectors.toList());
-
-        List<Person> betweenPersonsList = personsList.stream()
-                .filter(person -> person.getAge() >= ageFrom && person.getAge() <= ageTo)
-                .sorted((person1, person2) -> person2.getAge() - person1.getAge())
+                .sorted(Comparator.comparingInt(Person::getAge).reversed())
                 .collect(Collectors.toList());
 
         System.out.println();
-        System.out.println("Персоны между " + ageFrom + " и " + ageTo + " включительно: " + betweenPersonsList);
-        System.out.println(betweenPersonNamesList);
+        System.out.println("Персоны между " + ageFrom + " и " + ageTo + ": " + personNamesFromTo);
+
+        personNamesFromTo.forEach(person -> System.out.println(person.getName()));
     }
 }
