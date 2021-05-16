@@ -16,7 +16,9 @@ package ru.kellervitali.list;
         2.10 копирование списка
 */
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
@@ -24,6 +26,22 @@ public class SinglyLinkedList<T> {
 
     // конструктор
     public SinglyLinkedList() {
+    }
+
+    private SinglyLinkedList(ListItem<T> listItem) {
+        if (listItem == null) {
+            return;
+        }
+
+        head = new ListItem<>(listItem.getData());
+        length++;
+
+        for (ListItem<T> nextElement = listItem.getNext(), item = this.head; nextElement != null; nextElement = nextElement.getNext()) {
+            item.setNext(new ListItem<>(nextElement.getData()));
+            item = item.getNext();
+
+            length++;
+        }
     }
 
     //todo нет проверок на вылет за границы и отсутствие элементов ((
@@ -51,7 +69,7 @@ public class SinglyLinkedList<T> {
         return p;
     }
 
-    public T getDataByIndex(T data, int index) {
+    public T getDataByIndex(int index) {
         return getItemByIndex(index).getData();
     }
 
@@ -85,6 +103,7 @@ public class SinglyLinkedList<T> {
     // 2.5 вставка элемента в начало
     public void insertHead(T data) {
         head = new ListItem<>(data, head);
+
         length++;
     }
 
@@ -127,5 +146,23 @@ public class SinglyLinkedList<T> {
 
         head = nextItem;
         return headItem;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder list = new StringBuilder();
+
+        list.append("[");
+
+        for (ListItem<T> item = head; item != null; item = item.getNext()) {
+            if (item.getNext() != null) {
+                list.append(item.getData()).append(", ");
+            } else {
+                list.append(item.getData());
+            }
+        }
+        list.append("]");
+
+        return list.toString();
     }
 }

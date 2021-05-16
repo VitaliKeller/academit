@@ -9,6 +9,10 @@ public class ListItem<T> {
         this.next = next;
     }
 
+    public ListItem(T data) {
+        this.data = data;
+    }
+
     public T getData() {
         return data;
     }
