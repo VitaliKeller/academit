@@ -16,9 +16,7 @@ package ru.kellervitali.list;
         2.10 копирование списка
 */
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
@@ -28,6 +26,7 @@ public class SinglyLinkedList<T> {
     public SinglyLinkedList() {
     }
 
+/*
     private SinglyLinkedList(ListItem<T> listItem) {
         if (listItem == null) {
             return;
@@ -43,6 +42,7 @@ public class SinglyLinkedList<T> {
             length++;
         }
     }
+*/
 
     //todo нет проверок на вылет за границы и отсутствие элементов ((
 
@@ -77,6 +77,7 @@ public class SinglyLinkedList<T> {
         ListItem<T> p = getItemByIndex(index);
 
         T pData = p.getData();
+
         p.setData(data);
 
         return pData;
@@ -85,19 +86,19 @@ public class SinglyLinkedList<T> {
     // 2.4 удаление элемента по индексу, пусть выдает значение элемента
 
     public T deleteItemByIndex(int index) {
-        if (index == 0) {
-            System.out.println("ошибка! нет первого элемента");
-        }
-
-        ListItem<T> prevItem = getItemByIndex(index - 1);
         ListItem<T> itemToDelete = getItemByIndex(index);
 
-        T deletedItemData = itemToDelete.getData();
+        T itemToDeleteData = itemToDelete.getData();
 
-        prevItem.setNext(itemToDelete.getNext());
+        if (index == 0) {
+            head = head.getNext();
+        } else {
+            getItemByIndex(index - 1).setNext(itemToDelete.getNext());
+        }
+
         length--;
 
-        return deletedItemData;
+        return itemToDeleteData;
     }
 
     // 2.5 вставка элемента в начало
@@ -113,9 +114,11 @@ public class SinglyLinkedList<T> {
             insertHead(data);
         } else {
             ListItem<T> p = getItemByIndex(index - 1);
+
             ListItem<T> newItem = new ListItem<>(data, p.getNext());
 
             p.setNext(newItem);
+
             length++;
         }
     }
@@ -140,12 +143,13 @@ public class SinglyLinkedList<T> {
     }
 
     // 2.8 удаление первого элемента, пусть выдает значение элемента
-    public ListItem<T> deleteHead() {
+    public T deleteHead() {
         ListItem<T> nextItem = head.getNext();
-        ListItem<T> headItem = head;
+        T headData = head.getData();
 
         head = nextItem;
-        return headItem;
+
+        return headData;
     }
 
     @Override
@@ -161,6 +165,7 @@ public class SinglyLinkedList<T> {
                 list.append(item.getData());
             }
         }
+
         list.append("]");
 
         return list.toString();
