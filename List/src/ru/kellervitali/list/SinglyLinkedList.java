@@ -154,20 +154,16 @@ public class SinglyLinkedList<T> {
 
     // 2.9 разворот списка за линейное время
     public void reverse() {
-        int i = 0;
-        ListItem<T> prePrevItem;
-
-        for (ListItem<T> p = head, prevItem = null; p != null; prevItem = p, p = p.getNext()) {
-            i++;
-
-            if (i >= 2) {
-                prePrevItem = prevItem;
+        for (ListItem<T> p = head, prevItem = null, prePrevItem = null; p != null; prePrevItem = prevItem, prevItem = p, p = p.getNext()) {
+            if (prevItem != null) {
+                prevItem.setNext(prePrevItem);
             }
-
-            p.setNext(prevItem);
 
             if (p.getNext() == null) {
                 head = p;
+                p.setNext(prevItem);
+
+                return;
             }
         }
     }
@@ -180,9 +176,9 @@ public class SinglyLinkedList<T> {
 
         for (ListItem<T> item = head; item != null; item = item.getNext()) {
             if (item.getNext() != null) {
-                list.append(item.getData()).append(", ");
+                list.append(item.getData()).append("/").append(item.getNext()).append(", ");
             } else {
-                list.append(item.getData());
+                list.append(item.getData()).append("/").append(item.getNext());//item.getData());
             }
         }
 
