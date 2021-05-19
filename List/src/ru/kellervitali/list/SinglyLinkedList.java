@@ -152,6 +152,26 @@ public class SinglyLinkedList<T> {
         return headData;
     }
 
+    // 2.9 разворот списка за линейное время
+    public void reverse() {
+        int i = 0;
+        ListItem<T> prePrevItem;
+
+        for (ListItem<T> p = head, prevItem = null; p != null; prevItem = p, p = p.getNext()) {
+            i++;
+
+            if (i >= 2) {
+                prePrevItem = prevItem;
+            }
+
+            p.setNext(prevItem);
+
+            if (p.getNext() == null) {
+                head = p;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder list = new StringBuilder();

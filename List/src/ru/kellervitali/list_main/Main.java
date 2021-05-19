@@ -42,5 +42,10 @@ public class Main {
 
         // + 2.8 удаление первого элемента, пусть выдает значение элемента
         System.out.println("Удаление первого элемента. Пред.значение: " + list.deleteHead() + ". Результат: " + list);
+
+        // 2.9 разворот списка за линейное время
+        list.reverse();
+        System.out.println("Разворот списка за линейное время.");
+        System.out.println("list = " + list);
     }
 }
