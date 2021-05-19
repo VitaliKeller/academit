@@ -12,7 +12,7 @@ package ru.kellervitali.list;
         + 2.6 вставка элемента по индексу
         + 2.7 удаление узла по значению, пусть выдает true, если элемент был удален
         + 2.8 удаление первого элемента, пусть выдает значение элемента
-        2.9 разворот списка за линейное время
+        + 2.9 разворот списка за линейное время
         2.10 копирование списка
 */
 
@@ -168,7 +168,13 @@ public class SinglyLinkedList<T> {
         }
     }
 
-    @Override
+    // 2.10 копирование списка
+    public static SinglyLinkedList<Integer> copy(SinglyLinkedList<Integer> list) {
+
+        return list;
+    }
+
+        @Override
     public String toString() {
         StringBuilder list = new StringBuilder();
 

@@ -45,7 +45,10 @@ public class Main {
 
         // 2.9 разворот списка за линейное время
         list.reverse();
-        System.out.println("2.9. Разворот списка за линейное время.");
-        System.out.println("list = " + list);
+        System.out.println("2.9. Разворот списка за линейное время. Результат: " + list);
+
+        // 2.10 копирование списка
+        //SinglyLinkedList<Integer> =
+        System.out.println("2.10. копирование списка. Результат: " + SinglyLinkedList.copy(list));
     }
 }
