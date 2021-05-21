@@ -174,7 +174,7 @@ public class SinglyLinkedList<T> {
         return list;
     }
 
-        @Override
+    @Override
     public String toString() {
         StringBuilder list = new StringBuilder();
 

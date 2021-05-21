@@ -1,11 +1,9 @@
-package ru.kellervitali.arraylisthome;
+package ru.kellervitali.array_list_home;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-public class Main {
 
 /*
 Задача “ArrayListHome”
@@ -20,6 +18,7 @@ public class Main {
     список [1, 5, 2, 3]
 */
 
+public class Main {
     public static void main(String[] args) {
         // Задача 1
         String path = "Numbers.txt";
@@ -44,7 +43,6 @@ public class Main {
             while (scanner.hasNextLine()) {
                 stringsListFromFile.add(scanner.nextLine());
             }
-
         } catch (FileNotFoundException e) {
             System.out.println("Файл " + path + " не найден!");
         }
