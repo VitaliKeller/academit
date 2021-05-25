@@ -84,7 +84,6 @@ public class SinglyLinkedList<T> {
     }
 
     // 2.4 удаление элемента по индексу, пусть выдает значение элемента
-
     public T deleteItemByIndex(int index) {
         ListItem<T> itemToDelete = getItemByIndex(index);
 

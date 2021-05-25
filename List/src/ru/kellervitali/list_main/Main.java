@@ -49,6 +49,6 @@ public class Main {
 
         // 2.10 копирование списка
         //SinglyLinkedList<Integer> =
-        System.out.println("2.10. копирование списка. Результат: " + SinglyLinkedList.copy(list));
+        System.out.println("2.10. Копирование списка. Результат: " + SinglyLinkedList.copy(list));
     }
 }
