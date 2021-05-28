@@ -44,7 +44,7 @@ public class SinglyLinkedList<T> {
     }
 */
 
-    //todo нет проверок на вылет за границы и отсутствие элементов ((
+    //todo нет проверок на вылет за границы и отсутствие элементов (( нужно ли?
 
     // 2.1 получение размера списка
     public int getSize() {
@@ -149,6 +149,8 @@ public class SinglyLinkedList<T> {
 
         head = nextItem;
 
+        length--;
+
         return headData;
     }
 
@@ -169,9 +171,29 @@ public class SinglyLinkedList<T> {
     }
 
     // 2.10 копирование списка
-    public static SinglyLinkedList<Integer> copy(SinglyLinkedList<Integer> list) {
+    public SinglyLinkedList<T> getCopy() {
+        SinglyLinkedList<T> listClone = new SinglyLinkedList<>();
 
-        return list;
+        if (head == null || length == 0) {
+            return listClone;
+        }
+
+        ListItem<T> prevCloneItem = new ListItem<>(null);
+
+        for (ListItem<T> p = head, prevItem = null; p != null; prevItem = p, p = p.getNext()) {
+            ListItem<T> newListCloneItem = new ListItem<>(p.getData());
+
+            if (prevItem == null) {
+                listClone.head = newListCloneItem;
+            } else {
+                prevCloneItem.setNext(newListCloneItem);
+            }
+
+            listClone.length++;
+            prevCloneItem = newListCloneItem;
+        }
+
+        return listClone;
     }
 
     @Override
