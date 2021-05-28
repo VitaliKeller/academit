@@ -27,28 +27,29 @@ public class Main {
         System.out.println("2.3. Изменение значения по указанному индексу. Пред.значение: " + list.setDataByIndex(11, 4) + ". Результат: " + list);
 
         // + 2.4 удаление элемента по индексу, пусть выдает значение элемента
-        System.out.println("2.4. Пред.значение: " + list.deleteItemByIndex(2) + ". Результат: " + list);
+        System.out.println("2.4. Пред.значение: " + list.deleteItemByIndex(2) + ". Результат: " + list + ". length = " + list.getSize());
 
         // + 2.5 вставка элемента в начало
         list.insertHead(13);
-        System.out.println("2.5. Вставка head. Результат: " + list);
+        System.out.println("2.5. Вставка head. Результат: " + list + ". length = " + list.getSize());
 
         // + 2.6 вставка элемента по индексу
         list.addItemByIndex(2, 12);
-        System.out.println("2.6. Вставка элемента по индексу 2. Результат: " + list);
+        System.out.println("2.6. Вставка элемента по индексу 2. Результат: " + list + ". length = " + list.getSize());
 
         // + 2.7 удаление узла по значению, пусть выдает true, если элемент был удален
-        System.out.println("2.7. Удаление узла по значению 2. Успешность: " + list.deleteItemByData(2) + ". Результат: " + list);
+        System.out.println("2.7. Удаление узла по значению 2. Успешность: " + list.deleteItemByData(2) + ". Результат: " + list + ". length = " + list.getSize());
 
         // + 2.8 удаление первого элемента, пусть выдает значение элемента
-        System.out.println("2.8. Удаление первого элемента. Пред.значение: " + list.deleteHead() + ". Результат: " + list);
+        System.out.println("2.8. Удаление первого элемента. Пред.значение: " + list.deleteHead() + ". Результат: " + list + ". length = " + list.getSize());
 
         // 2.9 разворот списка за линейное время
         list.reverse();
-        System.out.println("2.9. Разворот списка за линейное время. Результат: " + list);
+        System.out.println("2.9. Разворот списка за линейное время. Результат: " + list + ". length = " + list.getSize());
 
         // 2.10 копирование списка
         //SinglyLinkedList<Integer> =
-        System.out.println("2.10. Копирование списка. Результат: " + SinglyLinkedList.copy(list));
+        System.out.println("2.10. Копирование списка. Результат: " + list.getCopy() + ". length = " + list.getSize());
+        System.out.println(list.getHead() == list.getCopy().getHead());
     }
 }
