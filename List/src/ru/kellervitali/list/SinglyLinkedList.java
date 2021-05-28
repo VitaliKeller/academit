@@ -179,7 +179,7 @@ public class SinglyLinkedList<T> {
         }
 
         ListItem<T> prevCloneItem = new ListItem<>(null);
-
+// хрень. ошибка. переделать!
         for (ListItem<T> p = head, prevItem = null; p != null; prevItem = p, p = p.getNext()) {
             ListItem<T> newListCloneItem = new ListItem<>(p.getData());
 

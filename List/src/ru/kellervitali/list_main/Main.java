@@ -50,5 +50,6 @@ public class Main {
         // 2.10 копирование списка
         //SinglyLinkedList<Integer> =
         System.out.println("2.10. Копирование списка. Результат: " + list.getCopy() + ". length = " + list.getSize());
+        System.out.println(list.getHead() == list.getCopy().getHead());
     }
 }
