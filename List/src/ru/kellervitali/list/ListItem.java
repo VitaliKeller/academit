@@ -31,8 +31,6 @@ public class ListItem<T> {
 
     @Override
     public String toString() {
-        return "ListItem{" +
-                "data=" + data +
-                '}';
+        return "ListItem{" + "data=" + data + ". next=" + next + "}";
     }
 }

@@ -1,4 +1,7 @@
 package ru.kellervitali.list;
+
+import java.util.Objects;
+
 /*
         +1. Сделать классы для односвязного списка и узла списка.
          +  Для эффективности сделайте поле для хранения длины списка.
@@ -13,42 +16,19 @@ package ru.kellervitali.list;
         + 2.7 удаление узла по значению, пусть выдает true, если элемент был удален
         + 2.8 удаление первого элемента, пусть выдает значение элемента
         + 2.9 разворот списка за линейное время
-        2.10 копирование списка
+        + 2.10 копирование списка
 */
-
-import java.util.Objects;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
-    private int length;
+    private int size;
 
-    // конструктор
     public SinglyLinkedList() {
     }
 
-/*
-    private SinglyLinkedList(ListItem<T> listItem) {
-        if (listItem == null) {
-            return;
-        }
-
-        head = new ListItem<>(listItem.getData());
-        length++;
-
-        for (ListItem<T> nextElement = listItem.getNext(), item = this.head; nextElement != null; nextElement = nextElement.getNext()) {
-            item.setNext(new ListItem<>(nextElement.getData()));
-            item = item.getNext();
-
-            length++;
-        }
-    }
-*/
-
-    //todo нет проверок на вылет за границы и отсутствие элементов (( нужно ли?
-
     // 2.1 получение размера списка
     public int getSize() {
-        return length;
+        return size;
     }
 
     // 2.2 получение значение первого элемента
@@ -95,7 +75,7 @@ public class SinglyLinkedList<T> {
             getItemByIndex(index - 1).setNext(itemToDelete.getNext());
         }
 
-        length--;
+        size--;
 
         return itemToDeleteData;
     }
@@ -104,7 +84,7 @@ public class SinglyLinkedList<T> {
     public void insertHead(T data) {
         head = new ListItem<>(data, head);
 
-        length++;
+        size++;
     }
 
     // 2.6 вставка элемента по индексу
@@ -118,7 +98,7 @@ public class SinglyLinkedList<T> {
 
             p.setNext(newItem);
 
-            length++;
+            size++;
         }
     }
 
@@ -129,7 +109,7 @@ public class SinglyLinkedList<T> {
                 if (prevItem != null) {
                     prevItem.setNext(p.getNext());
 
-                    length--;
+                    size--;
                 } else {
                     head = p;
                 }
@@ -148,7 +128,7 @@ public class SinglyLinkedList<T> {
 
         head = nextItem;
 
-        length--;
+        size--;
 
         return headData;
     }
@@ -173,23 +153,24 @@ public class SinglyLinkedList<T> {
     public SinglyLinkedList<T> getCopy() {
         SinglyLinkedList<T> listClone = new SinglyLinkedList<>();
 
-        if (head == null || length == 0) {
+        if (size == 0 || head == null) {
             return listClone;
         }
 
-        ListItem<T> prevCloneItem = new ListItem<>(null);
-// хрень. ошибка. переделать!
-        for (ListItem<T> p = head, prevItem = null; p != null; prevItem = p, p = p.getNext()) {
+        listClone.head = new ListItem<>(head.getData());
+        listClone.size++;
+
+        ListItem<T> previousCloneItem = listClone.head;
+
+        for (ListItem<T> p = head.getNext(); p != null; p = p.getNext()) {
             ListItem<T> newListCloneItem = new ListItem<>(p.getData());
 
-            if (prevItem == null) {
-                listClone.head = newListCloneItem;
-            } else {
-                prevCloneItem.setNext(newListCloneItem);
-            }
 
-            listClone.length++;
-            prevCloneItem = newListCloneItem;
+            previousCloneItem.setNext(newListCloneItem);
+
+            listClone.size++; // можно одной командой всю длину прописать в начале метода, но решил что так точнее
+
+            previousCloneItem = newListCloneItem;
         }
 
         return listClone;
@@ -203,9 +184,9 @@ public class SinglyLinkedList<T> {
 
         for (ListItem<T> item = head; item != null; item = item.getNext()) {
             if (item.getNext() != null) {
-                list.append(item.getData()).append("/").append(item.getNext()).append(", ");
+                list.append(item.getData()).append(", ");
             } else {
-                list.append(item.getData()).append("/").append(item.getNext());//item.getData());
+                list.append(item.getData());
             }
         }
 
