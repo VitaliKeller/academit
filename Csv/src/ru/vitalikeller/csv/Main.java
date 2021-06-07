@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -46,22 +47,31 @@ public class Main {
         contentHTML.append("<html>\n");
         contentHTML.append("    <head> CSV to HTML </head>\n");
         contentHTML.append("    <body>\n");
-        contentHTML.append("        <table>\n");
+        contentHTML.append("        <table border=\"1\">\n");
 
         // boolean trIsOpen = false;
-        boolean tdIsOpen = true;
+        boolean tdIsOpen = false;
 
         for (String row : contentCSV.toString().split("\\n")) {
-            // открыть строку, если ячейка не открыта
+            // если ячейка не была открыта принудительно - открыть строку
             if (!tdIsOpen) {
-                contentHTML.append("          <tr>\n");
+                contentHTML.append("  <tr>\n");
+                contentHTML.append("    <td>\n");
             }
 
-            // тут обработка строки
+            char[] rowData = row.toCharArray();
 
-            // закрыть строку, если ячейка не открыта
+            for (int i = 0; i < rowData.length; ++i) {
+                if (rowData[i] == ',') {
+                    contentHTML.append("\n    </td><td>\n");
+                } else {
+                    contentHTML.append(rowData[i]);
+                }
+            }
+
             if (!tdIsOpen) {
-                contentHTML.append("          </tr>\n");
+                contentHTML.append("    </td>\n");
+                contentHTML.append("  </tr>\n");
             }
         }
 
