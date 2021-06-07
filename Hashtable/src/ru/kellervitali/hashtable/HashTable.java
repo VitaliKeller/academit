@@ -3,11 +3,12 @@ package ru.kellervitali.hashtable;
 import java.util.*;
 
 public class HashTable<T> implements Collection<T> {
-    private ArrayList<T>[] hashTable;
-    private int size;
+    private ArrayList<T>[] hashTable;   // размер таблицы
+    private int size;   // кол-во элементов
 
     // конструктор с размерностью, если верно понял
     // todo проверить верно ли понял конструктор
+
     public HashTable(int length) {
         hashTable = new ArrayList[length];
         size = 0;
@@ -20,7 +21,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
