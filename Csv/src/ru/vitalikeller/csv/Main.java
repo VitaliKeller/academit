@@ -5,19 +5,23 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-
+    public static void main() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введите название файла CSV:");
         String fileName = scanner.nextLine();
+
+        Run(fileName);
+    }
+
+    private static void Run(String fileName) {
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Загрузка CSV...");
         StringBuilder csvContent = readCsvFile(fileName);
 
         System.out.println("Ковертация в HTML:" + fileName);
         StringBuilder htmlContent = convertCsvToHtml(csvContent);
-
     }
 
     private static StringBuilder readCsvFile(String fileName) {
@@ -60,5 +64,4 @@ public class Main {
 
         return contentHTML;
     }
-
 }
