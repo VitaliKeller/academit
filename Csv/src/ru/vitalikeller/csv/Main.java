@@ -15,6 +15,10 @@ public class Main {
         String fileName = "text.csv";
         System.out.println(fileName);
 
+        Run(fileName);
+    }
+
+    private static void Run(String fileName) {
         System.out.println("... Загрузка файла.");
         StringBuilder csvContent = readCsvFile(fileName);
 
@@ -24,7 +28,9 @@ public class Main {
         String outFileName = "index.html";
 
         System.out.println("... Вывод в файл: " + outFileName);
+
         saveHtmlContentToFile(outFileName, htmlContent);
+
     }
 
     private static StringBuilder readCsvFile(String fileName) {

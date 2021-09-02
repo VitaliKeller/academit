@@ -1,5 +1,6 @@
 package ru.kellervitali.list;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /*
@@ -34,17 +35,27 @@ public class SinglyLinkedList<T> {
     // 2.2 получение значение первого элемента
     public T getFirst() {
         if (head == null) {
-            throw new NullPointerException("Отсутствует первый элемент списка");
+            throw new NoSuchElementException("Пустой список. (Переменная head == null)");
         }
 
         return head.getData();
     }
 
+    private void validateIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + (size - 1) + ")");
+        }
+    }
+
+    private void validateIndex(int index, int maximumAllowableIndex) {
+        if (index < 0 || index > maximumAllowableIndex) {
+            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + " - задан опцией)");
+        }
+    }
+
     // 2.3 получение/изменение значения по указанному индексу. Изменение значения по индексу пусть выдает старое значение.
     private ListItem<T> getItemByIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("индекс вне допустимого диапазона");
-        }
+        validateIndex(index);
 
         int i = 0;
         ListItem<T> item = head;
@@ -58,50 +69,44 @@ public class SinglyLinkedList<T> {
     }
 
     public T getDataByIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("индекс вне допустимого диапазона");
-        }
+        validateIndex(index);
 
         return getItemByIndex(index).getData();
     }
 
-    public T setDataByIndex(T data, int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("индекс вне допустимого диапазона");
-        }
+    public T setDataByIndex(int index, T data) {
+        validateIndex(index);
 
         ListItem<T> item = getItemByIndex(index);
 
-        T itemPreviousData = item.getData();
+        T oldData = item.getData();
 
         item.setData(data);
 
-        return itemPreviousData;
+        return oldData;
     }
 
     // 2.4 удаление элемента по индексу, пусть выдает значение элемента
     public T deleteByIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("индекс вне допустимого диапазона");
-        }
+        validateIndex(index);
 
-        T deletedItemData;
+        T deletedData;
 
         if (index == 0) {
-            deletedItemData = head.getData();
+            deletedData = head.getData();
 
             head = head.getNext();
         } else {
             ListItem<T> previousItem = getItemByIndex(index - 1);
 
-            deletedItemData = previousItem.getNext().getData();
+            deletedData = previousItem.getNext().getData();
 
             previousItem.setNext(previousItem.getNext().getNext());
         }
 
         size--;
 
-        return deletedItemData;
+        return deletedData;
     }
 
     // 2.5 вставка элемента в начало
@@ -112,22 +117,22 @@ public class SinglyLinkedList<T> {
     }
 
     // 2.6 вставка элемента по индексу
-    public void addByIndex(int index, T data) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("индекс вне допустимого диапазона");
-        }
+    public void insertByIndex(int index, T data) {
+        validateIndex(index, size);
 
         if (index == 0) {
             insertFirst(data);
-        } else {
-            ListItem<T> item = getItemByIndex(index - 1);
 
-            ListItem<T> newItem = new ListItem<>(data, item.getNext());
-
-            item.setNext(newItem);
-
-            size++;
+            return;
         }
+
+        ListItem<T> item = getItemByIndex(index - 1);
+
+        ListItem<T> newItem = new ListItem<>(data, item.getNext());
+
+        item.setNext(newItem);
+
+        size++;
     }
 
     // 2.7 удаление узла по значению, пусть выдает true, если элемент был удален
@@ -136,11 +141,11 @@ public class SinglyLinkedList<T> {
             if (Objects.equals(data, item.getData())) {
                 if (previousItem != null) {
                     previousItem.setNext(item.getNext());
-
-                    size--;
                 } else {
                     head = item.getNext();
                 }
+
+                size--;
 
                 return true;
             }
@@ -152,13 +157,12 @@ public class SinglyLinkedList<T> {
     // 2.8 удаление первого элемента, пусть выдает значение элемента
     public T deleteFirst() {
         if (head == null) {
-            throw new NullPointerException("Отсутствует первый элемент списка");
+            throw new NoSuchElementException("head == null. Пустой список.");
         }
 
         T headData = head.getData();
 
         head = head.getNext();
-        ;
 
         size--;
 
