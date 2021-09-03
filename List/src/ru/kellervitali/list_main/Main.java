@@ -16,10 +16,10 @@ public class Main {
         System.out.println();
 
         // + 2.1 получение размера списка
-        System.out.println("2.1. Получение размера списка. length = " + list.getSize());
+        System.out.println("2.1. Получение размера списка. length = " + list.getSize() + ". Size = " + list.getSize());
 
         // + 2.2 получение значение первого элемента
-        System.out.println("2.2. Получение значение первого элемента. head = " + list.getFirst());
+        System.out.println("2.2. Получение значение первого элемента. head = " + list.getFirst() + ". Size = " + list.getSize());
 
         // + 2.3 получение/изменение значения по указанному индексу. Изменение значения по индексу пусть выдает старое значение.
         System.out.println("2.3. Получение значения по указанному индексу 1. item 1 = " + list.getDataByIndex(1));
@@ -28,7 +28,9 @@ public class Main {
         System.out.println("2.3. Изменение значения на 11, по указанному индексу 4. Пред.значение: " + list.setDataByIndex(4, 11) + ". Результат: " + list);
 
         // + 2.4 удаление элемента по индексу, пусть выдает значение элемента
-        System.out.println("2.4. Удаление элемента по индексу 2. Пред.значение: " + list.deleteByIndex(2) + ". Результат: " + list);
+        System.out.println("2.4. Удаление элемента по индексу 0. Пред.значение: " + list.deleteByIndex(0) + ". Результат: " + list + ". Size = " + list.getSize());
+        System.out.println("2.4. Удаление элемента по индексу 1. Пред.значение: " + list.deleteByIndex(1) + ". Результат: " + list + ". Size = " + list.getSize());
+        System.out.println("2.4. Удаление элемента по индексу 2. Пред.значение: " + list.deleteByIndex(2) + ". Результат: " + list + ". Size = " + list.getSize());
 
         // + 2.5 вставка элемента в начало
         list.insertFirst(13);
