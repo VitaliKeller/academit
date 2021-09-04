@@ -8,27 +8,29 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //Scanner scanner = new Scanner(System.in);
+        if (args.length != 1) {
+            System.out.println("Программа конвертирует файл из формата CSV в исходящий файл, формата HTML");
+            System.out.println("Для программы нужен один аргумент - путь и имя файла для конвертации");
+            System.out.println("Исходящий HTML - будет выложен в папку по умолчанию.");
 
-        System.out.print("Введите название файла CSV: ");
-        //String fileName = scanner.nextLine();
+            return;
+        }
+
+        /*try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
+             PrintWriter writer = new PrintWriter("index.html")) {
+
+        }*/
         String fileName = "text.csv";
         System.out.println(fileName);
 
-        Run(fileName);
-    }
-
-    private static void Run(String fileName) {
         System.out.println("... Загрузка файла.");
         StringBuilder csvContent = readCsvFile(fileName);
 
-        System.out.println("... Конвертация в HTML файла: " + fileName);
+        System.out.println("... Конвертация в HTML, файла: " + fileName);
         StringBuilder htmlContent = convertCsvToHtml(csvContent);
 
         String outFileName = "index.html";
-
         System.out.println("... Вывод в файл: " + outFileName);
-
         saveHtmlContentToFile(outFileName, htmlContent);
 
     }
@@ -49,16 +51,20 @@ public class Main {
     private static StringBuilder convertCsvToHtml(StringBuilder contentCSV) {
         StringBuilder contentHTML = new StringBuilder();
 
+        contentHTML.append("<!DOCTYPE html>");
         contentHTML.append("<html>\n");
-        contentHTML.append("    <head> CSV to HTML </head>\n");
+        contentHTML.append("    <head>\n");
+        contentHTML.append("        <meta charset=\"utf-8\">");
+        contentHTML.append("        <title>CSV to HTML</title>");
+        contentHTML.append("    </head>\n");
         contentHTML.append("    <body>\n");
         contentHTML.append("<table border=\"1\">\n");
 
-        boolean tdIsOpen = false;
+        boolean isTdOpen = false;
 
         for (String row : contentCSV.toString().split("\\n")) {
             // если ячейка не была открыта принудительно - открыть строку
-            if (!tdIsOpen) {
+            if (!isTdOpen) {
                 contentHTML.append("  <tr>\n");
                 contentHTML.append("    <td>");
             }
@@ -67,14 +73,14 @@ public class Main {
             int length = rowData.length;
 
             for (int i = 0; i < length; ++i) {
-                if (rowData[i] == ',' && !tdIsOpen) {
+                if (rowData[i] == ',' && !isTdOpen) {
                     contentHTML.append("</td>\n");
                     contentHTML.append("    <td>");
-                } else if (tdIsOpen && rowData[i] == '"' && i + 1 < length && rowData[i + 1] == '"') {
+                } else if (isTdOpen && rowData[i] == '"' && i + 1 < length && rowData[i + 1] == '"') {
                     contentHTML.append(rowData[i]);
                     ++i;
                 } else if (rowData[i] == '"') {
-                    tdIsOpen = !tdIsOpen;
+                    isTdOpen = !isTdOpen;
                 } else if (rowData[i] == '<') {
                     contentHTML.append("&lt;");
                 } else if (rowData[i] == '>') {
@@ -86,7 +92,7 @@ public class Main {
                 }
             }
 
-            if (!tdIsOpen) {
+            if (!isTdOpen) {
                 contentHTML.append("</td>\n");
                 contentHTML.append("  </tr>\n");
             } else {
