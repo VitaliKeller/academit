@@ -16,7 +16,7 @@ public class Main {
         System.out.println();
 
         // + 2.1 получение размера списка
-        System.out.println("2.1. Получение размера списка. length = " + list.getSize() + ". Size = " + list.getSize());
+        System.out.println("2.1. Получение размера списка. Size = " + list.getSize());
 
         // + 2.2 получение значение первого элемента
         System.out.println("2.2. Получение значение первого элемента. head = " + list.getFirst() + ". Size = " + list.getSize());

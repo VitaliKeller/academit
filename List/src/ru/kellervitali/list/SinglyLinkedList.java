@@ -42,14 +42,12 @@ public class SinglyLinkedList<T> {
     }
 
     private void validateIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + (size - 1) + ")");
-        }
+        validateIndex(index, size - 1);
     }
 
-    private void validateIndex(int index, int maximumAllowableIndex) {
+    private static void validateIndex(int index, int maximumAllowableIndex) {
         if (index < 0 || index > maximumAllowableIndex) {
-            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + " - задан опцией)");
+            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + ")");
         }
     }
 
@@ -57,12 +55,12 @@ public class SinglyLinkedList<T> {
     private ListItem<T> getItemByIndex(int index) {
         validateIndex(index);
 
-        int i = 0;
         ListItem<T> item = head;
 
-        while (i != index) {
-            item = item.getNext();
-            i++;
+        for (int i = 0; item != null; item = item.getNext(), i++) {
+            if (i == index) {
+                break;
+            }
         }
 
         return item;
@@ -96,13 +94,17 @@ public class SinglyLinkedList<T> {
             deletedData = head.getData();
 
             head = head.getNext();
-        } else {
-            ListItem<T> previousItem = getItemByIndex(index - 1);
 
-            deletedData = previousItem.getNext().getData();
+            size--;
 
-            previousItem.setNext(previousItem.getNext().getNext());
+            return deletedData;
         }
+
+        ListItem<T> previousItem = getItemByIndex(index - 1);
+
+        deletedData = previousItem.getNext().getData();
+
+        previousItem.setNext(previousItem.getNext().getNext());
 
         size--;
 
@@ -126,11 +128,11 @@ public class SinglyLinkedList<T> {
             return;
         }
 
-        ListItem<T> item = getItemByIndex(index - 1);
+        ListItem<T> previousItem = getItemByIndex(index - 1);
 
-        ListItem<T> newItem = new ListItem<>(data, item.getNext());
+        ListItem<T> newItem = new ListItem<>(data, previousItem.getNext());
 
-        item.setNext(newItem);
+        previousItem.setNext(newItem);
 
         size++;
     }
@@ -160,13 +162,7 @@ public class SinglyLinkedList<T> {
             throw new NoSuchElementException("head == null. Пустой список.");
         }
 
-        T headData = head.getData();
-
-        head = head.getNext();
-
-        size--;
-
-        return headData;
+        return deleteByIndex(0);
     }
 
     // 2.9 разворот списка за линейное время
@@ -199,11 +195,11 @@ public class SinglyLinkedList<T> {
         ListItem<T> previousCloneItem = listClone.head;
 
         for (ListItem<T> item = head.getNext(); item != null; item = item.getNext()) {
-            ListItem<T> newListCloneItem = new ListItem<>(item.getData());
+            ListItem<T> newCloneItem = new ListItem<>(item.getData());
 
-            previousCloneItem.setNext(newListCloneItem);
+            previousCloneItem.setNext(newCloneItem);
 
-            previousCloneItem = newListCloneItem;
+            previousCloneItem = newCloneItem;
         }
 
         return listClone;
