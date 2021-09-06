@@ -8,73 +8,77 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length != 1) {
+        /*if (args.length != 1) {
             System.out.println("Программа конвертирует файл из формата CSV в исходящий файл, формата HTML");
             System.out.println("Для программы нужен один аргумент - путь и имя файла для конвертации");
             System.out.println("Исходящий HTML - будет выложен в папку по умолчанию.");
 
             return;
-        }
+        }*/
 
         /*try (Scanner scanner = new Scanner(new FileInputStream(args[0]));
              PrintWriter writer = new PrintWriter("index.html")) {
 
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка: " + e.getMessage());
         }*/
-        String fileName = "text.csv";
-        System.out.println(fileName);
-
+        String incomeFileName = "text.csv";
+        System.out.println(incomeFileName);
         System.out.println("... Загрузка файла.");
-        StringBuilder csvContent = readCsvFile(fileName);
 
-        System.out.println("... Конвертация в HTML, файла: " + fileName);
+        StringBuilder csvContent = new StringBuilder();
+
+        try (Scanner scannerFile = new Scanner(
+                new FileInputStream(incomeFileName), StandardCharsets.UTF_8); //args[0]
+             PrintWriter writer = new PrintWriter("index.html")
+        ) {
+            while (scannerFile.hasNextLine()) {
+                csvContent.append(scannerFile.nextLine()).append("\r\n");
+
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл \"" + incomeFileName + "\" не найден.");  //args[0]
+            System.out.println("Описание ошибки: " + e);
+        }
+
+        // ------- использование csvContent -----------
+        System.out.println("... Конвертация в HTML, файла: " + incomeFileName);
         StringBuilder htmlContent = convertCsvToHtml(csvContent);
 
         String outFileName = "index.html";
         System.out.println("... Вывод в файл: " + outFileName);
-        saveHtmlContentToFile(outFileName, htmlContent);
+        saveHtmlContentToFile(outFileName, htmlContent);    // args[1]
 
-    }
-
-    private static StringBuilder readCsvFile(String fileName) {
-        StringBuilder csvContent = new StringBuilder();
-        try (Scanner scannerFile = new Scanner(new FileInputStream(fileName), StandardCharsets.UTF_8)) {
-            while (scannerFile.hasNextLine()) {
-                csvContent.append(scannerFile.nextLine()).append("\n");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
-
-        return csvContent;
     }
 
     private static StringBuilder convertCsvToHtml(StringBuilder contentCSV) {
         StringBuilder contentHTML = new StringBuilder();
 
         contentHTML.append("<!DOCTYPE html>");
-        contentHTML.append("<html>\n");
-        contentHTML.append("    <head>\n");
+        contentHTML.append("<html>\r\n");
+        contentHTML.append("    <head>\r\n");
         contentHTML.append("        <meta charset=\"utf-8\">");
         contentHTML.append("        <title>CSV to HTML</title>");
-        contentHTML.append("    </head>\n");
-        contentHTML.append("    <body>\n");
-        contentHTML.append("<table border=\"1\">\n");
+        contentHTML.append("    </head>\r\n");
+        contentHTML.append("    <body>\r\n");
+        contentHTML.append("<table border=\"1\">\r\n");
 
         boolean isTdOpen = false;
 
-        for (String row : contentCSV.toString().split("\\n")) {
+        for (String textLine : contentCSV.toString().split("(\r\n|\r|\n)", -1)) {
             // если ячейка не была открыта принудительно - открыть строку
             if (!isTdOpen) {
-                contentHTML.append("  <tr>\n");
+                contentHTML.append("  <tr>\r\n");
                 contentHTML.append("    <td>");
             }
 
-            char[] rowData = row.toCharArray();
+            char[] rowData = textLine.toCharArray();
             int length = rowData.length;
 
             for (int i = 0; i < length; ++i) {
                 if (rowData[i] == ',' && !isTdOpen) {
-                    contentHTML.append("</td>\n");
+                    contentHTML.append("</td>\r\n");
                     contentHTML.append("    <td>");
                 } else if (isTdOpen && rowData[i] == '"' && i + 1 < length && rowData[i + 1] == '"') {
                     contentHTML.append(rowData[i]);
@@ -93,16 +97,16 @@ public class Main {
             }
 
             if (!isTdOpen) {
-                contentHTML.append("</td>\n");
-                contentHTML.append("  </tr>\n");
+                contentHTML.append("</td>\r\n");
+                contentHTML.append("  </tr>\r\n");
             } else {
                 contentHTML.append("<br/>");
             }
         }
 
-        contentHTML.append("</table>\n");
-        contentHTML.append("    </body>\n");
-        contentHTML.append("</html>\n");
+        contentHTML.append("</table>\r\n");
+        contentHTML.append("    </body>\r\n");
+        contentHTML.append("</html>\r\n");
 
         return contentHTML;
     }
