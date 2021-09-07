@@ -41,41 +41,39 @@ public class Main {
             boolean isTdOpen = false;
 
             while (scanner.hasNextLine()) {
-                // - csvContent.append(scanner.nextLine()).append("\r\n");
-                String textLine = scanner.nextLine();
+                String textLineString = scanner.nextLine();
 
                 // если ячейка не была открыта принудительно - открыть строку
                 if (!isTdOpen) {
-                    writer.println("  <tr>\r\n");
+                    writer.println("  <tr>");
                     writer.println("    <td>");
                 }
 
-                char[] rowData = textLine.toCharArray();
-                int length = rowData.length;
+                int length = textLineString.length();
 
                 for (int i = 0; i < length; ++i) {
-                    if (rowData[i] == ',' && !isTdOpen) {
-                        writer.print("</td>\r\n");
+                    if (textLineString.charAt(i) == ',' && !isTdOpen) {
+                        writer.print("</td>");
                         writer.print("    <td>");
-                    } else if (isTdOpen && rowData[i] == '"' && i + 1 < length && rowData[i + 1] == '"') {
-                        writer.print(rowData[i]);
+                    } else if (isTdOpen && textLineString.charAt(i) == '"' && i + 1 < length && textLineString.charAt(i + 1) == '"') {
+                        writer.print(textLineString.charAt(i));
                         ++i;
-                    } else if (rowData[i] == '"') {
+                    } else if (textLineString.charAt(i) == '"') {
                         isTdOpen = !isTdOpen;
-                    } else if (rowData[i] == '<') {
+                    } else if (textLineString.charAt(i) == '<') {
                         writer.print("&lt;");
-                    } else if (rowData[i] == '>') {
+                    } else if (textLineString.charAt(i) == '>') {
                         writer.print("&gt;");
-                    } else if (rowData[i] == '&') {
+                    } else if (textLineString.charAt(i) == '&') {
                         writer.print("&amp;");
                     } else {
-                        writer.print(rowData[i]);
+                        writer.print(textLineString.charAt(i));
                     }
                 }
 
                 if (!isTdOpen) {
-                    writer.println("</td>\r\n");
-                    writer.println("  </tr>\r\n");
+                    writer.println("</td>");
+                    writer.println("  </tr>");
                 } else {
                     writer.println("<br/>");
                 }
