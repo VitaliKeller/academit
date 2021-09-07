@@ -29,7 +29,6 @@ public class Main {
         try (Scanner scanner = new Scanner(new FileInputStream(args[0]), StandardCharsets.UTF_8); //args[0]
              PrintWriter writer = new PrintWriter(args[1])
         ) {
-
             writer.println("<!DOCTYPE html>");
             writer.println("<html>");
             writer.println("    <head>");
