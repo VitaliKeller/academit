@@ -7,12 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] arg) {
-
-        String[] args = new String[2];
-        args[0] = "text.csv";
-        args[1] = "index.html";
-
+    public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Программа конвертирует файл из формата CSV в исходящий файл, формата HTML");
             System.out.println("Для программы нужно два аргумента:");
