@@ -8,23 +8,21 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] arg) {
-        String[] args = new String[2];
 
+        String[] args = new String[2];
         args[0] = "text.csv";
-        if (args[1] == null) {
-            args[1] = "index.html";
-        }
+        args[1] = "index.html";
 
         if (args.length != 2) {
             System.out.println("Программа конвертирует файл из формата CSV в исходящий файл, формата HTML");
-            System.out.println("Для программы нужен один аргумент - путь и имя файла для конвертации");
-            System.out.println("Или укажите два аргумента - откуда брать CSV, и куда выложить результирующий файл HTML");
-            System.out.println("Если второй аргумент не указан - исходящий HTML будет выложен в папку по умолчанию.");
+            System.out.println("Для программы нужно два аргумента:");
+            System.out.println("- путь и имя файла откуда брать CSV, и ");
+            System.out.println("- путь и имя файла куда выложить результирующий файл HTML.");
 
             return;
         }
 
-        System.out.println(args[0] + " ... Загрузка файла.");
+        System.out.println("... Загрузка CSV файла (" + args[0] + "), обработка, и выкладка в HTML (" + args[1] + ").");
 
         try (Scanner scanner = new Scanner(new FileInputStream(args[0]), StandardCharsets.UTF_8); //args[0]
              PrintWriter writer = new PrintWriter(args[1])
@@ -41,7 +39,11 @@ public class Main {
             boolean isTdOpen = false;
 
             while (scanner.hasNextLine()) {
-                String textLineString = scanner.nextLine();
+                String textLine = scanner.nextLine();
+
+                if (textLine.length() == 0) {
+                    continue;
+                }
 
                 // если ячейка не была открыта принудительно - открыть строку
                 if (!isTdOpen) {
@@ -49,25 +51,25 @@ public class Main {
                     writer.println("    <td>");
                 }
 
-                int length = textLineString.length();
+                int length = textLine.length();
 
                 for (int i = 0; i < length; ++i) {
-                    if (textLineString.charAt(i) == ',' && !isTdOpen) {
+                    if (textLine.charAt(i) == ',' && !isTdOpen) {
                         writer.print("</td>");
                         writer.print("    <td>");
-                    } else if (isTdOpen && textLineString.charAt(i) == '"' && i + 1 < length && textLineString.charAt(i + 1) == '"') {
-                        writer.print(textLineString.charAt(i));
+                    } else if (isTdOpen && textLine.charAt(i) == '"' && i + 1 < length && textLine.charAt(i + 1) == '"') {
+                        writer.print(textLine.charAt(i));
                         ++i;
-                    } else if (textLineString.charAt(i) == '"') {
+                    } else if (textLine.charAt(i) == '"') {
                         isTdOpen = !isTdOpen;
-                    } else if (textLineString.charAt(i) == '<') {
+                    } else if (textLine.charAt(i) == '<') {
                         writer.print("&lt;");
-                    } else if (textLineString.charAt(i) == '>') {
+                    } else if (textLine.charAt(i) == '>') {
                         writer.print("&gt;");
-                    } else if (textLineString.charAt(i) == '&') {
+                    } else if (textLine.charAt(i) == '&') {
                         writer.print("&amp;");
                     } else {
-                        writer.print(textLineString.charAt(i));
+                        writer.print(textLine.charAt(i));
                     }
                 }
 
@@ -86,6 +88,9 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден.");
             System.out.println("Описание ошибки: " + e);
+            System.out.println("Для корректной работы программы, требуется указать в строке вызова два аргумента:");
+            System.out.println("Первый должен содержать полный адрес файла CSV для чтения, с указанием имени и расширения файла");
+            System.out.println("Второй должен содержать полный адрес к файлу для записи HTML с указанием имени и расширения файла");
         }
     }
 }
