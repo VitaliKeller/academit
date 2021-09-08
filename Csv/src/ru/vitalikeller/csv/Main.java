@@ -79,7 +79,6 @@ public class Main {
             writer.println("</table>");
             writer.println("    </body>");
             writer.println("</html>");
-
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден.");
             System.out.println("Описание ошибки: " + e);
