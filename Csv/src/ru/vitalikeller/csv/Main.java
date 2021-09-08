@@ -43,14 +43,14 @@ public class Main {
                 // если ячейка не была открыта принудительно - открыть строку
                 if (!isTdOpen) {
                     writer.println("  <tr>");
-                    writer.println("    <td>");
+                    writer.print("    <td>");
                 }
 
                 int length = textLine.length();
 
                 for (int i = 0; i < length; ++i) {
                     if (textLine.charAt(i) == ',' && !isTdOpen) {
-                        writer.print("</td>");
+                        writer.println("</td>");
                         writer.print("    <td>");
                     } else if (isTdOpen && textLine.charAt(i) == '"' && i + 1 < length && textLine.charAt(i + 1) == '"') {
                         writer.print(textLine.charAt(i));
@@ -72,7 +72,7 @@ public class Main {
                     writer.println("</td>");
                     writer.println("  </tr>");
                 } else {
-                    writer.println("<br/>");
+                    writer.print("<br/>");
                 }
             }
 
