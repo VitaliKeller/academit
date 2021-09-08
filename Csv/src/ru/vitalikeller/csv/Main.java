@@ -9,10 +9,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.out.println("Программа конвертирует файл из формата CSV в исходящий файл, формата HTML");
+            System.out.println("Программа конвертирует файл из формата CSV в файл формата HTML.");
             System.out.println("Для программы нужно два аргумента:");
-            System.out.println("- путь и имя файла откуда брать CSV, и ");
-            System.out.println("- путь и имя файла куда выложить результирующий файл HTML.");
+            System.out.println("1. путь и имя файла откуда брать CSV, ");
+            System.out.println("2. путь и имя файла куда выложить результирующий файл HTML.");
 
             return;
         }
