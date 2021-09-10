@@ -1,6 +1,5 @@
 package ru.vitalikeller.arrayList;
 
-
 /*
 Задача. ArrayList
 Лекции, нужные для решения задачи: 1-8, 10 понятие итератора, 13.
@@ -19,6 +18,7 @@ package ru.vitalikeller.arrayList;
 •	Больше будете думать о временных оценках
 •	Generic’и
 */
+
 public class Main {
     public static void main(String[] args) {
 
