@@ -36,6 +36,55 @@ public abstract class ArrayList<E> implements List<E> {
         return indexOf(o) != -1;
     }
 
+    @Override
+    public Object[] toArray() {
+        return Arrays.copyOf(items, size);
+    }
+
+    private void validateIndex(int index) {
+        if (index >= size || index < 0) {
+            throw new IllegalArgumentException("Индекс должен быть >=0 и <=" + (size - 1) + ". Было передано значение = " + index);
+        }
+    }
+
+    @Override
+    public boolean add(E e) {
+        if (items.length < size) {
+            // todo Добавление массива
+        }
+
+        items[size] = e;
+        size++;
+
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            items[i] = null;
+        }
+
+        size = 0;
+    }
+
+    @Override
+    public E get(int index) {
+        validateIndex(index);
+        return items[index];
+    }
+
+    // --------------- управление размером
+    private void increaseCapacity() {
+        items = Arrays.copyOf(items, items.length * 2);
+    }
+
+    public void trimToSize() {
+        if (size < items.length) {
+            items = Arrays.copyOf(items, size);
+        }
+    }
+
     // ----- todo --------------------------
 
     @Override
@@ -43,24 +92,9 @@ public abstract class ArrayList<E> implements List<E> {
         return null;
     }
 
-    @Override   // +
-    public Object[] toArray() {
-        return Arrays.copyOf(items, size);
-    }
-
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
-    }
-
-    @Override   // +
-    public boolean add(E e) {
-        // todo добавить проверку что достаточно размера массива
-
-        items[size] = e;
-        size++;
-
-        return true;
     }
 
     @Override   // -+
@@ -95,24 +129,6 @@ public abstract class ArrayList<E> implements List<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override   // +
-    public void clear() {
-        for (int i = 0; i < size; i++) {
-            items[i] = null;
-        }
-
-        size = 0;
-    }
-
-    @Override   // +
-    public E get(int index) {
-        if (index >= size || index < 0) {
-            throw new IllegalArgumentException("Индекс должен быть >=0 и <=" + (size - 1) + ". Сейчас было передано " + index);
-        }
-
-        return items[index];
     }
 
     @Override
