@@ -1,9 +1,6 @@
 package ru.vitalikeller.arrayList;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public abstract class ArrayList<E> implements List<E> {
     private E[] items;
@@ -74,6 +71,28 @@ public abstract class ArrayList<E> implements List<E> {
         return items[index];
     }
 
+    @Override
+    public int indexOf(Object o) {
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(items[i], o)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        for (int i = size - 1; i >= 0; i--) {
+            if (Objects.equals(items[i], o)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     // --------------- управление размером
     private void increaseCapacity() {
         items = Arrays.copyOf(items, items.length * 2);
@@ -83,6 +102,28 @@ public abstract class ArrayList<E> implements List<E> {
         if (size < items.length) {
             items = Arrays.copyOf(items, size);
         }
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        int index = indexOf(o);
+
+        if (index == -1) {
+            return false;
+        }
+
+        remove(index);
+
+        return true;
+    }
+
+    @Override
+    public E remove(int index) {
+        validateIndex(index);
+
+        // todo удаление по индексу
+
+        return null;
     }
 
     // ----- todo --------------------------
@@ -95,15 +136,6 @@ public abstract class ArrayList<E> implements List<E> {
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
-    }
-
-    @Override   // -+
-    public boolean remove(Object o) {
-        if (indexOf(o) == -1) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override
@@ -141,18 +173,4 @@ public abstract class ArrayList<E> implements List<E> {
 
     }
 
-    @Override
-    public E remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
 }
