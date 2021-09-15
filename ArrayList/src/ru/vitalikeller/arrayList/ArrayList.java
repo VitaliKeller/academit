@@ -124,7 +124,7 @@ public abstract class ArrayList<E> implements List<E> {
         E removedItem = items[index];
 
         if (index < size - 1) {
-            System.arraycopy(items, index + 1, items, index, length - index - 1);
+            System.arraycopy(items, index + 1, items, index, size - index - 1);
         }
 
         items[size - 1] = null;
