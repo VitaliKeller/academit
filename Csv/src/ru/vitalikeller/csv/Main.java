@@ -1,10 +1,6 @@
 package ru.vitalikeller.csv;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,10 +13,13 @@ public class Main {
             return;
         }
 
-        System.out.println("... Загрузка CSV файла (" + args[0] + "), обработка, и выкладка в HTML (" + args[1] + ").");
+        String inFile = args[0];
+        String outFile = args[1];
 
-        try (Scanner scanner = new Scanner(new FileInputStream(args[0]), StandardCharsets.UTF_8); //args[0]
-             PrintWriter writer = new PrintWriter(args[1])
+        System.out.println("... Загрузка CSV файла (" + inFile + "), обработка, и выкладка в HTML (" + outFile + ").");
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inFile));
+             PrintWriter writer = new PrintWriter(outFile)
         ) {
             writer.println("<!DOCTYPE html>");
             writer.println("<html>");
@@ -33,8 +32,9 @@ public class Main {
 
             boolean isTdOpen = false;
 
-            while (scanner.hasNextLine()) {
-                String textLine = scanner.nextLine();
+            String textLine;
+
+            while ((textLine = bufferedReader.readLine()) != null) {    // https://metanit.com/java/tutorial/6.9.php
 
                 if (textLine.length() == 0) {
                     continue;
@@ -79,12 +79,12 @@ public class Main {
             writer.println("</table>");
             writer.println("    </body>");
             writer.println("</html>");
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Файл не найден.");
-            System.out.println("Описание ошибки: " + e);
+            System.out.println("Ошибка: " + e.getMessage());
             System.out.println("Для корректной работы программы, требуется указать в строке вызова два аргумента:");
-            System.out.println("Первый должен содержать полный адрес файла CSV для чтения, с указанием имени и расширения файла");
-            System.out.println("Второй должен содержать полный адрес к файлу для записи HTML с указанием имени и расширения файла");
+            System.out.println("Первый должен содержать полный путь к файлу CSV для чтения, с указанием имени и расширения файла");
+            System.out.println("Второй должен содержать полный путь к файлу для записи HTML с указанием имени и расширения файла");
         }
     }
 }
