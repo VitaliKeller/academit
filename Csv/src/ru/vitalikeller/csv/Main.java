@@ -13,14 +13,13 @@ public class Main {
             return;
         }
 
-        String inFile = args[0];
-        String outFile = args[1];
+        String inFile = args[0]; //"text.csv"
+        String outFile = args[1]; //"index.html"
 
         System.out.println("... Загрузка CSV файла (" + inFile + "), обработка, и выкладка в HTML (" + outFile + ").");
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inFile));
-             PrintWriter writer = new PrintWriter(outFile)
-        ) {
+             PrintWriter writer = new PrintWriter(outFile)) {
             writer.println("<!DOCTYPE html>");
             writer.println("<html>");
             writer.println("    <head>");
@@ -35,7 +34,6 @@ public class Main {
             String textLine;
 
             while ((textLine = bufferedReader.readLine()) != null) {    // https://metanit.com/java/tutorial/6.9.php
-
                 if (textLine.length() == 0) {
                     continue;
                 }
