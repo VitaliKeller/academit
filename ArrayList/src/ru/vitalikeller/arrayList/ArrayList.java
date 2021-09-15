@@ -8,7 +8,7 @@ public abstract class ArrayList<E> implements List<E> {
 
     public ArrayList(int size) {
         if (size < 0) {
-            throw new IllegalArgumentException("Размер должен быть >= 0");
+            throw new IllegalArgumentException("Размер должен быть >= 0. Переданный размер: " + size);
         }
 
         items = (E[]) new Object[size];
@@ -95,7 +95,7 @@ public abstract class ArrayList<E> implements List<E> {
 
     // --------------- управление размером
     private void increaseCapacity() {
-        items = Arrays.copyOf(items, items.length * 2);
+        items = Arrays.copyOf(items, items.length * 2 + 1);
     }
 
     public void trimToSize() {
@@ -121,9 +121,16 @@ public abstract class ArrayList<E> implements List<E> {
     public E remove(int index) {
         validateIndex(index);
 
-        // todo удаление по индексу
+        E removedItem = items[index];
 
-        return null;
+        if (index < size - 1) {
+            System.arraycopy(items, index + 1, items, index, length - index - 1);
+        }
+
+        items[size - 1] = null;
+        size--;
+
+        return removedItem;
     }
 
     // ----- todo --------------------------
