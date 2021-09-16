@@ -47,7 +47,7 @@ public abstract class ArrayList<E> implements List<E> {
     @Override
     public boolean add(E e) {
         if (items.length < size) {
-            // todo Добавление массива
+            increaseCapacity();
         }
 
         items[size] = e;
@@ -68,6 +68,7 @@ public abstract class ArrayList<E> implements List<E> {
     @Override
     public E get(int index) {
         validateIndex(index);
+
         return items[index];
     }
 
@@ -95,7 +96,7 @@ public abstract class ArrayList<E> implements List<E> {
 
     // --------------- управление размером
     private void increaseCapacity() {
-        items = Arrays.copyOf(items, items.length * 2 + 1);
+        items = Arrays.copyOf(items, (items.length + 1) * 2);
     }
 
     public void trimToSize() {
