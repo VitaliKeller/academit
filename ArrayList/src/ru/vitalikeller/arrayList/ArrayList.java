@@ -51,7 +51,7 @@ public abstract class ArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        if (items.length < size) {
+        if (items.length == size) {
             increaseCapacity();
         }
 
@@ -149,6 +149,26 @@ public abstract class ArrayList<E> implements List<E> {
         return oldData;
     }
 
+    @Override
+    public void add(int index, E element) {
+        validateIndex(index, size);
+
+        if (index == size) {
+            add(element);
+            return;
+        }
+
+        if (items.length == size) { // такой же блок есть в add, поэтому сделать этот после! add(element). // нужен чтобы +1 элемент если место закончилось
+            increaseCapacity();
+        }
+
+
+        System.arraycopy(items, index, items, index + 1, size - index); // копируем с индекса включительно на +1 вперед
+
+        items[index] = element;
+        size++;
+    }
+
     // ----- todo --------------------------
 
     @Override
@@ -184,21 +204,5 @@ public abstract class ArrayList<E> implements List<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public void add(int index, E element) {
-        validateIndex(index, size);
-
-        if (index == size) {
-            increaseCapacity();
-        }
-
-        if (index == size) {
-            System.arraycopy(items, index, items, index + 1, size - index);
-        }
-
-        items[index] = element;
-        size++;
     }
 }
