@@ -39,10 +39,15 @@ public abstract class ArrayList<E> implements List<E> {
     }
 
     private void validateIndex(int index) {
-        if (index >= size || index < 0) {
-            throw new IllegalArgumentException("Индекс должен быть >=0 и <=" + (size - 1) + ". Было передано значение = " + index);
+        validateIndex(index, size - 1);
+    }
+
+    private static void validateIndex(int index, int maximumAllowableIndex) {
+        if (index < 0 || index > maximumAllowableIndex) {
+            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + ")");
         }
     }
+
 
     @Override
     public boolean add(E e) {
@@ -100,7 +105,7 @@ public abstract class ArrayList<E> implements List<E> {
     }
 
     public void trimToSize() {
-        if (size < items.length) {
+        if (items.length > size) {
             items = Arrays.copyOf(items, size);
         }
     }
@@ -132,6 +137,16 @@ public abstract class ArrayList<E> implements List<E> {
         size--;
 
         return removedItem;
+    }
+
+    @Override
+    public E set(int index, E element) {
+        validateIndex(index);
+
+        E oldData = items[index];
+        items[index] = element;
+
+        return oldData;
     }
 
     // ----- todo --------------------------
@@ -172,13 +187,18 @@ public abstract class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public E set(int index, E element) {
-        return null;
-    }
-
-    @Override
     public void add(int index, E element) {
+        validateIndex(index, size);
 
+        if (index == size) {
+            increaseCapacity();
+        }
+
+        if (index == size) {
+            System.arraycopy(items, index, items, index + 1, size - index);
+        }
+
+        items[index] = element;
+        size++;
     }
-
 }
