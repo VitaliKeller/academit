@@ -52,7 +52,7 @@ public abstract class myArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        if (items.length < size) {
+        if (items.length == size) {
             increaseCapacity();
         }
 
@@ -148,6 +148,26 @@ public abstract class myArrayList<E> implements List<E> {
         items[index] = element;
 
         return oldData;
+    }
+
+    @Override
+    public void add(int index, E element) {
+        validateIndex(index, size);
+
+        if (index == size) {
+            add(element);
+            return;
+        }
+
+        if (items.length == size) { // такой же блок есть в add, поэтому сделать этот после add(element)! // нужен, чтобы добавить +1 элемент, если место закончилось - для add нового
+            increaseCapacity();
+        }
+
+
+        System.arraycopy(items, index, items, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+
+        items[index] = element;
+        size++;
     }
 
     // ----- todo --------------------------
