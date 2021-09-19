@@ -34,5 +34,7 @@ public class Main {
         myArrayList.add(4);
         myArrayList.add(5);
 
+        System.out.println(myArrayList);
+        System.out.println("Is myArrayList empty: " + myArrayList.isEmpty());
     }
 }

@@ -2,7 +2,7 @@ package ru.vitalikeller.arrayList;
 
 import java.util.*;
 
-public abstract class myArrayList<E> implements List<E> {
+public class myArrayList<E> implements List<E> {
     private static final int DEFAULT_SIZE = 5;
     private E[] items;
     private int size;
@@ -17,6 +17,21 @@ public abstract class myArrayList<E> implements List<E> {
 
     public myArrayList() {
         items = (E[]) new Object[DEFAULT_SIZE];
+    }
+
+    @Override
+    public String toString() {
+        System.out.print("[");
+
+        for (int i = 0; i < size; i++) {
+            System.out.print(items[i]);
+            if (i != size - 1) {
+                System.out.print(", ");
+            }
+        }
+
+        System.out.print("]");
+        return "";
     }
 
     @Override
@@ -45,7 +60,7 @@ public abstract class myArrayList<E> implements List<E> {
 
     private static void validateIndex(int index, int maximumAllowableIndex) {
         if (index < 0 || index > maximumAllowableIndex) {
-            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + ")");
+            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Передан индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + ")");
         }
     }
 
@@ -195,21 +210,6 @@ public abstract class myArrayList<E> implements List<E> {
         }
     }
 
-    @Override
-    public void add(int index, E element) {
-        validateIndex(index, size);
-
-        if (index == size) {
-            increaseCapacity();
-        }
-
-        if (index == size) {
-            System.arraycopy(items, index, items, index + 1, size - index);
-        }
-
-        items[index] = element;
-        size++;
-    }
 
     @Override
     public <T> T[] toArray(T[] a) {
@@ -239,5 +239,22 @@ public abstract class myArrayList<E> implements List<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
+    }
+
+    // ------------- not
+
+    @Override
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
     }
 }
