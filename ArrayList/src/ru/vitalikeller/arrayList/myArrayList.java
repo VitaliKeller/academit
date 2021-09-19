@@ -2,11 +2,12 @@ package ru.vitalikeller.arrayList;
 
 import java.util.*;
 
-public abstract class ArrayList<E> implements List<E> {
+public abstract class myArrayList<E> implements List<E> {
+    private static final int DEFAULT_SIZE = 5;
     private E[] items;
     private int size;
 
-    public ArrayList(int size) {
+    public myArrayList(int size) {
         if (size < 0) {
             throw new IllegalArgumentException("Размер должен быть >= 0. Переданный размер: " + size);
         }
@@ -14,8 +15,8 @@ public abstract class ArrayList<E> implements List<E> {
         items = (E[]) new Object[size];
     }
 
-    public ArrayList() {
-        items = (E[]) new Object[5];
+    public myArrayList() {
+        items = (E[]) new Object[DEFAULT_SIZE];
     }
 
     @Override
@@ -150,10 +151,44 @@ public abstract class ArrayList<E> implements List<E> {
     }
 
     // ----- todo --------------------------
-
     @Override
     public Iterator<E> iterator() {
-        return null;
+        throw new UnsupportedOperationException("Метод не поддерживается");
+    }
+
+    public class MyIterator implements Iterator<E> {
+        private int CurrentIndex = -1;
+
+        @Override
+        public boolean hasNext() {
+            return CurrentIndex + 1 < size;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("Коллекция кончилась!");
+            }
+
+            CurrentIndex++;
+            return items[CurrentIndex];
+        }
+    }
+
+    @Override
+    public void add(int index, E element) {
+        validateIndex(index, size);
+
+        if (index == size) {
+            increaseCapacity();
+        }
+
+        if (index == size) {
+            System.arraycopy(items, index, items, index + 1, size - index);
+        }
+
+        items[index] = element;
+        size++;
     }
 
     @Override
@@ -184,21 +219,5 @@ public abstract class ArrayList<E> implements List<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public void add(int index, E element) {
-        validateIndex(index, size);
-
-        if (index == size) {
-            increaseCapacity();
-        }
-
-        if (index == size) {
-            System.arraycopy(items, index, items, index + 1, size - index);
-        }
-
-        items[index] = element;
-        size++;
     }
 }
