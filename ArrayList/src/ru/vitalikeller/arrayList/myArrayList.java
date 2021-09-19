@@ -4,8 +4,10 @@ import java.util.*;
 
 public class myArrayList<E> implements List<E> {
     private static final int DEFAULT_SIZE = 5;
+
     private E[] items;
     private int size;
+    private int modCount;
 
     public myArrayList(int size) {
         if (size < 0) {
@@ -21,17 +23,17 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public String toString() {
-        System.out.print("[");
+        StringBuilder resultString = new StringBuilder("[");
 
         for (int i = 0; i < size; i++) {
-            System.out.print(items[i]);
+            resultString.append(items[i]);
             if (i != size - 1) {
-                System.out.print(", ");
+                resultString.append(", ");
             }
         }
 
-        System.out.print("]");
-        return "";
+        resultString.append("]");
+        return resultString.toString();
     }
 
     @Override
