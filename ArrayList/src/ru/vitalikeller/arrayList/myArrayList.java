@@ -7,7 +7,7 @@ public class myArrayList<E> implements List<E> {
 
     private E[] items;
     private int size;
-    private int modCount;
+    private int modCount = 0;
 
     public myArrayList(int size) {
         if (size < 0) {
@@ -195,6 +195,7 @@ public class myArrayList<E> implements List<E> {
 
     public class myListIterator implements Iterator<E> {
         private int CurrentIndex = -1;
+        private int modCountFirst = modCount;
 
         @Override
         public boolean hasNext() {
@@ -205,6 +206,10 @@ public class myArrayList<E> implements List<E> {
         public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException("Коллекция кончилась!");
+            }
+
+            if (modCount != modCountFirst) {
+                throw new ConcurrentModificationException("Изменился список!");
             }
 
             CurrentIndex++;
