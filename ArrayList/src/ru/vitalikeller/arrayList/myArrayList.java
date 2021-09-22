@@ -75,6 +75,7 @@ public class myArrayList<E> implements List<E> {
 
         items[size] = e;
         size++;
+        modCount++;
 
         return true;
     }
@@ -85,6 +86,7 @@ public class myArrayList<E> implements List<E> {
             items[i] = null;
         }
 
+        modCount++;
         size = 0;
     }
 
@@ -153,6 +155,7 @@ public class myArrayList<E> implements List<E> {
 
         items[size - 1] = null;
         size--;
+        modCount++;
 
         return removedItem;
     }
@@ -163,6 +166,8 @@ public class myArrayList<E> implements List<E> {
 
         E oldData = items[index];
         items[index] = element;
+
+        modCount++;
 
         return oldData;
     }
@@ -185,6 +190,7 @@ public class myArrayList<E> implements List<E> {
 
         items[index] = element;
         size++;
+        modCount++;
     }
 
     // ----- todo --------------------------
@@ -195,7 +201,7 @@ public class myArrayList<E> implements List<E> {
 
     public class myListIterator implements Iterator<E> {
         private int CurrentIndex = -1;
-        private int modCountFirst = modCount;
+        private final int modCountFirst = modCount;
 
         @Override
         public boolean hasNext() {
@@ -215,8 +221,6 @@ public class myArrayList<E> implements List<E> {
             CurrentIndex++;
             return items[CurrentIndex];
         }
-        // todo сделать стоп при изменениях коллекции!
-        // проверить что все ошибки!
     }
 
 
