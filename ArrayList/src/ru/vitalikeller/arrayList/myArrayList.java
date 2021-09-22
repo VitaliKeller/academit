@@ -2,11 +2,11 @@ package ru.vitalikeller.arrayList;
 
 import java.util.*;
 
-public abstract class ArrayList<E> implements List<E> {
+public abstract class myArrayList<E> implements List<E> {
     private E[] items;
     private int size;
 
-    public ArrayList(int size) {
+    public myArrayList(int size) {
         if (size < 0) {
             throw new IllegalArgumentException("Размер должен быть >= 0. Переданный размер: " + size);
         }
@@ -14,7 +14,7 @@ public abstract class ArrayList<E> implements List<E> {
         items = (E[]) new Object[size];
     }
 
-    public ArrayList() {
+    public myArrayList() {
         items = (E[]) new Object[5];
     }
 
@@ -169,12 +169,28 @@ public abstract class ArrayList<E> implements List<E> {
         size++;
     }
 
-    // ----- todo --------------------------
-
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new myListIterator();
     }
+
+    private class myListIterator implements Iterator<E> {
+        private int currentIndex = -1;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex + 1 < size;
+        }
+
+        @Override
+        public E next() {
+            ++currentIndex;
+            return items[currentIndex];
+        }
+        // todo сделать стоп при изменениях коллекции!
+    }
+
+    // ----- todo --------------------------
 
     @Override
     public <T> T[] toArray(T[] a) {
