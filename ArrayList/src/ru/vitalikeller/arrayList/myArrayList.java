@@ -2,9 +2,12 @@ package ru.vitalikeller.arrayList;
 
 import java.util.*;
 
-public abstract class myArrayList<E> implements List<E> {
+public class myArrayList<E> implements List<E> {
+    private static final int DEFAULT_SIZE = 5;
+
     private E[] items;
     private int size;
+    private int modCount;
 
     public myArrayList(int size) {
         if (size < 0) {
@@ -15,7 +18,22 @@ public abstract class myArrayList<E> implements List<E> {
     }
 
     public myArrayList() {
-        items = (E[]) new Object[5];
+        items = (E[]) new Object[DEFAULT_SIZE];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder resultString = new StringBuilder("[");
+
+        for (int i = 0; i < size; i++) {
+            resultString.append(items[i]);
+            if (i != size - 1) {
+                resultString.append(", ");
+            }
+        }
+
+        resultString.append("]");
+        return resultString.toString();
     }
 
     @Override
@@ -44,7 +62,7 @@ public abstract class myArrayList<E> implements List<E> {
 
     private static void validateIndex(int index, int maximumAllowableIndex) {
         if (index < 0 || index > maximumAllowableIndex) {
-            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Сейчас индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + ")");
+            throw new IndexOutOfBoundsException("Индекс вне допустимого диапазона. (Передан индекс = " + index + ", минимальный = 0, максимальный = " + maximumAllowableIndex + ")");
         }
     }
 
@@ -169,28 +187,33 @@ public abstract class myArrayList<E> implements List<E> {
         size++;
     }
 
+    // ----- todo --------------------------
     @Override
     public Iterator<E> iterator() {
         return new myListIterator();
     }
 
-    private class myListIterator implements Iterator<E> {
-        private int currentIndex = -1;
+    public class myListIterator implements Iterator<E> {
+        private int CurrentIndex = -1;
 
         @Override
         public boolean hasNext() {
-            return currentIndex + 1 < size;
+            return CurrentIndex + 1 < size;
         }
 
         @Override
         public E next() {
-            ++currentIndex;
-            return items[currentIndex];
+            if (!hasNext()) {
+                throw new NoSuchElementException("Коллекция кончилась!");
+            }
+
+            CurrentIndex++;
+            return items[CurrentIndex];
         }
         // todo сделать стоп при изменениях коллекции!
+        // проверить что все ошибки!
     }
 
-    // ----- todo --------------------------
 
     @Override
     public <T> T[] toArray(T[] a) {
@@ -220,5 +243,23 @@ public abstract class myArrayList<E> implements List<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
+    }
+
+
+    // ------------- todo просто заглушить, это так делается??
+
+    @Override
+    public ListIterator<E> listIterator() {
+        throw new UnsupportedOperationException("Метод не поддерживается");
+    }
+
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        throw new UnsupportedOperationException("Метод не поддерживается");
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException("Метод не поддерживается");
     }
 }
