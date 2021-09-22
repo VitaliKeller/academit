@@ -3,31 +3,32 @@ package ru.vitalikeller.arrayList;
 import java.util.*;
 
 public class myArrayList<E> implements List<E> {
-    private static final int DEFAULT_SIZE = 5;
+    private static final int DEFAULT_LENGTH = 5;
 
     private E[] items;
-    private int size;
+    private int length;
     private int modCount = 0;
 
-    public myArrayList(int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Размер должен быть >= 0. Переданный размер: " + size);
+    public myArrayList(int length) {
+        if (length < 0) {
+            throw new IllegalArgumentException("Размер должен быть >= 0. Переданный размер: " + length);
         }
 
-        items = (E[]) new Object[size];
+        //noinspection unchecked
+        items = (E[]) new Object[length];
     }
 
     public myArrayList() {
-        items = (E[]) new Object[DEFAULT_SIZE];
+        items = (E[]) new Object[DEFAULT_LENGTH];
     }
 
     @Override
     public String toString() {
         StringBuilder resultString = new StringBuilder("[");
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < length; i++) {
             resultString.append(items[i]);
-            if (i != size - 1) {
+            if (i != length - 1) {
                 resultString.append(", ");
             }
         }
@@ -38,13 +39,13 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public int size() {
-        return size;
-    }
+        return length;
+    }   // +
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
-    }
+        return length == 0;
+    }   // +
 
     @Override
     public boolean contains(Object o) {
@@ -53,11 +54,11 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public Object[] toArray() {
-        return Arrays.copyOf(items, size);
+        return Arrays.copyOf(items, length);
     }
 
     private void validateIndex(int index) {
-        validateIndex(index, size - 1);
+        validateIndex(index, length - 1);
     }
 
     private static void validateIndex(int index, int maximumAllowableIndex) {
@@ -66,28 +67,27 @@ public class myArrayList<E> implements List<E> {
         }
     }
 
-
     @Override
     public boolean add(E e) {
-        if (items.length == size) {
+        if (length >= items.length) {
             increaseCapacity();
         }
 
-        items[size] = e;
-        size++;
+        items[length] = e;
+        length++;
         modCount++;
 
         return true;
-    }
+    }   // +
 
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < length; i++) {
             items[i] = null;
         }
 
         modCount++;
-        size = 0;
+        length = 0;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < length; i++) {
             if (Objects.equals(items[i], o)) {
                 return i;
             }
@@ -110,7 +110,7 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = size - 1; i >= 0; i--) {
+        for (int i = length - 1; i >= 0; i--) {
             if (Objects.equals(items[i], o)) {
                 return i;
             }
@@ -122,11 +122,11 @@ public class myArrayList<E> implements List<E> {
     // --------------- управление размером
     private void increaseCapacity() {
         items = Arrays.copyOf(items, (items.length + 1) * 2);
-    }
+    }   // +
 
     public void trimToSize() {
-        if (items.length > size) {
-            items = Arrays.copyOf(items, size);
+        if (items.length > length) {
+            items = Arrays.copyOf(items, length);
         }
     }
 
@@ -149,16 +149,16 @@ public class myArrayList<E> implements List<E> {
 
         E removedItem = items[index];
 
-        if (index < size - 1) {
-            System.arraycopy(items, index + 1, items, index, size - index - 1);
+        if (index < length - 1) {
+            System.arraycopy(items, index + 1, items, index, length - index - 1);
         }
 
-        items[size - 1] = null;
-        size--;
+        items[length - 1] = null;
+        length--;
         modCount++;
 
         return removedItem;
-    }
+    }   // +
 
     @Override
     public E set(int index, E element) {
@@ -174,22 +174,22 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public void add(int index, E element) {
-        validateIndex(index, size);
+        validateIndex(index, length);
 
-        if (index == size) {
+        if (index == length) {
             add(element);
             return;
         }
 
-        if (items.length == size) { // такой же блок есть в add, поэтому сделать этот после add(element)! // нужен, чтобы добавить +1 элемент, если место закончилось - для add нового
+        if (items.length == length) { // такой же блок есть в add, поэтому сделать этот после add(element)! // нужен, чтобы добавить +1 элемент, если место закончилось - для add нового
             increaseCapacity();
         }
 
 
-        System.arraycopy(items, index, items, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+        System.arraycopy(items, index, items, index + 1, length - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
 
         items[index] = element;
-        size++;
+        length++;
         modCount++;
     }
 
@@ -205,7 +205,7 @@ public class myArrayList<E> implements List<E> {
 
         @Override
         public boolean hasNext() {
-            return CurrentIndex + 1 < size;
+            return CurrentIndex + 1 < length;
         }
 
         @Override
@@ -226,12 +226,35 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return null;
+        if (a == null) {
+            throw new IllegalArgumentException("Передан массив null");
+        }
+
+        if (a.length < items.length) {
+            //noinspection unchecked
+            return (T[]) Arrays.copyOf(items, length, a.getClass());
+        }
+
+        // todo  проверить что тут так и надо давить
+        // noinspection SuspiciousSystemArraycopy
+        System.arraycopy(items, 0, a, 0, length);
+
+        if (a.length > length) {
+            a[length] = null;
+        }
+
+        return a;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        for (Object currentElement : c) {
+            if (!contains(currentElement)) {    // если хоть один не нашелся - то False! :)
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -255,7 +278,7 @@ public class myArrayList<E> implements List<E> {
     }
 
 
-    // ------------- todo просто заглушить, это так делается??
+    // ------------- todo просто заглушить методы, так ли надо сделать?? подумать позже
 
     @Override
     public ListIterator<E> listIterator() {
