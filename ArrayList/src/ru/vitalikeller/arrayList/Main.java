@@ -33,5 +33,7 @@ public class Main {
 
         System.out.println(myArrayList);
         System.out.println("Is myArrayList empty: " + myArrayList.isEmpty());
+
+        myArrayList.trimToSize();
     }
 }
