@@ -21,8 +21,11 @@ package ru.vitalikeller.arrayList;
 
 public class Main {
     public static void main(String[] args) {
-        myArrayList<Integer> myArrayList = new myArrayList<>(1);
+        myArrayList<Integer> myArrayList1 = new myArrayList<>();
+        myArrayList1.add(1);
+        System.out.println("Is myArrayList1 empty: " + myArrayList1.isEmpty());
 
+        myArrayList<Integer> myArrayList = new myArrayList<>(1);
         System.out.println("Is myArrayList empty: " + myArrayList.isEmpty());
 
         myArrayList.add(1);

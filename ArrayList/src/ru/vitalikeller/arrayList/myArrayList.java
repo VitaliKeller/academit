@@ -19,6 +19,7 @@ public class myArrayList<E> implements List<E> {
     }
 
     public myArrayList() {
+        //noinspection unchecked
         items = (E[]) new Object[DEFAULT_LENGTH];
     }
 
@@ -50,11 +51,6 @@ public class myArrayList<E> implements List<E> {
     @Override
     public boolean contains(Object o) {
         return indexOf(o) != -1;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return Arrays.copyOf(items, length);
     }
 
     private void validateIndex(int index) {
@@ -181,7 +177,7 @@ public class myArrayList<E> implements List<E> {
             return;
         }
 
-        if (items.length == length) { // такой же блок есть в add, поэтому сделать этот после add(element)! // нужен, чтобы добавить +1 элемент, если место закончилось - для add нового
+        if (items.length == length) { // такой же блок есть в add, поэтому сделать этот после add(element) // нужен, чтобы добавить +1 элемент, если место закончилось - для add нового
             increaseCapacity();
         }
 
@@ -193,7 +189,6 @@ public class myArrayList<E> implements List<E> {
         modCount++;
     }
 
-    // ----- todo --------------------------
     @Override
     public Iterator<E> iterator() {
         return new myListIterator();
@@ -211,7 +206,7 @@ public class myArrayList<E> implements List<E> {
         @Override
         public E next() {
             if (!hasNext()) {
-                throw new NoSuchElementException("Коллекция кончилась!");
+                throw new NoSuchElementException("Коллекция закончилась!");
             }
 
             if (modCount != modCountFirst) {
@@ -223,11 +218,15 @@ public class myArrayList<E> implements List<E> {
         }
     }
 
+    @Override
+    public Object[] toArray() {
+        return Arrays.copyOf(items, length);
+    }
 
     @Override
     public <T> T[] toArray(T[] a) {
         if (a == null) {
-            throw new IllegalArgumentException("Передан массив null");
+            throw new IllegalArgumentException("Передан пустой массив.");
         }
 
         if (a.length < items.length) {
@@ -235,8 +234,7 @@ public class myArrayList<E> implements List<E> {
             return (T[]) Arrays.copyOf(items, length, a.getClass());
         }
 
-        // todo  проверить что тут так и надо давить
-        // noinspection SuspiciousSystemArraycopy
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(items, 0, a, 0, length);
 
         if (a.length > length) {
@@ -278,7 +276,7 @@ public class myArrayList<E> implements List<E> {
     }
 
 
-    // ------------- todo просто заглушить методы, так ли надо сделать?? подумать позже
+    // ------------- todo просто заглушить методы, так ли надо сделать
 
     @Override
     public ListIterator<E> listIterator() {
