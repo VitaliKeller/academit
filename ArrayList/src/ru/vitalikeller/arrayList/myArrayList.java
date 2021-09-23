@@ -257,8 +257,10 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        return addAll(length, c);
     }
+
+    // todo ----
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
