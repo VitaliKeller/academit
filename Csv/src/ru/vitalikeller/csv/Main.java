@@ -13,13 +13,13 @@ public class Main {
             return;
         }
 
-        String inFile = args[0]; //"text.csv"
-        String outFile = args[1]; //"index.html"
+        String inputFilePath = args[0]; //"text.csv"
+        String outputFilePath = args[1]; //"index.html"
 
-        System.out.println("... Загрузка CSV файла (" + inFile + "), обработка, и выкладка в HTML (" + outFile + ").");
+        System.out.println("... Загрузка CSV файла (" + inputFilePath + "), обработка, и выкладка в HTML (" + outputFilePath + ").");
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inFile));
-             PrintWriter writer = new PrintWriter(outFile)) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFilePath));
+             PrintWriter writer = new PrintWriter(outputFilePath)) {
             writer.println("<!DOCTYPE html>");
             writer.println("<html>");
             writer.println("    <head>");
@@ -77,12 +77,14 @@ public class Main {
             writer.println("</table>");
             writer.println("    </body>");
             writer.println("</html>");
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("Файл не найден.");
             System.out.println("Ошибка: " + e.getMessage());
             System.out.println("Для корректной работы программы, требуется указать в строке вызова два аргумента:");
             System.out.println("Первый должен содержать полный путь к файлу CSV для чтения, с указанием имени и расширения файла");
             System.out.println("Второй должен содержать полный путь к файлу для записи HTML с указанием имени и расширения файла");
+        } catch (IOException e) {
+            System.out.println("Ошибка: " + e.getMessage());
         }
     }
 }
