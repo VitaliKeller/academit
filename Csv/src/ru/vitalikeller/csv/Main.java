@@ -85,6 +85,7 @@ public class Main {
             System.out.println("Второй должен содержать полный путь к файлу для записи HTML с указанием имени и расширения файла");
         } catch (IOException e) {
             System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
