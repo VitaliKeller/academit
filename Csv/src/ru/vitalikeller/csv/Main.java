@@ -84,8 +84,7 @@ public class Main {
             System.out.println("Первый должен содержать полный путь к файлу CSV для чтения, с указанием имени и расширения файла");
             System.out.println("Второй должен содержать полный путь к файлу для записи HTML с указанием имени и расширения файла");
         } catch (IOException e) {
-            System.out.println("Ошибка: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Ошибка ввода/вывода: " + e.getMessage());
         }
     }
 }
