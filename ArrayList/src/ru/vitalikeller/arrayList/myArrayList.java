@@ -126,6 +126,12 @@ public class myArrayList<E> implements List<E> {
         }
     }
 
+    public void ensureCapacity(int minCapacity) {
+        if (items.length < minCapacity) {
+            items = Arrays.copyOf(items, minCapacity);
+        }
+    }
+
     @Override
     public boolean remove(Object o) {
         int index = indexOf(o);
@@ -260,20 +266,33 @@ public class myArrayList<E> implements List<E> {
         return addAll(length, c);
     }
 
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        int currentSize = length;
+
+        for (int i = 0; i < length; i++) {
+            if (!c.contains(items[i])) {
+                remove(i);
+                i--;
+            }
+        }
+
+        return currentSize != length;
+    }
+
     // todo ----
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        validateIndex(index);
+        ensureCapacity(length + c.size());
+
+
         return false;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
         return false;
     }
 
