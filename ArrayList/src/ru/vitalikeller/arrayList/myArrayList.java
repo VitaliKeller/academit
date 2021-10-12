@@ -288,6 +288,10 @@ public class myArrayList<E> implements List<E> {
 
         int incomeCollectionSize = c.size();
 
+        if (incomeCollectionSize == 0) {
+            return false;
+        }
+
         ensureCapacity(length + incomeCollectionSize);
 
         System.arraycopy(items, index, items, index + incomeCollectionSize, length - index);
@@ -300,11 +304,24 @@ public class myArrayList<E> implements List<E> {
         return true;
     }
 
-    // todo ----
-
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        if (c.isEmpty()) {
+            return false;
+        }
+
+        int currentSize = length;
+
+        for (int i = 0; i < length; i++) {
+            if (c.contains(items[i])) {
+                remove(i);
+
+                i--;
+                modCount++;
+            }
+        }
+
+        return currentSize != length;
     }
 
 
