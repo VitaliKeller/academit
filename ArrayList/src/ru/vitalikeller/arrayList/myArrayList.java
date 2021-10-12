@@ -284,7 +284,7 @@ public class myArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        validateIndex(index);
+        validateIndex(index, length);
 
         int incomeCollectionSize = c.size();
 
