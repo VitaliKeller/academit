@@ -262,34 +262,45 @@ public class myArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return addAll(length, c);
-    }
-
-    @Override
     public boolean retainAll(Collection<?> c) {
         int currentSize = length;
 
         for (int i = 0; i < length; i++) {
             if (!c.contains(items[i])) {
                 remove(i);
+
                 i--;
+                modCount++;
             }
         }
 
         return currentSize != length;
     }
 
-    // todo ----
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        return addAll(length, c);
+    }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         validateIndex(index);
-        ensureCapacity(length + c.size());
 
+        int incomeCollectionSize = c.size();
 
-        return false;
+        ensureCapacity(length + incomeCollectionSize);
+
+        System.arraycopy(items, index, items, index + incomeCollectionSize, length - index);
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(c.toArray(), 0, items, index, incomeCollectionSize);
+
+        length += incomeCollectionSize;
+        modCount++;
+
+        return true;
     }
+
+    // todo ----
 
     @Override
     public boolean removeAll(Collection<?> c) {
