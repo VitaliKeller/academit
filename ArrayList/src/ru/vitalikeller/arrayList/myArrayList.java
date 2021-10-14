@@ -324,9 +324,6 @@ public class myArrayList<E> implements List<E> {
         return currentSize != length;
     }
 
-
-    // ------------- todo просто заглушить методы, так ли надо сделать
-
     @Override
     public ListIterator<E> listIterator() {
         throw new UnsupportedOperationException("Метод не поддерживается");
