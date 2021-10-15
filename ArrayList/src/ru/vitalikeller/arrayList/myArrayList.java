@@ -118,7 +118,7 @@ public class myArrayList<E> implements List<E> {
     // --------------- управление размером
     private void increaseCapacity() {
         items = Arrays.copyOf(items, (items.length + 1) * 2);
-    }   // +
+    }
 
     public void trimToSize() {
         if (items.length > length) {
