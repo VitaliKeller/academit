@@ -229,6 +229,7 @@ public class myArrayList<E> implements List<E> {
         return Arrays.copyOf(items, length);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public <T> T[] toArray(T[] a) {
         if (a == null) {
@@ -261,9 +262,14 @@ public class myArrayList<E> implements List<E> {
         return true;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean retainAll(Collection<?> c) {
         int currentSize = length;
+
+        if (c == null) {
+            throw new IllegalArgumentException("Передан пустой массив.");
+        }
 
         for (int i = 0; i < length; i++) {
             if (!c.contains(items[i])) {
@@ -277,8 +283,13 @@ public class myArrayList<E> implements List<E> {
         return currentSize != length;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        if (c == null) {
+            throw new IllegalArgumentException("Передан пустой массив.");
+        }
+
         return addAll(length, c);
     }
 
