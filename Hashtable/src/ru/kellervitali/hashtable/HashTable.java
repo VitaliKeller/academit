@@ -10,6 +10,10 @@ public class HashTable<T> implements Collection<T> {
     // todo проверить верно ли понял конструктор
 
     public HashTable(int length) {
+        if (length <= 0) {
+            throw new IllegalArgumentException("Передан размер <=0");
+        }
+
         hashTable = new ArrayList[length];
         size = 0;
     }
