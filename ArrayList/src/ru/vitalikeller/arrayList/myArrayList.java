@@ -41,12 +41,12 @@ public class myArrayList<E> implements List<E> {
     @Override
     public int size() {
         return length;
-    }   // +
+    }
 
     @Override
     public boolean isEmpty() {
         return length == 0;
-    }   // +
+    }
 
     @Override
     public boolean contains(Object o) {
@@ -74,7 +74,7 @@ public class myArrayList<E> implements List<E> {
         modCount++;
 
         return true;
-    }   // +
+    }
 
     @Override
     public void clear() {
@@ -118,7 +118,7 @@ public class myArrayList<E> implements List<E> {
     // --------------- управление размером
     private void increaseCapacity() {
         items = Arrays.copyOf(items, (items.length + 1) * 2);
-    }   // +
+    }
 
     public void trimToSize() {
         if (items.length > length) {
@@ -160,7 +160,7 @@ public class myArrayList<E> implements List<E> {
         modCount++;
 
         return removedItem;
-    }   // +
+    }
 
     @Override
     public E set(int index, E element) {
@@ -178,16 +178,19 @@ public class myArrayList<E> implements List<E> {
     public void add(int index, E element) {
         validateIndex(index, length);
 
+        // кейс - добавить в конец
         if (index == length) {
             add(element);
             return;
         }
 
-        if (items.length == length) { // такой же блок есть в add, поэтому сделать этот после add(element) // нужен, чтобы добавить +1 элемент, если место закончилось - для add нового
+        // такой же блок есть в add, поэтому помещаю его после add(element)
+        // нужен, чтобы (если место закончилось) добавить место-элемент в массив для нового E
+        if (items.length == length) {
             increaseCapacity();
         }
 
-
+        // кейс - добавить не в конец
         System.arraycopy(items, index, items, index + 1, length - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
 
         items[index] = element;
@@ -229,6 +232,7 @@ public class myArrayList<E> implements List<E> {
         return Arrays.copyOf(items, length);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public <T> T[] toArray(T[] a) {
         if (a == null) {
@@ -261,9 +265,14 @@ public class myArrayList<E> implements List<E> {
         return true;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean retainAll(Collection<?> c) {
         int currentSize = length;
+
+        if (c == null) {
+            throw new IllegalArgumentException("Передан пустой массив.");
+        }
 
         for (int i = 0; i < length; i++) {
             if (!c.contains(items[i])) {
@@ -277,8 +286,13 @@ public class myArrayList<E> implements List<E> {
         return currentSize != length;
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        if (c == null) {
+            throw new IllegalArgumentException("Передан пустой массив.");
+        }
+
         return addAll(length, c);
     }
 
