@@ -1,4 +1,4 @@
-package ru.vitalikeller.arrayList;
+package main;
 
 /*
 Задача. ArrayList
@@ -19,14 +19,16 @@ package ru.vitalikeller.arrayList;
 •	Generic’и
 */
 
+import ru.vitalikeller.array_list.MyArrayList;
+
 public class Main {
     public static void main(String[] args) {
-        myArrayList<Integer> myList1 = new myArrayList<>();
+        MyArrayList<Integer> myList1 = new MyArrayList<>();
         myList1.add(1);
         myList1.add(4);
         System.out.println("myList1 пуст?: " + myList1.isEmpty());
 
-        myArrayList<Integer> myList = new myArrayList<>(1);
+        MyArrayList<Integer> myList = new MyArrayList<>(1);
         System.out.println("myList пуст?: " + myList.isEmpty());
 
         myList.add(null);
