@@ -270,7 +270,7 @@ public class MyArrayList<E> implements List<E> {
         int beginningSize = size;
 
         if (c == null) {
-            throw new IllegalArgumentException("Передан пустой массив.");
+            throw new NullPointerException("Передана пустая коллекция.");
         }
 
         int localModCount = 0;

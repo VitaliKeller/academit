@@ -23,50 +23,50 @@ import ru.vitalikeller.array_list.MyArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        MyArrayList<Integer> myList1 = new MyArrayList<>();
-        myList1.add(1);
-        myList1.add(4);
-        System.out.println("myList1 пуст?: " + myList1.isEmpty());
+        MyArrayList<Integer> list1 = new MyArrayList<>();
+        list1.add(1);
+        list1.add(4);
+        System.out.println("list1 пуст?: " + list1.isEmpty());
 
-        MyArrayList<Integer> myList = new MyArrayList<>(1);
-        System.out.println("myList пуст?: " + myList.isEmpty());
+        MyArrayList<Integer> list2 = new MyArrayList<>(1);
+        System.out.println("list2 пуст?: " + list2.isEmpty());
 
-        myList.add(null);
-        myList.add(-1);
-        myList.add(0);
-        myList.add(1);
-        myList.add(2);
-        myList.add(3);
-        myList.add(4);
-        myList.add(5);
+        list2.add(null);
+        list2.add(-1);
+        list2.add(0);
+        list2.add(1);
+        list2.add(2);
+        list2.add(3);
+        list2.add(4);
+        list2.add(5);
 
-        System.out.println(myList);
-        System.out.println("myList пуст: " + myList.isEmpty());
+        System.out.println(list2);
+        System.out.println("list2 пуст: " + list2.isEmpty());
 
-        myList.trimToSize();
+        list2.trimToSize();
 
 
         Integer num = 3;
-        System.out.println("Содержит элемент 3" + myList.contains(num));
-        System.out.println("Удалить 3: " + myList.remove(num));
-        System.out.println(myList);
+        System.out.println("Содержит элемент 3: " + list2.contains(num));
+        System.out.println("Удалить 3: " + list2.remove(num));
+        System.out.println(list2);
 
-        System.out.println("Удалить индекс 3: " + myList.remove(3));
-        System.out.println(myList);
+        System.out.println("Удалить индекс 3: " + list2.remove(3));
+        System.out.println(list2);
 
-        System.out.println("Добавить в myList первую коллекцию myList1 (на индекс length): " + myList.addAll(myList.size(), myList1));
-        System.out.println(myList);
+        System.out.println("Добавить в list2 первую коллекцию list1 (на индекс length): " + list2.addAll(list2.size(), list1));
+        System.out.println(list2);
 
-        System.out.println("Добавить в myList первую коллекцию myList1 (просто): " + myList.addAll(myList1));
-        System.out.println(myList);
+        System.out.println("Добавить в list2 первую коллекцию list1 (просто): " + list2.addAll(list1));
+        System.out.println(list2);
 
-        System.out.println("Содержатся ли все элементы myList в myList1: " + myList1.containsAll(myList));
-        System.out.println("Содержатся ли все элементы myList1 в myList: " + myList.containsAll(myList1));
+        System.out.println("Содержатся ли все элементы list2 в list1: " + list1.containsAll(list2));
+        System.out.println("Содержатся ли все элементы list1 в list2: " + list2.containsAll(list1));
 
-        myList.retainAll(myList1);
-        System.out.println("Список myList, после оставления в нем элементов из myList1: " + myList);
+        list2.retainAll(list1);
+        System.out.println("Список list2, после оставления в нем элементов из list1: " + list2);
 
-        myList.removeAll(myList1);
-        System.out.println("Список myList, после исключения элементов из myList1: " + myList);
+        list2.removeAll(list1);
+        System.out.println("Список list2, после исключения элементов из list1: " + list2);
     }
 }
