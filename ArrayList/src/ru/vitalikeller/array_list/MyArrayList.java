@@ -256,8 +256,8 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        for (Object currentElement : c) {
-            if (!contains(currentElement)) {    // если хоть один не нашелся - то False! :)
+        for (Object element : c) {
+            if (!contains(element)) {    // если хоть один не нашелся - то False! :)
                 return false;
             }
         }
@@ -267,30 +267,32 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        int currentSize = size;
+        int beginningSize = size;
 
         if (c == null) {
             throw new IllegalArgumentException("Передан пустой массив.");
         }
+
+        int localModCount = 0;
 
         for (int i = 0; i < size; i++) {
             if (!c.contains(items[i])) {
                 remove(i);
 
                 i--;
-                modCount++;
+                localModCount++;
             }
         }
 
-        return currentSize != size;
+        if (localModCount > 0) {
+            modCount++;
+        }
+
+        return beginningSize != size;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        if (c == null) {
-            throw new IllegalArgumentException("Передан пустой массив.");
-        }
-
         return addAll(size, c);
     }
 
@@ -298,11 +300,15 @@ public class MyArrayList<E> implements List<E> {
     public boolean addAll(int index, Collection<? extends E> c) {
         validateIndex(index, size);
 
-        int incomeCollectionSize = c.size();
-
-        if (incomeCollectionSize == 0) {
-            return false;
+        if (c == null) {
+            throw new NullPointerException("Передан null.");
         }
+
+        if (c.size() == 0) {
+            throw new IllegalArgumentException("Передана пустая коллекция.");
+        }
+
+        int incomeCollectionSize = c.size();
 
         ensureCapacity(size + incomeCollectionSize);
 
@@ -322,18 +328,23 @@ public class MyArrayList<E> implements List<E> {
             return false;
         }
 
-        int currentSize = size;
+        int beginningSize = size;
+        int localModCount = 0;
 
         for (int i = 0; i < size; i++) {
             if (c.contains(items[i])) {
                 remove(i);
 
                 i--;
-                modCount++;
+                localModCount++;
             }
         }
 
-        return currentSize != size;
+        if (localModCount > 0) {
+            modCount++;
+        }
+
+        return beginningSize != size;
     }
 
     @Override
