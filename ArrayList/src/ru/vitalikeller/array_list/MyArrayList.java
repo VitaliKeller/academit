@@ -5,7 +5,7 @@ import java.util.*;
 public class MyArrayList<E> implements List<E> {
     private static final int DEFAULT_CAPACITY = 5;
 
-    private E[] items;
+    private E[] elements;
     private int size;
     private int modCount = 0;
 
@@ -15,27 +15,33 @@ public class MyArrayList<E> implements List<E> {
         }
 
         //noinspection unchecked
-        items = (E[]) new Object[size];
+        elements = (E[]) new Object[size];
     }
 
     public MyArrayList() {
         //noinspection unchecked
-        items = (E[]) new Object[DEFAULT_CAPACITY];
+        elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     @Override
     public String toString() {
-        StringBuilder resultString = new StringBuilder("[");
-
-        for (int i = 0; i < size; i++) {
-            resultString.append(items[i]);
-            if (i != size - 1) {
-                resultString.append(", ");
-            }
+        if (size == 0) {
+            return "[]";
         }
 
-        resultString.append("]");
-        return resultString.toString();
+        StringBuilder stringBuilder = new StringBuilder("[");
+
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(elements[i]);
+
+            stringBuilder.append(", ");
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 2);    // можно, т.к. вставил проверку на size==0
+
+        stringBuilder.append("]");
+
+        return stringBuilder.toString();
     }
 
     @Override
@@ -65,11 +71,11 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E element) {
-        if (size >= items.length) {
+        if (size >= elements.length) {
             increaseCapacity();
         }
 
-        items[size] = element;
+        elements[size] = element;
         size++;
         modCount++;
 
@@ -82,7 +88,7 @@ public class MyArrayList<E> implements List<E> {
             return;
         }
 
-        Arrays.fill(items, null);
+        Arrays.fill(elements, null);
         modCount++;
         size = 0;
     }
@@ -91,25 +97,25 @@ public class MyArrayList<E> implements List<E> {
     public E get(int index) {
         validateIndex(index);
 
-        return items[index];
+        return elements[index];
     }
 
     @Override
     public E set(int index, E element) {
         validateIndex(index);
 
-        E oldData = items[index];
-        items[index] = element;
+        E oldElement = elements[index];
+        elements[index] = element;
 
         modCount++;
 
-        return oldData;
+        return oldElement;
     }
 
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < size; i++) {
-            if (Objects.equals(items[i], o)) {
+            if (Objects.equals(elements[i], o)) {
                 return i;
             }
         }
@@ -120,7 +126,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         for (int i = size - 1; i >= 0; i--) {
-            if (Objects.equals(items[i], o)) {
+            if (Objects.equals(elements[i], o)) {
                 return i;
             }
         }
@@ -130,18 +136,23 @@ public class MyArrayList<E> implements List<E> {
 
     // --------------- управление размером
     private void increaseCapacity() {
-        items = Arrays.copyOf(items, (items.length + 1) * 2);
+        if (size == 0) {
+            //noinspection unchecked
+            elements = (E[]) new Object[DEFAULT_CAPACITY];
+        }
+
+        elements = Arrays.copyOf(elements, elements.length * 2);
     }
 
     public void trimToSize() {
-        if (items.length > size) {
-            items = Arrays.copyOf(items, size);
+        if (elements.length > size) {
+            elements = Arrays.copyOf(elements, size);
         }
     }
 
     public void ensureCapacity(int minCapacity) {
-        if (items.length < minCapacity) {
-            items = Arrays.copyOf(items, minCapacity);
+        if (elements.length < minCapacity) {
+            elements = Arrays.copyOf(elements, minCapacity);
         }
     }
 
@@ -162,17 +173,17 @@ public class MyArrayList<E> implements List<E> {
     public E remove(int index) {
         validateIndex(index);
 
-        E removedItem = items[index];
+        E removedElement = elements[index];
 
         if (index < size - 1) {
-            System.arraycopy(items, index + 1, items, index, size - index - 1);
+            System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         }
 
-        items[size - 1] = null;
+        elements[size - 1] = null;
         size--;
         modCount++;
 
-        return removedItem;
+        return removedElement;
     }
 
 
@@ -188,14 +199,14 @@ public class MyArrayList<E> implements List<E> {
 
         // такой же блок есть в add, поэтому помещаю его после add(element)
         // нужен, чтобы (если место закончилось) добавить место-элемент в массив для нового E
-        if (items.length == size) {
+        if (elements.length == size) {
             increaseCapacity();
         }
 
         // кейс - добавить не в конец
-        System.arraycopy(items, index, items, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+        System.arraycopy(elements, index, elements, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
 
-        items[index] = element;
+        elements[index] = element;
         size++;
         modCount++;
     }
@@ -225,28 +236,28 @@ public class MyArrayList<E> implements List<E> {
             }
 
             currentIndex++;
-            return items[currentIndex];
+            return elements[currentIndex];
         }
     }
 
     @Override
     public Object[] toArray() {
-        return Arrays.copyOf(items, size);
+        return Arrays.copyOf(elements, size);
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
         if (a == null) {
-            throw new IllegalArgumentException("Передан пустой массив.");
+            throw new NullPointerException("Передан null.");
         }
 
-        if (a.length < items.length) {
+        if (a.length < elements.length) {
             //noinspection unchecked
-            return (T[]) Arrays.copyOf(items, size, a.getClass());
+            return (T[]) Arrays.copyOf(elements, size, a.getClass());
         }
 
         //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(items, 0, a, 0, size);
+        System.arraycopy(elements, 0, a, 0, size);
 
         if (a.length > size) {
             a[size] = null;
@@ -271,13 +282,13 @@ public class MyArrayList<E> implements List<E> {
         int beginningSize = size;
 
         if (c == null) {
-            throw new NullPointerException("Передана пустая коллекция.");
+            throw new NullPointerException("Передан null.");
         }
 
         int localModCount = 0;
 
         for (int i = 0; i < size; i++) {
-            if (!c.contains(items[i])) {
+            if (!c.contains(elements[i])) {
                 remove(i);
 
                 i--;
@@ -313,9 +324,9 @@ public class MyArrayList<E> implements List<E> {
 
         ensureCapacity(size + incomeCollectionSize);
 
-        System.arraycopy(items, index, items, index + incomeCollectionSize, size - index);
+        System.arraycopy(elements, index, elements, index + incomeCollectionSize, size - index);
         //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(c.toArray(), 0, items, index, incomeCollectionSize);
+        System.arraycopy(c.toArray(), 0, elements, index, incomeCollectionSize);
 
         size += incomeCollectionSize;
         modCount++;
@@ -333,7 +344,7 @@ public class MyArrayList<E> implements List<E> {
         int localModCount = 0;
 
         for (int i = 0; i < size; i++) {
-            if (c.contains(items[i])) {
+            if (c.contains(elements[i])) {
                 remove(i);
 
                 i--;
