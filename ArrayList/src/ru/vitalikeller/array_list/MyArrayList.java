@@ -64,12 +64,12 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean add(E e) {
+    public boolean add(E element) {
         if (size >= items.length) {
             increaseCapacity();
         }
 
-        items[size] = e;
+        items[size] = element;
         size++;
         modCount++;
 
@@ -78,10 +78,11 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            items[i] = null;
+        if (size == 0) {
+            return;
         }
 
+        Arrays.fill(items, null);
         modCount++;
         size = 0;
     }
