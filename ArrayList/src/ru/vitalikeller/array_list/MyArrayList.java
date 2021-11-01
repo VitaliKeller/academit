@@ -251,7 +251,11 @@ public class MyArrayList<E> implements List<E> {
             throw new NullPointerException("Передан null.");
         }
 
-        if (a.length < elements.length) {
+        if (a.length == 0) {
+            throw new IllegalArgumentException("Передана пустая коллекция.");
+        }
+
+        if (a.length < size) {
             //noinspection unchecked
             return (T[]) Arrays.copyOf(elements, size, a.getClass());
         }
