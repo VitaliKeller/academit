@@ -9,13 +9,13 @@ public class MyArrayList<E> implements List<E> {
     private int size;
     private int modCount = 0;
 
-    public MyArrayList(int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("Размер должен быть >= 0. Переданный размер: " + size);
+    public MyArrayList(int capacity) {
+        if (capacity < 0) {
+            throw new IllegalArgumentException("Вместимость должна быть >= 0. Передано: " + capacity);
         }
 
         //noinspection unchecked
-        elements = (E[]) new Object[size];
+        elements = (E[]) new Object[capacity];
     }
 
     public MyArrayList() {
@@ -104,12 +104,12 @@ public class MyArrayList<E> implements List<E> {
     public E set(int index, E element) {
         validateIndex(index);
 
-        E oldElement = elements[index];
+        E beginningElement = elements[index];
         elements[index] = element;
 
         modCount++;
 
-        return oldElement;
+        return beginningElement;
     }
 
     @Override
@@ -138,7 +138,9 @@ public class MyArrayList<E> implements List<E> {
     private void increaseCapacity() {
         if (size == 0) {
             //noinspection unchecked
-            elements = (E[]) new Object[DEFAULT_CAPACITY];
+            elements = (E[]) new Object[DEFAULT_CAPACITY];  // просто сносим старый и делаем новый
+
+            return; // хм. тут же, вроде, не нужно копировать, верно? (подумать)
         }
 
         elements = Arrays.copyOf(elements, elements.length * 2);
@@ -218,7 +220,7 @@ public class MyArrayList<E> implements List<E> {
 
     private class MyListIterator implements Iterator<E> {
         private int currentIndex = -1;
-        private final int modCountFirst = modCount;
+        private final int beginningModCount = modCount;
 
         @Override
         public boolean hasNext() {
@@ -231,7 +233,7 @@ public class MyArrayList<E> implements List<E> {
                 throw new NoSuchElementException("Коллекция закончилась!");
             }
 
-            if (modCount != modCountFirst) {
+            if (modCount != beginningModCount) {
                 throw new ConcurrentModificationException("Изменился список!");
             }
 
