@@ -71,15 +71,34 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E element) {
+        add(size, element);
+
+        return true;
+    }
+
+    @Override
+    public void add(int index, E element) {
+        validateIndex(index, size);
+
         if (size >= elements.length) {
             increaseCapacity();
         }
 
-        elements[size] = element;
+        // Это кейс - добавить в конец:
+        if (index == size) {
+            elements[size] = element;
+            size++;
+            modCount++;
+
+            return;
+        }
+
+        // Это кейс - добавить не в конец:
+        System.arraycopy(elements, index, elements, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+
+        elements[index] = element;
         size++;
         modCount++;
-
-        return true;
     }
 
     @Override
@@ -186,31 +205,6 @@ public class MyArrayList<E> implements List<E> {
         modCount++;
 
         return removedElement;
-    }
-
-
-    @Override
-    public void add(int index, E element) {
-        validateIndex(index, size);
-
-        // кейс - добавить в конец
-        if (index == size) {
-            add(element);
-            return;
-        }
-
-        // такой же блок есть в add, поэтому помещаю его после add(element)
-        // нужен, чтобы (если место закончилось) добавить место-элемент в массив для нового E
-        if (elements.length == size) {
-            increaseCapacity();
-        }
-
-        // todo кейс - добавить не в конец
-        System.arraycopy(elements, index, elements, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
-
-        elements[index] = element;
-        size++;
-        modCount++;
     }
 
     @Override
