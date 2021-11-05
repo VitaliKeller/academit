@@ -1,4 +1,4 @@
-package ru.vitalikeller.array_list;
+package array_list;
 
 import java.util.*;
 

@@ -19,7 +19,7 @@ package main;
 •	Generic’и
 */
 
-import ru.vitalikeller.array_list.MyArrayList;
+import array_list.MyArrayList;
 
 public class Main {
     public static void main(String[] args) {
