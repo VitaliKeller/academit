@@ -5,9 +5,9 @@ import java.util.*;
 public class MyArrayList<E> implements List<E> {
     private static final int DEFAULT_CAPACITY = 5;
 
-    private E[] elements;
-    private int size;
-    private int modCount = 0;
+    private E[] elements;       // Массив для элементов
+    private int size;           // Кол-во элементов (отличается от вместимости capacity!)
+    private int modCount = 0;   // Счетчик модификаций
 
     public MyArrayList(int capacity) {
         if (capacity < 0) {
@@ -94,7 +94,8 @@ public class MyArrayList<E> implements List<E> {
         }
 
         // Это кейс - добавить не в конец:
-        System.arraycopy(elements, index, elements, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+        // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+        System.arraycopy(elements, index, elements, index + 1, size - index);
 
         elements[index] = element;
         size++;
@@ -157,9 +158,9 @@ public class MyArrayList<E> implements List<E> {
     private void increaseCapacity() {
         if (size == 0) {
             //noinspection unchecked
-            elements = (E[]) new Object[DEFAULT_CAPACITY];  // просто сносим старый и делаем новый
+            elements = (E[]) new Object[DEFAULT_CAPACITY];  // просто делаем новый с вместимостью по умолчанию
 
-            return; // todo Хм. Тут же, вроде, не нужно копировать, верно? (подумать)
+            return;
         }
 
         elements = Arrays.copyOf(elements, elements.length * 2);
@@ -325,8 +326,17 @@ public class MyArrayList<E> implements List<E> {
         ensureCapacity(size + incomeCollectionSize);
 
         System.arraycopy(elements, index, elements, index + incomeCollectionSize, size - index);
+
+        for (E element : c) {
+            elements[index] = element;
+
+            index++;
+        }
+
+        /*
         //noinspection SuspiciousSystemArraycopy
         System.arraycopy(c.toArray(), 0, elements, index, incomeCollectionSize);
+        */
 
         size += incomeCollectionSize;
         modCount++;
