@@ -69,6 +69,12 @@ public class MyArrayList<E> implements List<E> {
         }
     }
 
+    private void validateCollectionForNull(Collection<?> c) {
+        if (c == null) {
+            throw new NullPointerException("Передан null");
+        }
+    }
+
     @Override
     public boolean add(E element) {
         add(size, element);
@@ -243,13 +249,9 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public <T> T[] toArray(@SuppressWarnings("NullableProblems") T[] a) {
-        if (a == null) {
-            throw new NullPointerException("Передан null.");
-        }
-
+    public <T> T[] toArray(T[] a) {
         if (a.length == 0) {
-            throw new IllegalArgumentException("Передана пустая коллекция.");
+            throw new IllegalArgumentException("Передан пустой массив.");
         }
 
         if (a.length < size) {
@@ -269,6 +271,8 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
+        validateCollectionForNull(c);
+
         for (Object element : c) {
             if (!contains(element)) {    // Если хоть один не нашелся - то False! :)
                 return false;
@@ -279,12 +283,10 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean retainAll(@SuppressWarnings("NullableProblems") Collection<?> c) {
-        int beginningSize = size;
+    public boolean retainAll(Collection<?> c) {
+        validateCollectionForNull(c);
 
-        if (c == null) {
-            throw new NullPointerException("Передан null.");
-        }
+        int beginningSize = size;
 
         int localModCount = 0;
 
@@ -305,17 +307,16 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(@SuppressWarnings("NullableProblems") Collection<? extends E> c) {
+    public boolean addAll(Collection<? extends E> c) {
+        // проверка на null - в методе с индексом
         return addAll(size, c);
     }
 
     @Override
-    public boolean addAll(int index, @SuppressWarnings("NullableProblems") Collection<? extends E> c) {
-        validateIndex(index, size);
+    public boolean addAll(int index, Collection<? extends E> c) {
+        validateCollectionForNull(c);
 
-        if (c == null) {
-            throw new NullPointerException("Передан null.");
-        }
+        validateIndex(index, size);
 
         if (c.size() == 0) {
             throw new IllegalArgumentException("Передана пустая коллекция.");
@@ -341,6 +342,8 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
+        validateCollectionForNull(c);
+
         if (c.isEmpty()) {
             return false;
         }
