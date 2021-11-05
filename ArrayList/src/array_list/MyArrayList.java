@@ -333,11 +333,6 @@ public class MyArrayList<E> implements List<E> {
             index++;
         }
 
-        /*
-        //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(c.toArray(), 0, elements, index, incomeCollectionSize);
-        */
-
         size += incomeCollectionSize;
         modCount++;
 
