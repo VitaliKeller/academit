@@ -37,7 +37,7 @@ public class MyArrayList<E> implements List<E> {
             stringBuilder.append(", ");
         }
 
-        stringBuilder.setLength(stringBuilder.length() - 2);    // можно, т.к. вставил проверку на size==0
+        stringBuilder.setLength(stringBuilder.length() - 2);    // Можно, т.к. вставил проверку на size==0
 
         stringBuilder.append("]");
 
@@ -140,7 +140,7 @@ public class MyArrayList<E> implements List<E> {
             //noinspection unchecked
             elements = (E[]) new Object[DEFAULT_CAPACITY];  // просто сносим старый и делаем новый
 
-            return; // хм. тут же, вроде, не нужно копировать, верно? (подумать)
+            return; // todo Хм. Тут же, вроде, не нужно копировать, верно? (подумать)
         }
 
         elements = Arrays.copyOf(elements, elements.length * 2);
@@ -205,7 +205,7 @@ public class MyArrayList<E> implements List<E> {
             increaseCapacity();
         }
 
-        // кейс - добавить не в конец
+        // todo кейс - добавить не в конец
         System.arraycopy(elements, index, elements, index + 1, size - index); // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
 
         elements[index] = element;
@@ -248,7 +248,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(@SuppressWarnings("NullableProblems") T[] a) {
         if (a == null) {
             throw new NullPointerException("Передан null.");
         }
@@ -275,7 +275,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public boolean containsAll(Collection<?> c) {
         for (Object element : c) {
-            if (!contains(element)) {    // если хоть один не нашелся - то False! :)
+            if (!contains(element)) {    // Если хоть один не нашелся - то False! :)
                 return false;
             }
         }
@@ -284,7 +284,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(@SuppressWarnings("NullableProblems") Collection<?> c) {
         int beginningSize = size;
 
         if (c == null) {
@@ -310,12 +310,12 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@SuppressWarnings("NullableProblems") Collection<? extends E> c) {
         return addAll(size, c);
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(int index, @SuppressWarnings("NullableProblems") Collection<? extends E> c) {
         validateIndex(index, size);
 
         if (c == null) {
