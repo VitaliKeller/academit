@@ -283,8 +283,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean retainAll(@SuppressWarnings("NullableProblems") Collection<?> c) {
-        //todo проверить на домашнем компе, покажет ли предупреждение с таким подавлением!!
+    public boolean retainAll(Collection<?> c) {
         validateCollectionForNull(c);
 
         int beginningSize = size;
