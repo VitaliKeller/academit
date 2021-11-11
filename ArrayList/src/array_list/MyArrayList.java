@@ -90,7 +90,7 @@ public class MyArrayList<E> implements List<E> {
             increaseCapacity();
         }
 
-        // Это кейс - добавить в конец:
+        // Это кейс "добавить в конец":
         if (index == size) {
             elements[size] = element;
             size++;
@@ -99,7 +99,7 @@ public class MyArrayList<E> implements List<E> {
             return;
         }
 
-        // Это кейс - добавить не в конец:
+        // Это кейс "добавить не в конец":
         // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
         System.arraycopy(elements, index, elements, index + 1, size - index);
 
