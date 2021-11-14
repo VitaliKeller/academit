@@ -5,15 +5,21 @@ import java.util.*;
 public class HashTable<T> implements Collection<T> {
     private ArrayList<T>[] hashTable;   // размер таблицы
     private int size;   // кол-во элементов
+    private int modCount;
+    private static final int DEFAULT_LENGTH = 10;
+
+    public HashTable() {
+        //noinspection unchecked
+        hashTable = new ArrayList[DEFAULT_LENGTH];
+    }
 
     // конструктор с размерностью, если верно понял
-    // todo проверить верно ли понял конструктор
-
     public HashTable(int length) {
         if (length <= 0) {
             throw new IllegalArgumentException("Передан размер <=0");
         }
 
+        //noinspection unchecked
         hashTable = new ArrayList[length];
         size = 0;
     }
@@ -30,7 +36,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return hashTable[getIndex(o)] != null;
     }
 
     @Override
@@ -48,13 +54,44 @@ public class HashTable<T> implements Collection<T> {
         return null;
     }
 
-    @Override
-    public boolean add(T t) {
-        return false;
+    private int getIndex(Object object) {
+        if (object == null) {
+            return 0;
+        }
+
+        return Math.abs(object.hashCode() % hashTable.length);
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean add(T element) {
+        int index = getIndex(element);
+
+        if (hashTable[index] == null) {
+            hashTable[index] = new ArrayList<>();
+        }
+
+        hashTable[index].add(element);
+        modCount++;
+        size++;
+
+        return true;
+    }
+
+    @Override
+    public boolean remove(Object element) {
+        int index = getIndex(element);
+
+        if (hashTable[index] == null) {
+            return false;
+        }
+
+        if (hashTable[index].remove(element)) {
+            modCount++;
+            size--;
+
+            return true;
+        }
+
         return false;
     }
 
@@ -80,6 +117,14 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public void clear() {
+        if (size == 0) {
+            return;
+        }
 
+        //noinspection unchecked
+        hashTable = new ArrayList[DEFAULT_LENGTH];
+
+        modCount++;
+        size = 0;
     }
 }
