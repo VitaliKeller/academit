@@ -1,4 +1,4 @@
-package ru.kellervitali.hashtable;
+package main;
 
 /*
 Задача HashTable

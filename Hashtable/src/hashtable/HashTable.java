@@ -1,4 +1,4 @@
-package ru.kellervitali.hashtable;
+package hashtable;
 
 import java.util.*;
 
