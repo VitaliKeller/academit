@@ -127,4 +127,25 @@ public class HashTable<T> implements Collection<T> {
         modCount++;
         size = 0;
     }
+
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[]";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("[");
+
+        for (ArrayList<T> hashTableElement : hashTable) {
+            stringBuilder.append(hashTableElement);
+            stringBuilder.append(", ");
+        }
+
+        stringBuilder.setLength(stringBuilder.length() - 2);    // Можно, т.к. вставил проверку на size==0
+        stringBuilder.append("]");
+
+        return stringBuilder.toString();
+    }
 }
