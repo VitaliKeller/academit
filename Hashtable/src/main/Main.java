@@ -27,14 +27,14 @@ public class Main {
         ht1.add(2);
         ht1.add(3);
         ht1.add(4);
-        System.out.println(ht1);
+        //System.out.println(ht1);
         ht1.add(5);
         ht1.add(5);
         ht1.add(15);
         ht1.add(6);
         ht1.add(8);
         ht1.add(null);
-        System.out.println(ht1);
+        //System.out.println(ht1);
         ht1.add(100);
         ht1.add(101);
         ht1.add(102);
