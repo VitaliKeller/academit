@@ -52,5 +52,25 @@ public class Main {
         System.out.println(ht1);
         System.out.println(ht1.size());
         System.out.println(ht1.isEmpty());
+
+        // -------------
+        System.out.println();
+
+        Collection<Integer> ht2 = new HashTable<>();
+        ht2.add(1);
+        ht2.add(2);
+        ht2.add(3);
+        System.out.println(ht2);
+
+        // -------------
+        System.out.println();
+
+        //System.out.println(ht1.containsAll(ht2));
+        // todo ошибка... если во второй коллекции null. Нужен иторатор
+
+        ht2.add(200);
+        System.out.println(ht2);
+        //System.out.println(ht1.containsAll(ht2));
+        //System.out.println(ht1.removeAll(ht2));
     }
 }

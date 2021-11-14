@@ -96,8 +96,14 @@ public class HashTable<T> implements Collection<T> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
+    public boolean containsAll(Collection<?> collection) {   // вроверить вхождение ВСЕХ элементов
+        for (Object element : collection) {
+            if (!contains(element)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -106,8 +112,16 @@ public class HashTable<T> implements Collection<T> {
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
+    public boolean removeAll(Collection<?> collection) {
+        boolean answer = false;
+
+        for (Object element : collection) {
+            if (remove(element)) {
+                answer = true;
+            }
+        }
+
+        return answer;
     }
 
     @Override
