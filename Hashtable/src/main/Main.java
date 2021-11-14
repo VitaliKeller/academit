@@ -20,8 +20,9 @@ import java.util.Collection;
 public class Main {
     public static void main(String[] args) {
         Collection<Integer> ht1 = new HashTable<>(5);
-
         System.out.println(ht1);
+        System.out.println(ht1.size());
+        System.out.println(ht1.isEmpty());
 
         ht1.add(1);
         ht1.add(2);
@@ -39,7 +40,17 @@ public class Main {
         ht1.add(101);
         ht1.add(102);
         ht1.add(103);
-
         System.out.println(ht1);
+
+        ht1.remove(100);
+        System.out.println(ht1);
+
+        System.out.println(ht1.size());
+        System.out.println(ht1.isEmpty());
+
+        ht1.clear();
+        System.out.println(ht1);
+        System.out.println(ht1.size());
+        System.out.println(ht1.isEmpty());
     }
 }
