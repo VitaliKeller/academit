@@ -274,22 +274,23 @@ public class MyArrayList<E> implements List<E> {
     public boolean retainAll(Collection<?> c) {
         validateCollectionForNull(c);
 
-        boolean isModified = false;
+        int initialSize = size;
 
         for (int i = 0; i < size; i++) {
             if (!c.contains(elements[i])) {
                 remove(i);
 
                 i--;
-                isModified = true;
             }
         }
 
-        if (isModified) {
+        if (initialSize != size) {
             modCount++;
+
+            return true;
         }
 
-        return isModified;
+        return false;
     }
 
     @Override
@@ -335,22 +336,23 @@ public class MyArrayList<E> implements List<E> {
             return false;
         }
 
-        boolean isModified = false;
+        int initialSize = size;
 
         for (int i = 0; i < size; i++) {
             if (c.contains(elements[i])) {
                 remove(i);
 
                 i--;
-                isModified = true;
             }
         }
 
-        if (isModified) {
+        if (initialSize != size) {
             modCount++;
+
+            return true;
         }
 
-        return isModified;
+        return false;
     }
 
     @Override
