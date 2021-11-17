@@ -53,6 +53,14 @@ public class HashTable<T> implements Collection<T> {
 
         @Override
         public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("Коллекция закончилась!");
+            }
+
+            if (modCount != initialModCount) {
+                throw new ConcurrentModificationException("Изменился список!");
+            }
+
             return null;
         }
     }
