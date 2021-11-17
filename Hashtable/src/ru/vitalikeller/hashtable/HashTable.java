@@ -13,7 +13,6 @@ public class HashTable<T> implements Collection<T> {
         hashTable = new ArrayList[DEFAULT_LENGTH];
     }
 
-    // конструктор с размерностью, если верно понял
     public HashTable(int length) {
         if (length <= 0) {
             throw new IllegalArgumentException("Передан размер <=0");
@@ -41,7 +40,21 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T> {
+        final private int initialModCount = modCount;
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public T next() {
+            return null;
+        }
     }
 
     @Override
@@ -60,7 +73,21 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+   /*     //noinspection unchecked
+        T1[] hashTable = (T1[]) toArray();
+
+        if (size > a.length) {
+            //noinspection unchecked
+            return (T1[]) Arrays.copyOf(hashTable, size, a.getClass());
+        }
+
+        System.arraycopy(hashTable, 0, a, 0, size);
+
+        if (size < a.length) {
+            a[size] = null;
+        }
+
+        return a;*/ return a;
     }
 
     private int getIndex(Object object) {
