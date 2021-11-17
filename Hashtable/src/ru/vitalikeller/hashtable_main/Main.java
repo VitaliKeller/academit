@@ -1,4 +1,4 @@
-package main;
+package ru.vitalikeller.hashtable_main;
 
 /*
 Задача HashTable
@@ -13,7 +13,7 @@ package main;
 •	Generic’и
 */
 
-import hashtable.HashTable;
+import ru.vitalikeller.hashtable.HashTable;
 
 import java.util.Collection;
 
@@ -61,6 +61,7 @@ public class Main {
         ht2.add(2);
         ht2.add(3);
         System.out.println(ht2);
+        System.out.println(ht2.toArray());
 
         // -------------
         System.out.println();

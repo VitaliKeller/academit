@@ -1,4 +1,4 @@
-package hashtable;
+package ru.vitalikeller.hashtable;
 
 import java.util.*;
 
@@ -46,7 +46,16 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] hashTableArray = new Object[size];
+        int i = 0;
+
+        for (Object element : this) {
+            hashTableArray[i] = element;
+
+            i++;
+        }
+
+        return hashTableArray;
     }
 
     @Override
@@ -96,7 +105,7 @@ public class HashTable<T> implements Collection<T> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> collection) {   // вроверить вхождение ВСЕХ элементов
+    public boolean containsAll(Collection<?> collection) {   // Проверить вхождение ВСЕХ элементов
         for (Object element : collection) {
             if (!contains(element)) {
                 return false;

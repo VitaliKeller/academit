@@ -1,4 +1,4 @@
-package array_list;
+package ru.vitalikeller.array_list;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ public class MyArrayList<E> implements List<E> {
 
     private E[] elements;       // Массив для элементов
     private int size;           // Кол-во элементов (отличается от вместимости capacity!)
-    private int modCount = 0;   // Счетчик модификаций
+    private int modCount;       // Счетчик модификаций
 
     public MyArrayList(int capacity) {
         if (capacity < 0) {
@@ -90,19 +90,13 @@ public class MyArrayList<E> implements List<E> {
             increaseCapacity();
         }
 
-        // Это кейс "добавить в конец":
-        if (index == size) {
-            elements[size] = element;
-            size++;
-            modCount++;
-
-            return;
+        if (index != size) {
+            // Это кейс "добавить не в конец":
+            // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
+            System.arraycopy(elements, index, elements, index + 1, size - index);
         }
 
-        // Это кейс "добавить не в конец":
-        // копируем с индекса включительно на +1 вперед https://javadevblog.com/kak-skopirovat-massiv-v-java.html
-        System.arraycopy(elements, index, elements, index + 1, size - index);
-
+        // Это кейс "добавить в конец":
         elements[index] = element;
         size++;
         modCount++;
@@ -114,7 +108,7 @@ public class MyArrayList<E> implements List<E> {
             return;
         }
 
-        Arrays.fill(elements, null);
+        Arrays.fill(elements, 0, size, null);
         modCount++;
         size = 0;
     }
@@ -130,12 +124,10 @@ public class MyArrayList<E> implements List<E> {
     public E set(int index, E element) {
         validateIndex(index);
 
-        E beginningElement = elements[index];
+        E oldElement = elements[index];
         elements[index] = element;
 
-        modCount++;
-
-        return beginningElement;
+        return oldElement;
     }
 
     @Override
@@ -221,7 +213,7 @@ public class MyArrayList<E> implements List<E> {
 
     private class MyListIterator implements Iterator<E> {
         private int currentIndex = -1;
-        private final int beginningModCount = modCount;
+        private final int initialModCount = modCount;
 
         @Override
         public boolean hasNext() {
@@ -234,7 +226,7 @@ public class MyArrayList<E> implements List<E> {
                 throw new NoSuchElementException("Коллекция закончилась!");
             }
 
-            if (modCount != beginningModCount) {
+            if (modCount != initialModCount) {
                 throw new ConcurrentModificationException("Изменился список!");
             }
 
@@ -250,10 +242,6 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-        if (a.length == 0) {
-            throw new IllegalArgumentException("Передан пустой массив.");
-        }
-
         if (a.length < size) {
             //noinspection unchecked
             return (T[]) Arrays.copyOf(elements, size, a.getClass());
@@ -286,24 +274,22 @@ public class MyArrayList<E> implements List<E> {
     public boolean retainAll(Collection<?> c) {
         validateCollectionForNull(c);
 
-        int beginningSize = size;
-
-        int localModCount = 0;
+        boolean isModified = false;
 
         for (int i = 0; i < size; i++) {
             if (!c.contains(elements[i])) {
                 remove(i);
 
                 i--;
-                localModCount++;
+                isModified = true;
             }
         }
 
-        if (localModCount > 0) {
+        if (isModified) {
             modCount++;
         }
 
-        return beginningSize != size;
+        return isModified;
     }
 
     @Override
@@ -319,7 +305,7 @@ public class MyArrayList<E> implements List<E> {
         validateIndex(index, size);
 
         if (c.size() == 0) {
-            throw new IllegalArgumentException("Передана пустая коллекция.");
+            return false;
         }
 
         int incomeCollectionSize = c.size();
@@ -328,10 +314,11 @@ public class MyArrayList<E> implements List<E> {
 
         System.arraycopy(elements, index, elements, index + incomeCollectionSize, size - index);
 
+        int i = index;
         for (E element : c) {
-            elements[index] = element;
+            elements[i] = element;
 
-            index++;
+            i++;
         }
 
         size += incomeCollectionSize;
@@ -348,23 +335,22 @@ public class MyArrayList<E> implements List<E> {
             return false;
         }
 
-        int beginningSize = size;
-        int localModCount = 0;
+        boolean isModified = false;
 
         for (int i = 0; i < size; i++) {
             if (c.contains(elements[i])) {
                 remove(i);
 
                 i--;
-                localModCount++;
+                isModified = true;
             }
         }
 
-        if (localModCount > 0) {
+        if (isModified) {
             modCount++;
         }
 
-        return beginningSize != size;
+        return isModified;
     }
 
     @Override

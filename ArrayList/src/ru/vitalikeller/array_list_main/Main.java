@@ -1,4 +1,4 @@
-package main;
+package ru.vitalikeller.array_list_main;
 
 /*
 Задача. ArrayList
@@ -19,7 +19,7 @@ package main;
 •	Generic’и
 */
 
-import array_list.MyArrayList;
+import ru.vitalikeller.array_list.MyArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -54,7 +54,7 @@ public class Main {
         System.out.println("Удалить индекс 3: " + list2.remove(3));
         System.out.println(list2);
 
-        System.out.println("Добавить в list2 первую коллекцию list1 (на индекс length): " + list2.addAll(list2.size(), list1));
+        System.out.println("Добавить в list2 первую коллекцию list1 (на индекс size): " + list2.addAll(list2.size(), list1));
         System.out.println(list2);
 
         System.out.println("Добавить в list2 первую коллекцию list1 (просто): " + list2.addAll(list1));
