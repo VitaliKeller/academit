@@ -101,7 +101,19 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;    // todo
+        if (a.length < size) {
+            //noinspection unchecked
+            return (T1[]) Arrays.copyOf(toArray(), size, a.getClass());
+        }
+
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(toArray(), 0, a, 0, size);
+
+        if (a.length > size) {
+            a[size] = null;
+        }
+
+        return a;
     }
 
     private int getIndex(Object object) {
