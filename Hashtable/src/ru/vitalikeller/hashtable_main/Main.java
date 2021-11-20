@@ -15,6 +15,7 @@ package ru.vitalikeller.hashtable_main;
 
 import ru.vitalikeller.hashtable.HashTable;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 public class Main {
@@ -48,30 +49,32 @@ public class Main {
         System.out.println(ht1.size());
         System.out.println(ht1.isEmpty());
 
+        // -------------
+        System.out.println("... (0)");
+
         ht1.clear();
         System.out.println(ht1);
         System.out.println(ht1.size());
         System.out.println(ht1.isEmpty());
 
         // -------------
-        System.out.println();
+        System.out.println("... (1)");
 
         Collection<Integer> ht2 = new HashTable<>();
         ht2.add(1);
         ht2.add(2);
         ht2.add(3);
         System.out.println(ht2);
-        System.out.println(ht2.toArray());
+        System.out.println(Arrays.toString(ht2.toArray()));
 
         // -------------
-        System.out.println();
+        System.out.println("... (2)");
 
-        //System.out.println(ht1.containsAll(ht2));
-        // todo ошибка... если во второй коллекции null. Нужен иторатор
+        System.out.println(ht1.containsAll(ht2));
 
         ht2.add(200);
         System.out.println(ht2);
-        //System.out.println(ht1.containsAll(ht2));
-        //System.out.println(ht1.removeAll(ht2));
+        System.out.println(ht1.containsAll(ht2));
+        System.out.println(ht1.removeAll(ht2));
     }
 }
