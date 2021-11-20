@@ -76,5 +76,17 @@ public class Main {
         System.out.println(ht2);
         System.out.println(ht1.containsAll(ht2));
         System.out.println(ht1.removeAll(ht2));
+        System.out.println(ht1);
+
+        // -------------
+        System.out.println("... (3)");
+
+        System.out.println(ht1.containsAll(ht2));
+
+        ht2.add(300);
+        System.out.println(ht2);
+        System.out.println(ht1);
+        System.out.println(ht1.addAll(ht2));
+        System.out.println(ht1);
     }
 }
