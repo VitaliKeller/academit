@@ -101,7 +101,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+        return null;    // todo
     }
 
     private int getIndex(Object object) {
@@ -146,7 +146,7 @@ public class HashTable<T> implements Collection<T> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> collection) {   // Проверить вхождение ВСЕХ элементов
+    public boolean containsAll(Collection<?> collection) {   // Проверяет вхождение ВСЕХ элементов
         for (Object element : collection) {
             if (!contains(element)) {
                 return false;
@@ -158,7 +158,15 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;   // todo
+        boolean edited = false;
+
+        for (T element : c) {
+            if (add(element)) {
+                edited = true;
+            }
+        }
+
+        return edited;
     }
 
     @Override
@@ -176,7 +184,24 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;   // todo
+        boolean modified = false;
+
+        for (ArrayList<T> arrayElement : hashTable) {
+            if (arrayElement != null) {
+                int initialListSize = arrayElement.size();
+
+                if (arrayElement.retainAll(c)) {
+                    modified = true;
+                    size -= initialListSize - arrayElement.size();
+                }
+            }
+        }
+
+        if (modified) {
+            modCount++;
+        }
+
+        return modified;
     }
 
     @Override
