@@ -3,10 +3,10 @@ package ru.vitalikeller.hashtable;
 import java.util.*;
 
 public class HashTable<T> implements Collection<T> {
-    private ArrayList<T>[] hashTable;   // размер таблицы
-    private int size;   // кол-во элементов
-    private int modCount;
-    private static final int DEFAULT_ARRAY_LENGTH = 10;
+    private ArrayList<T>[] hashTable;   // массив - скелет
+    private int size;                   // кол-во элементов
+    private int modCount;               // модификации
+    private static final int DEFAULT_ARRAY_LENGTH = 10; // дефолтное кол-во позвонков :)
 
     public HashTable() {
         //noinspection unchecked
@@ -45,13 +45,13 @@ public class HashTable<T> implements Collection<T> {
 
     private class MyIterator implements Iterator<T> {
         final private int initialModCount = modCount;
-        private int arrayIndex = 0;
-        private int tableIndex = -1;
-        private int listIndex = -1;
+        private int inArrayCurrentIndex = 0;    // счетчик - номер коллекции в массиве. Начнем с нулевой
+        private int inListIndex = -1;           // счетчик - индекс элемента в коллекции (лежащей в элементе массива)
+        private int inTableGlobalIndex = -1;    // счетчик - индекс элемента в size
 
         @Override
         public boolean hasNext() {
-            return tableIndex + 1 < size;
+            return inTableGlobalIndex + 1 < size;
         }
 
         @Override
@@ -64,10 +64,24 @@ public class HashTable<T> implements Collection<T> {
                 throw new ConcurrentModificationException("Изменился список!");
             }
 
-            ++tableIndex; // todo лажа какая-то
-            return hashTable[tableIndex];
+            while (hasNext()) {
+                if (hashTable[inArrayCurrentIndex] == null) {     // переходим на следующий элемент массива
+                    inArrayCurrentIndex++;
+                } else {
+                    inListIndex++;    // плюсуем номер элемента
 
-            return null;
+                    if (inListIndex == hashTable[inArrayCurrentIndex].size()) {   // если закончилось ребро скелета
+                        inArrayCurrentIndex++;      // следующий позвонок
+                        inListIndex = -1;           // индекс для начала перебора коллекци-ребра
+                    } else {
+                        inTableGlobalIndex++;       // индекс элемента в хэш-таблице
+
+                        return hashTable[inArrayCurrentIndex].get(inListIndex); // и - наконец-то сам элемент.! ))
+                    }
+                }
+            }
+
+            return null;        // алилуйя!!! неужели заработает?
         }
     }
 
@@ -87,22 +101,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-   /*     //noinspection unchecked
-        T1[] hashTable = (T1[]) toArray();
-
-        if (size > a.length) {
-            //noinspection unchecked
-            return (T1[]) Arrays.copyOf(hashTable, size, a.getClass());
-        }
-
-        System.arraycopy(hashTable, 0, a, 0, size);
-
-        if (size < a.length) {
-            a[size] = null;
-        }
-
-        return a;*/
-        return a;
+        return null;
     }
 
     private int getIndex(Object object) {
@@ -159,7 +158,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        return false;   // todo
     }
 
     @Override
@@ -177,7 +176,7 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        return false;   // todo
     }
 
     @Override
