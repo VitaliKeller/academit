@@ -6,11 +6,11 @@ public class HashTable<T> implements Collection<T> {
     private ArrayList<T>[] hashTable;   // размер таблицы
     private int size;   // кол-во элементов
     private int modCount;
-    private static final int DEFAULT_LENGTH = 10;
+    private static final int DEFAULT_ARRAY_LENGTH = 10;
 
     public HashTable() {
         //noinspection unchecked
-        hashTable = new ArrayList[DEFAULT_LENGTH];
+        hashTable = new ArrayList[DEFAULT_ARRAY_LENGTH];
     }
 
     public HashTable(int length) {
@@ -45,10 +45,13 @@ public class HashTable<T> implements Collection<T> {
 
     private class MyIterator implements Iterator<T> {
         final private int initialModCount = modCount;
+        private int arrayIndex = 0;
+        private int tableIndex = -1;
+        private int listIndex = -1;
 
         @Override
         public boolean hasNext() {
-            return false;
+            return tableIndex + 1 < size;
         }
 
         @Override
@@ -60,6 +63,9 @@ public class HashTable<T> implements Collection<T> {
             if (modCount != initialModCount) {
                 throw new ConcurrentModificationException("Изменился список!");
             }
+
+            ++tableIndex; // todo лажа какая-то
+            return hashTable[tableIndex];
 
             return null;
         }
@@ -95,7 +101,8 @@ public class HashTable<T> implements Collection<T> {
             a[size] = null;
         }
 
-        return a;*/ return a;
+        return a;*/
+        return a;
     }
 
     private int getIndex(Object object) {
@@ -180,7 +187,7 @@ public class HashTable<T> implements Collection<T> {
         }
 
         //noinspection unchecked
-        hashTable = new ArrayList[DEFAULT_LENGTH];
+        hashTable = new ArrayList[DEFAULT_ARRAY_LENGTH];
 
         modCount++;
         size = 0;
