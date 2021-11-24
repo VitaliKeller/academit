@@ -69,7 +69,7 @@ public class MyArrayList<E> implements List<E> {
         }
     }
 
-    private void validateCollectionForNull(Collection<?> c) {
+    private static void validateCollectionForNull(Collection<?> c) {
         if (c == null) {
             throw new NullPointerException("Передан null");
         }
@@ -96,7 +96,6 @@ public class MyArrayList<E> implements List<E> {
             System.arraycopy(elements, index, elements, index + 1, size - index);
         }
 
-        // Это кейс "добавить в конец":
         elements[index] = element;
         size++;
         modCount++;
